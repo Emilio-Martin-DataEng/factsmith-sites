@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+/*
+  FactSmith Sites — coastal professional.
+  Not Ask Ember. Not Three Birds sage.
+*/
+@theme {
+  --color-sea-50: #f0f7f8;
+  --color-sea-100: #d7ebef;
+  --color-sea-200: #b0d7df;
+  --color-sea-300: #7bbac8;
+  --color-sea-400: #4a96a9;
+  --color-sea-500: #2f7a8f;
+  --color-sea-600: #1d6a7a;
+  --color-sea-700: #185561;
+  --color-sea-800: #164650;
+  --color-sea-900: #153b44;
+
+  --color-cream-50: #f7f5f0;
+  --color-cream-100: #efeae0;
+  --color-cream-200: #e2d9c8;
+
+  --color-ink-900: #17202a;
+  --color-ink-700: #3a4553;
+  --color-ink-500: #66707e;
+
+  --color-whatsapp: #25d366;
+
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-cream-50);
+  color: var(--color-ink-900);
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 60;
+  border-radius: 9999px;
+  background: var(--color-sea-700);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}

@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { site } from "../site.config";
+
+const included = [
+  "4–6 page static brochure (Home, About, Services/Rooms, Contact)",
+  "Mobile-first custom design from an agreed homepage sample",
+  "Two focused revision rounds after the first private preview",
+  "Contact form + WhatsApp as the primary button",
+  "Free hosting setup on Cloudflare Pages",
+  ".co.za domain registered in your name (billed at actual cost)",
+  "Cloudflare Email Routing to your existing Gmail or Outlook",
+  "Technical SEO foundations and clear factual structure",
+  "Hand-over of all source files",
+];
+
+const notIncluded = [
+  "Search Console + Bing ownership — R1 000 add-on",
+  "Extra top-level pages beyond six — quoted separately",
+  "Photography, logo design, or writing from scratch",
+  "Booking engines, payments, shops, or memberships",
+  "WordPress or a CMS so a cousin can edit pages",
+  "Monthly retainers, blogs, or link-building",
+];
+---
+
+<BaseLayout
+  title="Offer"
+  description="South Coast website rebuild — R4 000 fixed, 50% deposit, domain in your name."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">Published package</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold text-ink-900">South Coast website rebuild</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-700">
+      Fixed <strong>R{site.priceZar.toLocaleString("en-ZA")}</strong>. Deposit
+      R{site.depositZar.toLocaleString("en-ZA")} to start. Domain at actual registrar cost
+      (typically R90–R150). Balance within 7 days of hand-over.
+    </p>
+
+    <div class="mt-10 grid gap-8 lg:grid-cols-2">
+      <div class="rounded-2xl border border-sea-100 bg-white p-6 shadow-sm">
+        <h2 class="font-display text-xl font-semibold text-ink-900">Included</h2>
+        <ul class="mt-4 space-y-3 text-sm text-ink-700">
+          {included.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-sea-100 bg-cream-100 p-6">
+        <h2 class="font-display text-xl font-semibold text-ink-900">Not in this fee</h2>
+        <ul class="mt-4 space-y-3 text-sm text-ink-700">
+          {notIncluded.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">–</span><span>{item}</span></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 rounded-2xl bg-sea-900 p-6 text-cream-50 sm:p-8">
+      <h2 class="font-display text-xl font-semibold">Late content does not pause us</h2>
+      <p class="mt-2 max-w-3xl text-sm leading-relaxed text-sea-100">
+        Send what you can. If something is still missing when we need it, we finish with
+        AI-suggested copy from your ads and the agreed sample. You can still swap words in any
+        remaining revision round.
+      </p>
+      <p class="mt-4 text-xs text-sea-300">Invoices from {site.billingEntity}.</p>
+      <div class="mt-6">
+        <WhatsAppButton label="Ask about your site" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

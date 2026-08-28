@@ -1,0 +1,92 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+
+const endpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? "";
+const configured = endpoint.length > 0;
+---
+
+<form
+  id="contact-form"
+  action={configured ? endpoint : "#"}
+  method="POST"
+  data-configured={configured ? "true" : "false"}
+  class="space-y-4 rounded-2xl border border-sea-100 bg-white p-6 shadow-sm"
+>
+  <input type="hidden" name="_subject" value="FactSmith Sites enquiry" />
+  <div class="hidden" aria-hidden="true">
+    <label for="company">Company</label>
+    <input id="company" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div>
+    <label for="name" class="block text-sm font-medium text-ink-900">Name</label>
+    <input
+      id="name"
+      name="name"
+      type="text"
+      required
+      autocomplete="name"
+      class="mt-1 w-full rounded-lg border border-sea-200 bg-cream-50 px-3 py-2 text-sm focus:border-sea-500 focus:outline-none focus:ring-1 focus:ring-sea-500"
+    />
+  </div>
+
+  <div>
+    <label for="contact" class="block text-sm font-medium text-ink-900">Email or phone</label>
+    <input
+      id="contact"
+      name="contact"
+      type="text"
+      required
+      autocomplete="email"
+      class="mt-1 w-full rounded-lg border border-sea-200 bg-cream-50 px-3 py-2 text-sm focus:border-sea-500 focus:outline-none focus:ring-1 focus:ring-sea-500"
+    />
+  </div>
+
+  <div>
+    <label for="town" class="block text-sm font-medium text-ink-900">Town (optional)</label>
+    <input
+      id="town"
+      name="town"
+      type="text"
+      autocomplete="address-level2"
+      class="mt-1 w-full rounded-lg border border-sea-200 bg-cream-50 px-3 py-2 text-sm focus:border-sea-500 focus:outline-none focus:ring-1 focus:ring-sea-500"
+    />
+  </div>
+
+  <div>
+    <label for="message" class="block text-sm font-medium text-ink-900">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="4"
+      required
+      class="mt-1 w-full rounded-lg border border-sea-200 bg-cream-50 px-3 py-2 text-sm focus:border-sea-500 focus:outline-none focus:ring-1 focus:ring-sea-500"
+    ></textarea>
+  </div>
+
+  <button
+    type="submit"
+    class="inline-flex items-center justify-center rounded-full bg-sea-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-sea-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sea-500 focus-visible:ring-offset-2"
+  >
+    Send message
+  </button>
+</form>
+
+<div id="form-fallback" class="mt-4 hidden rounded-2xl border border-sea-200 bg-sea-50 p-6">
+  <p class="text-sm text-ink-700">
+    The email form isn’t connected yet. WhatsApp is the fastest way to reach us.
+  </p>
+  <div class="mt-4">
+    <WhatsAppButton />
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById("contact-form");
+  form?.addEventListener("submit", (event) => {
+    if (form.dataset.configured === "true") return;
+    event.preventDefault();
+    form.classList.add("hidden");
+    document.getElementById("form-fallback")?.classList.remove("hidden");
+  });
+</script>

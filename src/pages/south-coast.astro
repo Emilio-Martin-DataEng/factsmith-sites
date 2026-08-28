@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { towns } from "../site.config";
+---
+
+<BaseLayout
+  title="South Coast"
+  description="FactSmith Sites serves owner-operated businesses on the KZN Hibiscus / Ray Nkonyeni South Coast."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <h1 class="font-display text-4xl font-semibold text-ink-900">South Coast</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-700">
+      We work with owner-operated businesses on the Hibiscus Coast — lodges, B&Bs, tutors, trades,
+      professionals — where the website is clearly overdue for a rebuild.
+    </p>
+
+    <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">Towns we mean</h2>
+    <ul class="mt-4 flex flex-wrap gap-2">
+      {
+        towns.map((town) => (
+          <li class="rounded-full bg-sea-50 px-3 py-1.5 text-sm font-medium text-sea-800">{town}</li>
+        ))
+      }
+    </ul>
+    <p class="mt-4 text-sm text-ink-500">Not Durban. Not Cape Town.</p>
+
+    <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">A rebuild is worth it when</h2>
+    <ul class="mt-4 max-w-2xl space-y-2 text-ink-700">
+      <li>The site breaks or scrolls sideways on a phone</li>
+      <li>There is no tap-to-call and no WhatsApp button</li>
+      <li>You cannot change the site yourself (dead WordPress, old `.htm` tables)</li>
+      <li>Facebook or Airbnb is doing the real work and the `.co.za` is an embarrassment</li>
+    </ul>
+
+    <div class="mt-10">
+      <WhatsAppButton label="Send us your current site" />
+    </div>
+  </section>
+</BaseLayout>

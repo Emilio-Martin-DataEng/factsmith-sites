@@ -1,0 +1,93 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { samples, site } from "../site.config";
+---
+
+<BaseLayout title={site.name}>
+  <section class="relative overflow-hidden bg-gradient-to-b from-cream-50 to-sea-50">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
+      <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">KZN South Coast</p>
+      <h1 class="mt-3 max-w-3xl font-display text-4xl font-semibold leading-tight text-ink-900 sm:text-5xl">
+        Your website is costing you enquiries.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-ink-700">
+        FactSmith Sites rebuilds broken brochure sites for small and medium businesses on the Hibiscus
+        Coast — mobile-first, WhatsApp-first, domain in your name, hosting at R0. Fixed price
+        <strong>R{site.priceZar.toLocaleString("en-ZA")}</strong>.
+      </p>
+      <div class="mt-8 flex flex-wrap items-center gap-4">
+        <WhatsAppButton label="Chat about a rebuild" />
+        <a href="/offer" class="text-sm font-semibold text-sea-700 hover:text-sea-500">
+          See what’s included →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="flex items-end justify-between gap-4">
+      <h2 class="font-display text-2xl font-semibold text-ink-900">Samples</h2>
+      <a href="/work" class="text-sm font-semibold text-sea-700 hover:text-sea-500">All work →</a>
+    </div>
+    <div class="mt-8 grid gap-6 md:grid-cols-3">
+      {
+        samples.map((sample) => (
+          <article class="rounded-2xl border border-sea-100 bg-white p-6 shadow-sm">
+            <p class="text-xs font-semibold uppercase tracking-wide text-sea-600">{sample.kind}</p>
+            <h3 class="mt-2 font-display text-lg font-semibold text-ink-900">{sample.title}</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink-700">{sample.blurb}</p>
+            {sample.status === "live" && sample.url ? (
+              <a
+                href={sample.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-4 inline-flex text-sm font-semibold text-sea-700 hover:text-sea-500"
+              >
+                Visit live site →
+              </a>
+            ) : sample.status === "pending-permission" ? (
+              <p class="mt-4 text-xs text-ink-500">Listed once the client agrees.</p>
+            ) : (
+              <p class="mt-4 text-xs text-ink-500">Preview URL coming.</p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="border-y border-sea-100 bg-white">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-3">
+      <div>
+        <h2 class="font-display text-lg font-semibold text-ink-900">R4 000 fixed</h2>
+        <p class="mt-2 text-sm text-ink-700">
+          Four to six pages, two revision rounds, deposit half up front. Domain at actual cost.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-lg font-semibold text-ink-900">You own it</h2>
+        <p class="mt-2 text-sm text-ink-700">
+          Domain registered in your name. Source files handed over. Hosting starts at R0 a month.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-lg font-semibold text-ink-900">Local process</h2>
+        <p class="mt-2 text-sm text-ink-700">
+          Same method we used for Three Birds in Anerley — Sharon handles the client side after you
+          say yes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 text-center sm:px-6">
+    <h2 class="font-display text-2xl font-semibold text-ink-900">Ready for a straight conversation?</h2>
+    <p class="mx-auto mt-3 max-w-xl text-ink-700">
+      Send the link to your current site. We’ll tell you honestly whether a rebuild is worth it.
+    </p>
+    <div class="mt-6 flex justify-center">
+      <WhatsAppButton />
+    </div>
+  </section>
+</BaseLayout>

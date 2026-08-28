@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import ContactForm from "../components/ContactForm.astro";
+import { site } from "../site.config";
+---
+
+<BaseLayout
+  title="Contact"
+  description="WhatsApp FactSmith Sites about a South Coast website rebuild."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <h1 class="font-display text-4xl font-semibold text-ink-900">Contact</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-700">
+      WhatsApp is the fastest path. Send a link to your current site and the town you’re in.
+    </p>
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-2">
+      <div>
+        <WhatsAppButton label={`WhatsApp ${site.phoneDisplay}`} />
+        <ul class="mt-8 space-y-3 text-sm text-ink-700">
+          <li>
+            <span class="font-semibold text-ink-900">Email:</span>
+            <a class="ml-1 text-sea-700 hover:text-sea-500" href={`mailto:${site.email}`}>{site.email}</a>
+          </li>
+          <li>
+            <span class="font-semibold text-ink-900">Build:</span> Emilio Martin
+          </li>
+          <li>
+            <span class="font-semibold text-ink-900">After you are a client:</span> Sharon Cooper handles
+            content, previews and revision rounds
+          </li>
+          <li>
+            <span class="font-semibold text-ink-900">Billing:</span> {site.billingEntity}
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="font-display text-lg font-semibold text-ink-900">Or send a short message</h2>
+        <div class="mt-4">
+          <ContactForm />
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
