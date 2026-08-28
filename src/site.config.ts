@@ -59,6 +59,18 @@ export const samples = [
   },
 ] as const;
 
+/** Free opener for prospects — lighter than the Henton Timber Homes deep audit. */
+export const freeAuditPack = {
+  name: "Free website check + homepage sample",
+  notHenton: "Not a 10-page condition report or 7-screen redesign. That stays for after they reply.",
+  deliverables: [
+    "Half-page findings note (3–5 concrete fails)",
+    "One mobile screenshot of the worst fail",
+    "One homepage sample (HTML mock) using their real name/photos where legal",
+  ],
+  nextStep: "If they like the sample: R4 000 pack (deposit + domain form).",
+} as const;
+
 export const methodSteps = [
   {
     title: "Spot the problem",
