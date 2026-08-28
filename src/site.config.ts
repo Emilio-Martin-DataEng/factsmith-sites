@@ -47,7 +47,7 @@ export const samples = [
     url: "https://threebirdscentre.co.za",
     blurb:
       "The actual package: Astro brochure, WhatsApp-first, domain in the client’s name, R0 hosting.",
-    status: "pending-permission" as const,
+    status: "live" as const,
   },
   {
     slug: "eagles-roost",
