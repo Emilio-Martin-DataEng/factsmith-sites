@@ -6,11 +6,13 @@ export const site = {
   domain: "sites.factsmith.co.za",
   url: "https://sites.factsmith.co.za",
   email: "factsmith@outlook.com",
-  phoneDisplay: "082 413 0438",
-  phoneTel: "+27824130438",
-  whatsappLink: "https://wa.me/27824130438",
+  /** Sharon Cooper is the published contact for Sites enquiries. */
+  contactName: "Sharon Cooper",
+  phoneDisplay: "072 500 5179",
+  phoneTel: "+27725005179",
+  whatsappLink: "https://wa.me/27725005179",
   whatsappMessage:
-    "Hi Emilio — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
+    "Hi Sharon — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
   description:
     "Websites for South Coast small businesses whose current site is costing them enquiries. R7 500 brochure rebuilds — R4 000 for the first five. Keep your domain if you have one; keep or downscale hosting.",
   ogImage: "/images/og-card.png",
