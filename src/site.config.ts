@@ -13,7 +13,15 @@ export const site = {
     "Hi Emilio — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
   description:
     "Websites for South Coast small businesses whose current site is costing them enquiries. R7 500 brochure rebuilds — R4 000 for the first five. Keep your domain if you have one; keep or downscale hosting.",
-  ogImage: "/images/og-card.svg",
+  ogImage: "/images/og-card.png",
+  /**
+   * GitHub Pages has not issued the TLS certificate for this subdomain yet.
+   * While true, og:image / og:url are emitted over http — WhatsApp and Facebook
+   * refuse to fetch a link-preview card from a host with an invalid cert, so
+   * https here means no preview image in a group post at all.
+   * Flip to false the moment the certificate lands.
+   */
+  certPending: true,
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
   billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",

@@ -12,7 +12,11 @@ interface Props {
 const { title, description = site.description } = Astro.props;
 const pageTitle = title === site.name ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
-const ogImage = new URL(site.ogImage, site.url).toString();
+// Social scrapers get http while the TLS cert is still being issued, otherwise
+// the preview card silently fails to load. Canonical stays https on purpose.
+const shareBase = site.certPending ? site.url.replace(/^https:/, "http:") : site.url;
+const shareUrl = new URL(Astro.url.pathname, shareBase).toString();
+const ogImage = new URL(site.ogImage, shareBase).toString();
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -51,8 +55,12 @@ const jsonLd = {
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    <meta property="og:url" content={shareUrl} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — website rebuilds, first 5 sites R4 000`} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
