@@ -29,7 +29,7 @@ export const nav = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-/** Samples. Three Birds stays pending until Paula says yes. */
+/** Live samples. */
 export const samples = [
   {
     slug: "factsmith",
@@ -43,19 +43,88 @@ export const samples = [
   {
     slug: "three-birds",
     title: "Three Birds Online Learning Centre",
-    kind: "Client — Anerley",
+    kind: "Live client — Anerley",
     url: "https://threebirdscentre.co.za",
     blurb:
-      "The actual package: Astro brochure, WhatsApp-first, domain in the client’s name, R0 hosting.",
+      "The actual R4 000 package: Astro brochure, WhatsApp-first, domain in the client’s name, R0 hosting.",
     status: "live" as const,
   },
+] as const;
+
+/**
+ * Approved and in process. Visuals from real project photography and
+ * agreed mockups — not stock. Henton is Cape Town / larger than the R4 000 bar.
+ */
+export const inProcess = [
   {
     slug: "eagles-roost",
     title: "Eagle’s Roost B&B",
-    kind: "Local — Umtentweni",
-    url: "",
-    blurb: "Neighbourhood B&B sample. Public preview URL coming.",
-    status: "in-progress" as const,
+    kind: "Umtentweni · South Coast",
+    package: "In process",
+    blurb:
+      "Heritage house above the Umzimkulu. Direction C (petrol teal, WhatsApp-first) is the agreed look. Build underway.",
+    hero: "/images/work/eagles-roost/hero.jpg",
+    heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
+    images: [
+      {
+        src: "/images/work/eagles-roost/concept-c.png",
+        alt: "Direction C phone mockups — first screen, the house, rates",
+      },
+      {
+        src: "/images/work/eagles-roost/concept-c-p2.png",
+        alt: "Direction C phone mockups — what’s included, the area, enquire",
+      },
+      {
+        src: "/images/work/eagles-roost/verandah.jpg",
+        alt: "Covered verandah at first light",
+      },
+    ],
+  },
+  {
+    slug: "khaya-la-manzi",
+    title: "Khaya La Manzi Guest Lodge",
+    kind: "Hibberdene · South Coast",
+    package: "In process · overhaul",
+    blurb:
+      "Existing table-layout site, not mobile, no tap-to-call. Rebuild using their own sunset, lodge and beach photography. Approved; in process.",
+    hero: "/images/work/khaya/hero.jpg",
+    heroAlt: "Khaya La Manzi sunset header from the current site",
+    images: [
+      {
+        src: "/images/work/khaya/lodge.jpg",
+        alt: "Khaya La Manzi lodge building",
+      },
+      {
+        src: "/images/work/khaya/beach.jpg",
+        alt: "Hibberdene beach near the lodge",
+      },
+    ],
+    currentUrl: "https://khayalamanzi.co.za",
+  },
+  {
+    slug: "henton",
+    title: "Henton Timber Homes",
+    kind: "Melkbosstrand · timber construction",
+    package: "In process · larger than the R4 000 brochure",
+    blurb:
+      "Full rebuild of a static mirror of a dead WordPress install. Real project photography, ITFB award, enquiry path. Not the South Coast R4 000 package — this one is a bigger site.",
+    hero: "/images/work/henton/elephant-hide.jpg",
+    heroAlt: "Elephant Hide Lodge — a Henton timber structure",
+    images: [
+      {
+        src: "/images/work/henton/house-goosen.jpg",
+        alt: "House Goosen timber home",
+      },
+      {
+        src: "/images/work/henton/deck.jpg",
+        alt: "Henton decking",
+      },
+      {
+        src: "/images/work/henton/hero.png",
+        alt: "Henton Homes featured build",
+      },
+    ],
+    currentUrl: "https://www.hentonhomes.co.za",
   },
 ] as const;
 

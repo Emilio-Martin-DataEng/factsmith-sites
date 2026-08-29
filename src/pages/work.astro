@@ -1,39 +1,35 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { samples, site } from "../site.config";
+import InProcessCard from "../components/InProcessCard.astro";
+import { inProcess, samples, site } from "../site.config";
 ---
 
 <BaseLayout
   title="Work"
-  description="Samples from FactSmith Sites — our product site as capability ceiling, and South Coast brochure rebuilds."
+  description="Live samples and projects in process — Eagle’s Roost, Khaya La Manzi, Henton Timber Homes."
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <h1 class="font-display text-4xl font-semibold text-ink-900">Work</h1>
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      Honest labels. The FactSmith product site shows what we can design. The R4 000 South Coast
-      package is the Three Birds shape — fast brochure, WhatsApp-first, you own the domain.
+      Honest labels. Live sites first. Then three jobs that are approved and in process — with
+      the real photography and mockups, not stock.
     </p>
 
-    <div class="mt-12 space-y-8">
+    <h2 class="mt-14 font-display text-2xl font-semibold text-ink-900">Live</h2>
+    <div class="mt-6 space-y-6">
       {
         samples.map((sample) => (
           <article class="rounded-2xl border border-sea-100 bg-white p-6 shadow-sm sm:p-8">
             <div class="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p class="text-xs font-semibold uppercase tracking-wide text-sea-600">{sample.kind}</p>
-                <h2 class="mt-1 font-display text-2xl font-semibold text-ink-900">{sample.title}</h2>
+                <h3 class="mt-1 font-display text-2xl font-semibold text-ink-900">{sample.title}</h3>
               </div>
-              <span class="rounded-full bg-sea-50 px-3 py-1 text-xs font-medium text-sea-700">
-                {sample.status === "live"
-                  ? "Live"
-                  : sample.status === "pending-permission"
-                    ? "Awaiting listing permission"
-                    : "In progress"}
-              </span>
+              <span class="rounded-full bg-sea-50 px-3 py-1 text-xs font-medium text-sea-700">Live</span>
             </div>
             <p class="mt-4 max-w-3xl text-ink-700">{sample.blurb}</p>
-            {sample.status === "live" && sample.url ? (
+            {sample.url ? (
               <a
                 href={sample.url}
                 target="_blank"
@@ -48,11 +44,34 @@ import { samples, site } from "../site.config";
       }
     </div>
 
+    <h2 id="in-process" class="mt-16 font-display text-2xl font-semibold text-ink-900">
+      In process
+    </h2>
+    <p class="mt-2 max-w-2xl text-ink-700">
+      Approved. Being built. Visuals from the client’s own photos and the agreed mockups.
+    </p>
+    <div class="mt-8 grid gap-8 lg:grid-cols-1">
+      {
+        inProcess.map((job) => (
+          <InProcessCard
+            title={job.title}
+            kind={job.kind}
+            package={job.package}
+            blurb={job.blurb}
+            hero={job.hero}
+            heroAlt={job.heroAlt}
+            images={job.images}
+            currentUrl={"currentUrl" in job ? job.currentUrl : undefined}
+          />
+        ))
+      }
+    </div>
+
     <div class="mt-12 rounded-2xl bg-sea-50 p-6 sm:p-8">
       <h2 class="font-display text-xl font-semibold text-ink-900">Want yours on this page?</h2>
       <p class="mt-2 text-ink-700">
-        South Coast businesses with a site that fails on a phone — lodges, trades, tutors,
-        professionals. Fixed R{site.priceZar.toLocaleString("en-ZA")}.
+        South Coast brochure rebuilds at R{site.priceZar.toLocaleString("en-ZA")}. Larger sites
+        (like Henton) are quoted separately.
       </p>
       <div class="mt-5">
         <WhatsAppButton />
