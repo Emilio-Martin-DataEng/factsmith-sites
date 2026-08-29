@@ -12,7 +12,7 @@ export const site = {
   whatsappMessage:
     "Hi Emilio — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
   description:
-    "Websites for South Coast small businesses whose current site is costing them enquiries. R4 000 brochure rebuilds — you own the domain, hosting stays R0.",
+    "Websites for South Coast small businesses whose current site is costing them enquiries. R4 000 brochure rebuilds — keep your domain if you have one; keep or downscale hosting.",
   ogImage: "/images/og-card.svg",
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
@@ -154,12 +154,12 @@ export const methodSteps = [
     text: "Invoice, domain form, content questions, hosting note, and scope. R2 000 starts the job.",
   },
   {
-    title: "Domain in your name",
-    text: "We register the .co.za for you at actual cost. You own it from day one.",
+    title: "Domain and hosting — your call",
+    text: "Already have a domain? We use it. Need one? Registered in your name at cost. Hosting: keep what you pay for, or downscale to free static.",
   },
   {
     title: "Build from a sample",
-    text: "Mobile-first Astro site. WhatsApp as the main button. Contact form included.",
+    text: "Mobile-first site. WhatsApp as the main button. Contact form included.",
   },
   {
     title: "Preview + two rounds",
@@ -167,7 +167,7 @@ export const methodSteps = [
   },
   {
     title: "Go live",
-    text: "Cloudflare Pages, free SSL, email forwarding to your Gmail. Balance on hand-over.",
+    text: "Deploy on the host you chose. Balance on hand-over.",
   },
 ] as const;
 
