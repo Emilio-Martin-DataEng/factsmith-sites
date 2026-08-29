@@ -4,6 +4,11 @@ interface Image {
   alt: string;
 }
 
+interface MockupPdf {
+  href: string;
+  label: string;
+}
+
 interface Props {
   title: string;
   kind: string;
@@ -13,9 +18,10 @@ interface Props {
   heroAlt: string;
   images: readonly Image[];
   currentUrl?: string;
+  mockupPdf?: MockupPdf;
 }
 
-const { title, kind, package: pkg, blurb, hero, heroAlt, images, currentUrl } = Astro.props;
+const { title, kind, package: pkg, blurb, hero, heroAlt, images, currentUrl, mockupPdf } = Astro.props;
 ---
 
 <article class="overflow-hidden rounded-2xl border border-sea-100 bg-white shadow-sm">
@@ -40,6 +46,21 @@ const { title, kind, package: pkg, blurb, hero, heroAlt, images, currentUrl } = 
           class="mt-3 inline-flex text-sm font-semibold text-sea-700 hover:text-sea-500"
         >
           Current site →
+        </a>
+      ) : null
+    }
+    {
+      mockupPdf ? (
+        <a
+          href={mockupPdf.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-sea-700 hover:text-sea-500"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4">
+            <path fill-rule="evenodd" d="M4 2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.914a2 2 0 0 0-.586-1.414l-3.914-3.914A2 2 0 0 0 12.086 2H4Zm0 2h7v3a2 2 0 0 0 2 2h3v9H4V4Z" clip-rule="evenodd" />
+          </svg>
+          {mockupPdf.label} →
         </a>
       ) : null
     }

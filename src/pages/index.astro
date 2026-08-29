@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { inProcess, samples, site } from "../site.config";
+import { inProcess, samples, site, launchOffer } from "../site.config";
 ---
 
 <BaseLayout title={site.name}>
@@ -13,9 +13,39 @@ import { inProcess, samples, site } from "../site.config";
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-ink-700">
         FactSmith Sites rebuilds broken brochure sites for small and medium businesses on the Hibiscus
-        Coast — mobile-first, WhatsApp-first, domain in your name, hosting at R0. Fixed price
-        <strong>R{site.priceZar.toLocaleString("en-ZA")}</strong>.
+        Coast — mobile-first, WhatsApp-first, domain in your name, hosting at R0.
       </p>
+
+      {
+        launchOffer.active ? (
+          <div class="mt-7 max-w-2xl rounded-2xl border-2 border-sea-600 bg-white/80 p-5 shadow-sm backdrop-blur">
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="rounded-full bg-sea-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+                {launchOffer.headline}
+              </span>
+              <p class="flex items-baseline gap-2">
+                <span class="text-lg font-medium text-ink-500 line-through decoration-2">
+                  R{site.standardPriceZar.toLocaleString("en-ZA")}
+                </span>
+                <span class="font-display text-3xl font-semibold text-sea-700">
+                  R{site.priceZar.toLocaleString("en-ZA")}
+                </span>
+              </p>
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-ink-700">
+              A R{site.depositZar.toLocaleString("en-ZA")} deposit secures one of the five slots and
+              locks the price. After that the published price is
+              R{site.standardPriceZar.toLocaleString("en-ZA")}.
+            </p>
+            <p class="mt-2 text-sm font-semibold text-sea-800">{launchOffer.turnaround}</p>
+          </div>
+        ) : (
+          <p class="mt-5 max-w-2xl text-lg text-ink-700">
+            Fixed price <strong>R{site.standardPriceZar.toLocaleString("en-ZA")}</strong>.
+          </p>
+        )
+      }
+
       <div class="mt-8 flex flex-wrap items-center gap-4">
         <WhatsAppButton label="Chat about a rebuild" />
         <a href="/offer" class="text-sm font-semibold text-sea-700 hover:text-sea-500">
@@ -84,9 +114,11 @@ import { inProcess, samples, site } from "../site.config";
   <section class="border-y border-sea-100 bg-white">
     <div class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-3">
       <div>
-        <h2 class="font-display text-lg font-semibold text-ink-900">R4 000 fixed</h2>
+        <h2 class="font-display text-lg font-semibold text-ink-900">Fixed price, no surprises</h2>
         <p class="mt-2 text-sm text-ink-700">
           Four to six pages, two revision rounds, deposit half up front. Domain at actual cost.
+          R{site.standardPriceZar.toLocaleString("en-ZA")} — or
+          R{site.priceZar.toLocaleString("en-ZA")} while the launch five last.
         </p>
       </div>
       <div>

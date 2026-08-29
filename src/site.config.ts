@@ -12,13 +12,34 @@ export const site = {
   whatsappMessage:
     "Hi Emilio — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
   description:
-    "Websites for South Coast small businesses whose current site is costing them enquiries. R4 000 brochure rebuilds — keep your domain if you have one; keep or downscale hosting.",
+    "Websites for South Coast small businesses whose current site is costing them enquiries. R7 500 brochure rebuilds — R4 000 for the first five. Keep your domain if you have one; keep or downscale hosting.",
   ogImage: "/images/og-card.svg",
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
   billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",
+  /** Launch-special price. Reverts to standardPriceZar once the 5 slots are gone. */
   priceZar: 4000,
+  /** Normal published price after the launch five. */
+  standardPriceZar: 7500,
   depositZar: 2000,
+} as const;
+
+/**
+ * Launch special — the first 5 South Coast sites at R4 000 instead of R7 500.
+ * A deposit secures the slot and locks the price.
+ * Set active: false once five deposits are in; the pages then fall back to
+ * site.standardPriceZar automatically.
+ */
+export const launchOffer = {
+  active: true,
+  slots: 5,
+  headline: "First 5 sites only",
+  lede: "R4 000 instead of R7 500.",
+  detail:
+    "The first five South Coast rebuilds are R4 000 — a R2 000 deposit secures your slot and locks the price. After the five, the published price is R7 500.",
+  bonus:
+    "On these five, Search Console + Bing ownership setup (normally R1 000) is included free.",
+  turnaround: "Mockups this weekend. Your new site live next week.",
 } as const;
 
 export const nav = [
@@ -37,7 +58,7 @@ export const samples = [
     kind: "Our product site",
     url: "https://www.factsmith.co.za",
     blurb:
-      "Capability ceiling — a full marketing site we built for our own product. Not the R4 000 package.",
+      "Capability ceiling — a full marketing site we built for our own product. Bigger than the standard brochure package.",
     status: "live" as const,
   },
   {
@@ -46,14 +67,14 @@ export const samples = [
     kind: "Live client — Anerley",
     url: "https://threebirdscentre.co.za",
     blurb:
-      "The actual R4 000 package: Astro brochure, WhatsApp-first, domain in the client’s name, R0 hosting.",
+      "The actual brochure package: Astro build, WhatsApp-first, domain in the client’s name, R0 hosting.",
     status: "live" as const,
   },
 ] as const;
 
 /**
  * Approved and in process. Visuals from real project photography and
- * agreed mockups — not stock. Henton is Cape Town / larger than the R4 000 bar.
+ * agreed mockups — not stock. Henton is Cape Town / larger than the brochure bar.
  */
 export const inProcess = [
   {
@@ -105,11 +126,15 @@ export const inProcess = [
     slug: "henton",
     title: "Henton Timber Homes",
     kind: "Melkbosstrand · timber construction",
-    package: "In process · larger than the R4 000 brochure",
+    package: "In process · larger than the standard brochure",
     blurb:
-      "Full rebuild of a static mirror of a dead WordPress install. Real project photography, ITFB award, enquiry path. Not the South Coast R4 000 package — this one is a bigger site.",
+      "Full rebuild of a static mirror of a dead WordPress install. Real project photography, ITFB award, enquiry path. Not the standard South Coast brochure package — this one is a bigger site.",
     hero: "/images/work/henton/elephant-hide.jpg",
     heroAlt: "Elephant Hide Lodge — a Henton timber structure",
+    mockupPdf: {
+      href: "/mockups/henton-timber-homes-proposed-website.pdf",
+      label: "Download the 7-screen proposal (PDF)",
+    },
     images: [
       {
         src: "/images/work/henton/house-goosen.jpg",
