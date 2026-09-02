@@ -91,9 +91,10 @@ export const inProcess = [
     slug: "eagles-roost",
     title: "Eagle’s Roost B&B",
     kind: "Umtentweni · South Coast",
-    package: "In process",
+    package: "In process · preview live",
     blurb:
-      "Heritage house above the Umzimkulu. Direction C (petrol teal, WhatsApp-first) is the agreed look. Build underway.",
+      "Heritage Port Master’s House above the Umzimkulu. West Hill layout feel, WhatsApp-first booking, guest recommendations on the home page. Work-in-progress preview is live for review.",
+    previewUrl: "https://sites.factsmith.co.za/eagles-roost/",
     hero: "/images/work/eagles-roost/hero.jpg",
     heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
     images: [
