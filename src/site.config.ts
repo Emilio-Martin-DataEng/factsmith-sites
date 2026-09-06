@@ -137,9 +137,10 @@ export const inProcess = [
     slug: "henton",
     title: "Henton Timber Homes",
     kind: "Melkbosstrand · timber construction",
-    package: "In process · larger than the standard brochure",
+    package: "In process · preview live",
     blurb:
-      "Full rebuild of a static mirror of a dead WordPress install. Real project photography, ITFB award, enquiry path. Not the standard South Coast brochure package — this one is a bigger site.",
+      "Full rebuild of a static mirror of a dead WordPress install. Real project photography, ITFB award, enquiry path. Work-in-progress preview is live for Horton / Tamryn review.",
+    previewUrl: "https://sites.factsmith.co.za/henton-homes/",
     hero: "/images/work/henton/elephant-hide.jpg",
     heroAlt: "Elephant Hide Lodge — a Henton timber structure",
     mockupPdf: {
