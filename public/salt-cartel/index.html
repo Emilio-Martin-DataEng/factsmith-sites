@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#081317">
+<link rel="canonical" href="https://sites.factsmith.co.za/salt-cartel/">
+<meta name="description" content="Guided rock, surf, river & boat fishing charters on KwaZulu-Natal's South Coast, plus stickbaits, poppers & apparel. Concept build — pending brand assets, photography & domain.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Salt Cartel">
+<meta property="og:description" content="Guided rock, surf, river & boat fishing charters on KwaZulu-Natal's South Coast.">
+<title>Salt Cartel</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --abyss:#081317;
+    --reef:#0d2529;
+    --reef-2:#12333770;
+    --reef-line:#1c4247;
+    --foam:#eef1ec;
+    --foam-dim:#b9c6c2;
+    --tide:#2a9d8f;
+    --lure:#ff5a2e;
+    --lure-dim:#c94420;
+    --chartreuse:#c9e86a;
+    --font-display:'Anton', Impact, 'Arial Narrow', sans-serif;
+    --font-body:'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--abyss);
+    color:var(--foam);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    padding:0 16px;
+  }
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  a{color:inherit;}
+  img,.aspect{max-width:100%;}
+  h1,h2,h3{text-wrap:balance; margin:0;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  .wrap{max-width:1120px; margin-inline:auto;}
+  .section{padding-block:clamp(48px,8vw,96px);}
+  .eyebrow{
+    font-family:var(--font-body); font-weight:800; font-size:.72rem;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--tide);
+  }
+
+  /* ---------- tide-line divider (signature device) ---------- */
+  .tideline{display:block; width:100%; height:28px; margin-block:-1px;}
+  .tideline path{fill:var(--reef);}
+  .tideline.flip path{fill:var(--abyss);}
+  .tideline.to-reef path{fill:var(--reef);}
+  .tideline.to-abyss path{fill:var(--abyss);}
+
+  /* ---------- nav ---------- */
+  header.site{
+    position:sticky; top:0; z-index:40;
+    background:rgba(8,19,23,.86); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--reef-line);
+  }
+  .navwrap{
+    max-width:1120px; margin-inline:auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-block:14px; gap:12px;
+  }
+  .navside{display:flex; gap:22px; flex:1;}
+  .navside.right{justify-content:flex-end;}
+  .navlink{
+    font-size:.78rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    text-decoration:none; color:var(--foam-dim); white-space:nowrap;
+    border-bottom:2px solid transparent; padding-bottom:2px;
+    transition:color .15s, border-color .15s;
+  }
+  .navlink:hover{color:var(--foam); border-color:var(--lure);}
+  .wordmark{
+    font-family:var(--font-display); letter-spacing:.03em;
+    font-size:1.5rem; text-decoration:none; color:var(--foam); text-align:center; line-height:1;
+  }
+  .wordmark small{
+    display:block; font-family:var(--font-body); font-weight:700; font-size:.55rem;
+    letter-spacing:.28em; color:var(--tide); margin-top:3px;
+  }
+  .navmenu-btn{display:none; background:none; border:0; color:var(--foam); font-size:1.4rem;}
+  @media (max-width:820px){
+    .navside{display:none;}
+    .navmenu-btn{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    padding-block:clamp(56px,12vw,120px) clamp(40px,8vw,72px);
+    background:
+      radial-gradient(ellipse 120% 60% at 50% -10%, #123c3f 0%, transparent 60%),
+      linear-gradient(180deg, var(--abyss) 0%, #061014 100%);
+  }
+  .hero-rings{position:absolute; inset:0; z-index:0; opacity:.5; pointer-events:none;}
+  .hero-inner{position:relative; z-index:1; max-width:820px; margin-inline:auto; text-align:center;}
+  .hero h1{
+    font-family:var(--font-display); font-size:clamp(2.6rem,8vw,5.4rem);
+    letter-spacing:.01em; line-height:.98; color:var(--foam);
+  }
+  .hero h1 .hit{color:var(--lure);}
+  .hero p.lede{
+    font-size:clamp(1rem,2vw,1.2rem); color:var(--foam-dim); max-width:560px;
+    margin:20px auto 0; line-height:1.6;
+  }
+  .cta-row{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:32px;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px; border-radius:999px; font-weight:800; font-size:.85rem;
+    letter-spacing:.06em; text-transform:uppercase; text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:linear-gradient(135deg,var(--lure),var(--lure-dim)); color:#0a0503; box-shadow:0 8px 24px -8px rgba(255,90,46,.55);}
+  .btn-ghost{background:transparent; border:1.5px solid var(--reef-line); color:var(--foam);}
+  .btn-ghost:hover{border-color:var(--tide);}
+
+  /* ---------- photo-style section (CSS ocean scene, no stock photo available) ---------- */
+  .scene{
+    position:relative; background:var(--reef); overflow:hidden;
+  }
+  .scene-bg{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, transparent 0%, rgba(8,19,23,.9) 92%),
+      repeating-linear-gradient(115deg, #0f2b2f 0 2px, #123539 2px 90px),
+      linear-gradient(200deg, #164246 0%, #0c2226 55%, #081417 100%);
+  }
+  .scene-grain{position:absolute; inset:0; mix-blend-mode:overlay; opacity:.5;}
+  .scene .wrap{position:relative; z-index:1; padding-block:clamp(64px,10vw,112px);}
+  .scene-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center;}
+  @media (max-width:780px){ .scene-grid{grid-template-columns:1fr;} }
+  .scene h2{font-family:var(--font-display); font-size:clamp(2rem,5vw,3.4rem); line-height:1.02;}
+  .scene p{color:var(--foam-dim); margin-top:16px; max-width:46ch; line-height:1.65;}
+  .scene .btn{margin-top:26px;}
+
+  .tide-card{
+    background:rgba(8,19,23,.55); border:1px solid var(--reef-line); border-radius:14px;
+    padding:26px; backdrop-filter:blur(4px);
+  }
+  .tide-card dl{display:grid; grid-template-columns:1fr auto; gap:10px 14px; margin:0;}
+  .tide-card dt{color:var(--foam-dim); font-size:.85rem;}
+  .tide-card dd{margin:0; font-weight:800; color:var(--chartreuse);}
+
+  /* ---------- rates ---------- */
+  .rates-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:40px;}
+  @media (max-width:980px){ .rates-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .rates-grid{grid-template-columns:1fr;} }
+  .rate-card{
+    background:var(--reef); border:1px solid var(--reef-line); border-radius:16px;
+    padding:24px; display:flex; flex-direction:column; gap:14px;
+  }
+  .rate-card h3{
+    font-family:var(--font-display); font-size:1.15rem; letter-spacing:.02em; color:var(--foam);
+    line-height:1.15; min-height:2.4em;
+  }
+  .rate-rows{display:flex; flex-direction:column; gap:10px; flex:1;}
+  .rate-row{display:flex; justify-content:space-between; gap:10px; font-size:.9rem; border-top:1px solid var(--reef-line); padding-top:10px;}
+  .rate-row:first-child{border-top:none; padding-top:0;}
+  .rate-row .label{color:var(--foam-dim);}
+  .rate-row .price{font-weight:800; color:var(--chartreuse); white-space:nowrap;}
+  .rate-tag{
+    align-self:flex-start; font-size:.65rem; font-weight:800; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--lure); border:1px solid var(--lure-dim);
+    padding:4px 10px; border-radius:999px;
+  }
+  .perks{
+    display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:36px; padding-top:28px;
+    border-top:1px solid var(--reef-line);
+  }
+  .perk{display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--foam-dim);}
+  .perk svg{flex:none; width:16px; height:16px; color:var(--tide);}
+  .rates-cta{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:32px;}
+  .rates-cta p{color:var(--foam-dim); margin:0; max-width:40ch;}
+
+  /* ---------- tackle banner ---------- */
+  .tackle{background:var(--abyss);}
+  .tackle .wrap{padding-block:clamp(56px,9vw,88px);}
+  .tackle-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;}
+  .tackle-head h2{font-family:var(--font-display); font-size:clamp(1.8rem,4vw,2.6rem);}
+  .tackle-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px;}
+  @media (max-width:760px){ .tackle-grid{grid-template-columns:1fr;} }
+  .tackle-card{
+    border-radius:16px; padding:28px 24px; min-height:180px;
+    display:flex; flex-direction:column; justify-content:flex-end; gap:6px;
+    position:relative; overflow:hidden; border:1px solid var(--reef-line);
+  }
+  .tackle-card h3{font-family:var(--font-display); font-size:1.4rem; color:#08130f;}
+  .tackle-card p{margin:0; font-size:.82rem; color:#08130fcc; font-weight:600;}
+  .tc-1{background:linear-gradient(135deg,#ff8a5c,#ff5a2e);}
+  .tc-2{background:linear-gradient(135deg,#e7f5a0,var(--chartreuse));}
+  .tc-3{background:linear-gradient(135deg,#7fd8cd,var(--tide)); }
+  .tc-3 h3,.tc-3 p{color:#04211d;}
+
+  /* ---------- feature strip + statement ---------- */
+  .features{background:var(--reef);}
+  .features .wrap{padding-block:clamp(56px,9vw,88px);}
+  .feat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  @media (max-width:760px){ .feat-grid{grid-template-columns:1fr;} }
+  .feat{display:flex; flex-direction:column; gap:10px;}
+  .feat .ico{
+    width:44px; height:44px; border-radius:12px; background:rgba(42,157,143,.15);
+    display:flex; align-items:center; justify-content:center; color:var(--tide);
+  }
+  .feat h4{font-size:1rem; font-weight:800;}
+  .feat p{margin:0; color:var(--foam-dim); font-size:.88rem; line-height:1.55;}
+  .statement{
+    font-family:var(--font-display); font-size:clamp(2.4rem,7vw,5rem); line-height:.96;
+    margin-top:clamp(40px,7vw,64px); color:var(--foam);
+  }
+  .statement span{color:transparent; -webkit-text-stroke:1.5px var(--foam-dim);}
+
+  /* ---------- accommodation crossover ---------- */
+  .stay{
+    position:relative; overflow:hidden;
+    background:linear-gradient(120deg,#0c2226,#153a3d 55%,#0c2226);
+    border-top:1px solid var(--reef-line); border-bottom:1px solid var(--reef-line);
+  }
+  .stay .wrap{padding-block:clamp(56px,9vw,96px);}
+  .stay-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:780px){ .stay-grid{grid-template-columns:1fr;} }
+  .stay-card{
+    background:var(--abyss); border:1px solid var(--reef-line); border-radius:18px; padding:30px;
+  }
+  .stay-card .eyebrow{color:var(--chartreuse);}
+  .stay-card h3{font-family:var(--font-display); font-size:1.6rem; margin-top:8px;}
+  .stay-card p{color:var(--foam-dim); line-height:1.6; margin-top:10px;}
+  .stay-card .btn{margin-top:18px;}
+
+  /* ---------- social proof ---------- */
+  .proof .wrap{padding-block:clamp(48px,8vw,80px); display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:space-between;}
+  .stat-row{display:flex; gap:clamp(24px,5vw,56px); flex-wrap:wrap;}
+  .stat{}
+  .stat .n{font-family:var(--font-display); font-size:clamp(2rem,4vw,3rem); color:var(--chartreuse); line-height:1;}
+  .stat .l{font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:var(--foam-dim); margin-top:6px;}
+  .social-btns{display:flex; gap:10px;}
+  .icon-btn{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--reef-line);
+    display:flex; align-items:center; justify-content:center; color:var(--foam);
+    text-decoration:none; transition:border-color .15s, color .15s;
+  }
+  .icon-btn:hover{border-color:var(--lure); color:var(--lure);}
+
+  /* ---------- footer ---------- */
+  footer{background:#061013; border-top:1px solid var(--reef-line);}
+  footer .wrap{padding-block:clamp(48px,7vw,72px) 28px;}
+  .foot-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:32px;
+  }
+  @media (max-width:820px){ .foot-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .foot-grid{grid-template-columns:1fr;} }
+  .foot-brand .wordmark{text-align:left;}
+  .foot-brand p{color:var(--foam-dim); font-size:.85rem; margin-top:14px; max-width:32ch; line-height:1.6;}
+  .foot-col h5{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--foam-dim); margin:0 0 14px;}
+  .foot-col ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .foot-col a{text-decoration:none; font-size:.88rem; color:var(--foam); opacity:.85;}
+  .foot-col a:hover{opacity:1; color:var(--lure);}
+  .foot-bottom{
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    margin-top:44px; padding-top:20px; border-top:1px solid var(--reef-line);
+    font-size:.75rem; color:var(--foam-dim);
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navwrap">
+    <nav class="navside left">
+      <a class="navlink" href="#charters">Charters</a>
+      <a class="navlink" href="#rates">Rates</a>
+      <a class="navlink" href="#tackle">Tackle</a>
+    </nav>
+    <a class="wordmark" href="#top">SALT CARTEL<small>KZN South Coast</small></a>
+    <nav class="navside right">
+      <a class="navlink" href="#stay">Accommodation</a>
+      <a class="navlink" href="#contact">Contact</a>
+    </nav>
+    <button class="navmenu-btn" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="hero-rings" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <circle cx="400" cy="60" r="120" fill="none" stroke="#1c4247" stroke-width="1"/>
+      <circle cx="400" cy="60" r="210" fill="none" stroke="#1c4247" stroke-width="1"/>
+      <circle cx="400" cy="60" r="300" fill="none" stroke="#123c3f" stroke-width="1"/>
+    </svg>
+    <div class="hero-inner">
+      <p class="eyebrow">Guided Fishing &middot; Rock &middot; Surf &middot; River &middot; Boat</p>
+      <h1>HOOK.<br><span class="hit">DOMINATE.</span><br>REPEAT.</h1>
+      <p class="lede">Guided rock &amp; surf, river &amp; estuary and boat fishing charters on KwaZulu-Natal's South Coast &mdash; run by local knowledge, not luck.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://wa.me/27721398245" target="_blank" rel="noopener">Book a Charter</a>
+        <a class="btn btn-ghost" href="#tackle">Shop Tackle</a>
+      </div>
+    </div>
+  </section>
+
+  <svg class="tideline to-reef" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0,14 C150,28 350,0 600,10 C850,20 1050,2 1200,14 L1200,28 L0,28 Z"/></svg>
+
+  <!-- SCENE / INTRO -->
+  <section class="scene" id="charters">
+    <div class="scene-bg"></div>
+    <div class="wrap">
+      <div class="scene-grid">
+        <div>
+          <p class="eyebrow">Local knowledge, every trip</p>
+          <h2>READ THE WATER,<br>NOT THE FORECAST.</h2>
+          <p>Every charter starts with tide charts, wind logs and years on this exact stretch of coastline. Rock &amp; surf, river &amp; estuary, or off the boat &mdash; we put you where the fish already are, not where an app says to try.</p>
+          <p>Suitable for first-timers, families and seasoned anglers. Custom group and corporate packages available on request.</p>
+          <a class="btn btn-primary" href="#rates">View Charters &amp; Rates</a>
+        </div>
+        <div class="tide-card">
+          <p class="eyebrow" style="margin-bottom:14px;">On this coastline</p>
+          <dl>
+            <dt>Base</dt><dd>Umtentweni, KZN</dd>
+            <dt>Terrain</dt><dd>Rock &middot; Surf &middot; Estuary</dd>
+            <dt>Boat trips</dt><dd>2&ndash;4 anglers</dd>
+            <dt>Lessons</dt><dd>Beginner&ndash;Advanced</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <svg class="tideline to-abyss" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0,14 C150,2 350,26 600,16 C850,6 1050,24 1200,14 L1200,28 L0,28 Z"/></svg>
+
+  <!-- RATES -->
+  <section class="section" id="rates">
+    <div class="wrap">
+      <p class="eyebrow">Charters &amp; Rates</p>
+      <h2 style="font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); margin-top:10px;">PICK YOUR WATER.</h2>
+
+      <div class="rates-grid">
+        <div class="rate-card">
+          <span class="rate-tag">Land Based</span>
+          <h3>Rock &amp; Surf Guided Fishing</h3>
+          <div class="rate-rows">
+            <div class="rate-row"><span class="label">Half Day &middot; 4&ndash;5 hrs</span><span class="price num">R950 pp</span></div>
+            <div class="rate-row"><span class="label">Full Day &middot; 8&ndash;10 hrs</span><span class="price num">R1,500 pp</span></div>
+          </div>
+        </div>
+        <div class="rate-card">
+          <span class="rate-tag">Land Based</span>
+          <h3>River &amp; Estuary Fishing</h3>
+          <div class="rate-rows">
+            <div class="rate-row"><span class="label">Half Day</span><span class="price num">R850 pp</span></div>
+            <div class="rate-row"><span class="label">Full Day</span><span class="price num">R1,300 pp</span></div>
+          </div>
+        </div>
+        <div class="rate-card">
+          <span class="rate-tag">On The Water</span>
+          <h3>River Boat Fishing</h3>
+          <div class="rate-rows">
+            <div class="rate-row"><span class="label">2 people</span><span class="price num">R2,200</span></div>
+            <div class="rate-row"><span class="label">3 people</span><span class="price num">R2,900</span></div>
+            <div class="rate-row"><span class="label">4 people</span><span class="price num">R3,600</span></div>
+          </div>
+        </div>
+        <div class="rate-card">
+          <span class="rate-tag">Learn</span>
+          <h3>Rock &amp; Surf Fishing Lessons</h3>
+          <div class="rate-rows">
+            <div class="rate-row"><span class="label">Beginner &ndash; Advanced &middot; ~3 hrs</span><span class="price num">R750 pp</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="perks">
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Local knowledge &amp; professional guidance</div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Learn to read tides, wind &amp; water</div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Beginners, families &amp; experienced anglers</div>
+        <div class="perk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Custom group &amp; corporate packages</div>
+      </div>
+
+      <div class="rates-cta">
+        <p>Rates confirmed direct with Salt Cartel &mdash; call or WhatsApp to lock in a date.</p>
+        <a class="btn btn-primary" href="https://wa.me/27721398245" target="_blank" rel="noopener">WhatsApp 072 139 8245</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TACKLE -->
+  <section class="tackle" id="tackle">
+    <div class="wrap">
+      <div class="tackle-head">
+        <div>
+          <p class="eyebrow">High performance</p>
+          <h2>STICKBAITS &amp; POPPERS.</h2>
+        </div>
+        <a class="btn btn-ghost" href="https://saltcartel.square.site/" target="_blank" rel="noopener">Shop the Full Range &#8599;</a>
+      </div>
+      <div class="tackle-grid">
+        <div class="tackle-card tc-1"><h3>Stickbaits</h3><p>Built for rock &amp; surf distance and hookup rate.</p></div>
+        <div class="tackle-card tc-2"><h3>Poppers</h3><p>Topwater commotion for aggressive strikes.</p></div>
+        <div class="tackle-card tc-3"><h3>Apparel</h3><p>Salt Cartel gear for the boat, the rocks, the road.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES + STATEMENT -->
+  <section class="features">
+    <div class="wrap">
+      <div class="feat-grid">
+        <div class="feat">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+          <h4>Local Knowledge</h4>
+          <p>Years on this exact stretch of KZN coastline &mdash; not a generic charter script.</p>
+        </div>
+        <div class="feat">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 12l4-4M4 12l4 4"/></svg></div>
+          <h4>Full Kit Provided</h4>
+          <p>Rods, tackle and guidance included &mdash; just bring yourself.</p>
+        </div>
+        <div class="feat">
+          <div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-11a7 7 0 0 1 14 0c0 6.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+          <h4>Beginner &amp; Family Friendly</h4>
+          <p>Lessons and land-based trips built for first-timers and kids.</p>
+        </div>
+      </div>
+      <h2 class="statement">RIVER. REEF. <span>RUSH.</span></h2>
+    </div>
+  </section>
+
+  <!-- ACCOMMODATION CROSSOVER -->
+  <section class="stay" id="stay">
+    <div class="wrap">
+      <div class="stay-grid">
+        <div>
+          <p class="eyebrow" style="color:var(--chartreuse);">Make it a weekend</p>
+          <h2 style="font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); margin-top:10px;">FISH BY DAY.<br>STAY BY NIGHT.</h2>
+          <p style="color:var(--foam-dim); margin-top:14px; max-width:46ch; line-height:1.65;">Book your charter alongside a stay at Eagle's Roost B&amp;B in Umtentweni &mdash; five minutes from the water, ten minutes from the estuary mouth.</p>
+        </div>
+        <div class="stay-card">
+          <p class="eyebrow">Accommodation partner</p>
+          <h3>Eagle's Roost B&amp;B</h3>
+          <p>Umtentweni, KZN South Coast. The natural base for a Salt Cartel fishing weekend.</p>
+          <a class="btn btn-primary" href="https://eaglesroost.co.za" target="_blank" rel="noopener">View Eagle's Roost &#8599;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF -->
+  <section class="proof">
+    <div class="wrap">
+      <div class="stat-row">
+        <div class="stat"><div class="n num">602+</div><div class="l">TikTok Followers</div></div>
+        <div class="stat"><div class="n num">82K+</div><div class="l">Views, Top Catch</div></div>
+        <div class="stat"><div class="n num">3K+</div><div class="l">Likes on the Water</div></div>
+      </div>
+      <div class="social-btns">
+        <a class="icon-btn" href="https://www.tiktok.com/@salt.cartl" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82c-.9-.78-1.5-1.87-1.6-3.02h-3.06v13.6a3.1 3.1 0 1 1-2.19-2.96V10.3a6.1 6.1 0 1 0 5.25 6.04V9.68a8.4 8.4 0 0 0 4.6 1.36V8a5.5 5.5 0 0 1-3-2.18z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://www.facebook.com/saltcartel" target="_blank" rel="noopener" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.2h2.4l.4-2.8h-2.8V9.2c0-.8.3-1.4 1.5-1.4h1.4V5.3C15.9 5.2 15 5 14 5c-2.2 0-3.6 1.3-3.6 3.8v2.2H7.9v2.8h2.5V21h3.1z"/></svg>
+        </a>
+        <a class="icon-btn" href="https://www.instagram.com/salt_cartel_kzn/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <a class="wordmark" href="#top">SALT CARTEL</a>
+          <p>Guided rock, surf, river &amp; boat fishing on the KZN South Coast. Stickbaits, poppers &amp; apparel.</p>
+        </div>
+        <div class="foot-col">
+          <h5>Explore</h5>
+          <ul>
+            <li><a href="#charters">Charters</a></li>
+            <li><a href="#rates">Rates</a></li>
+            <li><a href="#tackle">Tackle</a></li>
+            <li><a href="#stay">Accommodation</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="https://wa.me/27721398245" target="_blank" rel="noopener">072 139 8245</a></li>
+            <li><a href="mailto:saltcartel@hotmail.com">saltcartel@hotmail.com</a></li>
+            <li><a href="https://saltcartel.square.site/" target="_blank" rel="noopener">Tackle Shop &#8599;</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Follow the Hunt</h5>
+          <ul>
+            <li><a href="https://www.tiktok.com/@salt.cartl" target="_blank" rel="noopener">TikTok &middot; @salt.cartl</a></li>
+            <li><a href="https://www.facebook.com/saltcartel" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="https://www.instagram.com/salt_cartel_kzn/" target="_blank" rel="noopener">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; 2026 Salt Cartel &middot; KZN South Coast</span>
+        <span>Concept build &mdash; pending brand assets, photography &amp; domain</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
