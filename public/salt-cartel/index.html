@@ -219,22 +219,28 @@
   }
   .statement span{color:transparent; -webkit-text-stroke:1.5px var(--foam-dim);}
 
-  /* ---------- accommodation crossover ---------- */
+  /* ---------- accommodation crossover / packages ---------- */
   .stay{
     position:relative; overflow:hidden;
     background:linear-gradient(120deg,#0c2226,#153a3d 55%,#0c2226);
     border-top:1px solid var(--reef-line); border-bottom:1px solid var(--reef-line);
   }
   .stay .wrap{padding-block:clamp(56px,9vw,96px);}
-  .stay-grid{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
-  @media (max-width:780px){ .stay-grid{grid-template-columns:1fr;} }
-  .stay-card{
-    background:var(--abyss); border:1px solid var(--reef-line); border-radius:18px; padding:30px;
+  .stay-intro{max-width:640px;}
+  .stay-intro p{color:var(--foam-dim); margin-top:14px; line-height:1.65;}
+  .pkg-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:40px;}
+  @media (max-width:900px){ .pkg-grid{grid-template-columns:1fr;} }
+  .pkg-card{
+    background:var(--abyss); border:1px solid var(--reef-line); border-radius:18px;
+    padding:28px; display:flex; flex-direction:column; gap:14px;
   }
-  .stay-card .eyebrow{color:var(--chartreuse);}
-  .stay-card h3{font-family:var(--font-display); font-size:1.6rem; margin-top:8px;}
-  .stay-card p{color:var(--foam-dim); line-height:1.6; margin-top:10px;}
-  .stay-card .btn{margin-top:18px;}
+  .pkg-card h3{font-family:var(--font-display); font-size:1.35rem; color:var(--foam); line-height:1.1;}
+  .pkg-card ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; flex:1;}
+  .pkg-card li{display:flex; gap:8px; font-size:.85rem; color:var(--foam-dim); line-height:1.4;}
+  .pkg-card li svg{flex:none; width:15px; height:15px; margin-top:2px; color:var(--tide);}
+  .pkg-card .price{font-weight:800; color:var(--chartreuse); font-size:.9rem;}
+  .pkg-cta{display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-top:36px;}
+  .pkg-cta p{color:var(--foam-dim); margin:0; max-width:40ch;}
 
   /* ---------- social proof ---------- */
   .proof .wrap{padding-block:clamp(48px,8vw,80px); display:flex; flex-wrap:wrap; gap:40px; align-items:center; justify-content:space-between;}
@@ -249,6 +255,28 @@
     text-decoration:none; transition:border-color .15s, color .15s;
   }
   .icon-btn:hover{border-color:var(--lure); color:var(--lure);}
+
+  /* ---------- enquiry form ---------- */
+  .enquire{background:var(--reef); border-top:1px solid var(--reef-line); border-bottom:1px solid var(--reef-line);}
+  .enquire .wrap{padding-block:clamp(56px,9vw,96px);}
+  .enquire-grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:48px; align-items:start;}
+  @media (max-width:820px){ .enquire-grid{grid-template-columns:1fr;} }
+  .enquire-intro p{color:var(--foam-dim); margin-top:14px; max-width:40ch; line-height:1.65;}
+  .enquire-intro .btn{margin-top:22px;}
+  .form-card{
+    background:var(--abyss); border:1px solid var(--reef-line); border-radius:18px; padding:30px;
+  }
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:16px;}
+  .field label{font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--foam-dim);}
+  .field input, .field select, .field textarea{
+    background:var(--reef); border:1px solid var(--reef-line); border-radius:10px;
+    padding:12px 14px; color:var(--foam); font-family:var(--font-body); font-size:.9rem;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{outline:2px solid var(--tide); outline-offset:1px;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:480px){ .field-row{grid-template-columns:1fr;} }
+  .form-card .btn{width:100%; justify-content:center; border:0; cursor:pointer; margin-top:4px;}
+  .form-note{font-size:.78rem; color:var(--foam-dim); margin-top:12px;}
 
   /* ---------- footer ---------- */
   footer{background:#061013; border-top:1px solid var(--reef-line);}
@@ -273,6 +301,7 @@
 </head>
 <body>
 
+
 <header class="site">
   <div class="navwrap">
     <nav class="navside left">
@@ -283,6 +312,7 @@
     <a class="wordmark" href="#top">SALT CARTEL<small>KZN South Coast</small></a>
     <nav class="navside right">
       <a class="navlink" href="#stay">Accommodation</a>
+      <a class="navlink" href="#enquire">Enquire</a>
       <a class="navlink" href="#contact">Contact</a>
     </nav>
     <button class="navmenu-btn" aria-label="Menu">&#9776;</button>
@@ -435,21 +465,48 @@
     </div>
   </section>
 
-  <!-- ACCOMMODATION CROSSOVER -->
+  <!-- ACCOMMODATION + PACKAGES -->
   <section class="stay" id="stay">
     <div class="wrap">
-      <div class="stay-grid">
-        <div>
-          <p class="eyebrow" style="color:var(--chartreuse);">Make it a weekend</p>
-          <h2 style="font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); margin-top:10px;">FISH BY DAY.<br>STAY BY NIGHT.</h2>
-          <p style="color:var(--foam-dim); margin-top:14px; max-width:46ch; line-height:1.65;">Book your charter alongside a stay at Eagle's Roost B&amp;B in Umtentweni &mdash; five minutes from the water, ten minutes from the estuary mouth.</p>
+      <div class="stay-intro">
+        <p class="eyebrow" style="color:var(--chartreuse);">Salt Cartel &times; Eagle's Roost</p>
+        <h2 style="font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); margin-top:10px;">FISH BY DAY.<br>STAY BY NIGHT.</h2>
+        <p>Charter and accommodation, bundled. Eagle's Roost B&amp;B in Umtentweni is five minutes from the water &mdash; built for anglers travelling in from outside the area.</p>
+      </div>
+
+      <div class="pkg-grid">
+        <div class="pkg-card">
+          <h3>Weekend Angler</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>2 nights at Eagle's Roost B&amp;B</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>1 half-day guided charter (rock &amp; surf or river)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Braai night on arrival</li>
+          </ul>
+          <span class="price">From your charter rate + stay &mdash; ask for the bundle price</span>
         </div>
-        <div class="stay-card">
-          <p class="eyebrow">Accommodation partner</p>
-          <h3>Eagle's Roost B&amp;B</h3>
-          <p>Umtentweni, KZN South Coast. The natural base for a Salt Cartel fishing weekend.</p>
-          <a class="btn btn-primary" href="https://eaglesroost.co.za" target="_blank" rel="noopener">View Eagle's Roost &#8599;</a>
+        <div class="pkg-card">
+          <h3>Family &amp; First-Timers Getaway</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>2&ndash;3 nights at Eagle's Roost B&amp;B</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Fishing lesson + land-based trip, beginner-friendly</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Meals/braai included</li>
+          </ul>
+          <span class="price">Custom pricing &mdash; contact us</span>
         </div>
+        <div class="pkg-card">
+          <h3>Group &amp; Corporate Escape</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Multi-room stay at Eagle's Roost B&amp;B</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Boat + land-based charter options for the group</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Group braai / meals experience</li>
+          </ul>
+          <span class="price">Custom group pricing &mdash; contact us</span>
+        </div>
+      </div>
+
+      <div class="pkg-cta">
+        <p>Every package is built around your dates and group size &mdash; enquire direct with Eagle's Roost and we'll coordinate the fishing side.</p>
+        <a class="btn btn-primary" href="https://wa.me/27725005179" target="_blank" rel="noopener">WhatsApp Eagle's Roost</a>
       </div>
     </div>
   </section>
@@ -476,6 +533,53 @@
     </div>
   </section>
 
+  <!-- ENQUIRY FORM -->
+  <section class="enquire" id="enquire">
+    <div class="wrap">
+      <div class="enquire-grid">
+        <div class="enquire-intro">
+          <p class="eyebrow">Book a trip</p>
+          <h2 style="font-family:var(--font-display); font-size:clamp(2rem,5vw,3rem); margin-top:10px;">TELL US<br>WHAT YOU'RE AFTER.</h2>
+          <p>Fill in the trip you want and we'll reply on WhatsApp to lock in a date. Prefer to talk first? Call or WhatsApp 072 139 8245 directly.</p>
+          <a class="btn btn-ghost" href="https://wa.me/27721398245" target="_blank" rel="noopener">WhatsApp Direct Instead</a>
+        </div>
+        <form class="form-card" id="enquiry-form">
+          <div class="field">
+            <label for="eq-name">Name</label>
+            <input id="eq-name" name="name" type="text" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="eq-trip">Trip Type</label>
+              <select id="eq-trip" name="trip" required>
+                <option value="">Select&hellip;</option>
+                <option>Rock &amp; Surf Guided Fishing</option>
+                <option>River &amp; Estuary Fishing</option>
+                <option>River Boat Fishing</option>
+                <option>Rock &amp; Surf Fishing Lessons</option>
+                <option>Salt Cartel + Eagle's Roost Package</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="eq-people">Group Size</label>
+              <input id="eq-people" name="people" type="number" min="1" value="1" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="eq-date">Preferred Date</label>
+            <input id="eq-date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="eq-message">Anything else?</label>
+            <textarea id="eq-message" name="message" rows="3" placeholder="Beginners in the group, corporate booking, package interest, etc."></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Send Enquiry via WhatsApp</button>
+          <p class="form-note">Opens WhatsApp with your enquiry pre-filled &mdash; nothing is sent until you hit send there.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer id="contact">
     <div class="wrap">
@@ -491,6 +595,7 @@
             <li><a href="#rates">Rates</a></li>
             <li><a href="#tackle">Tackle</a></li>
             <li><a href="#stay">Accommodation</a></li>
+            <li><a href="#enquire">Enquire</a></li>
           </ul>
         </div>
         <div class="foot-col">
@@ -518,5 +623,25 @@
   </footer>
 
 </main>
+
+<script>
+  document.getElementById('enquiry-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = new FormData(e.target);
+    var trip = f.get('trip');
+    var isPackage = trip.indexOf("Eagle's Roost") !== -1;
+    var lines = [
+      (isPackage ? 'Eagle\'s Roost package enquiry (via Salt Cartel)' : 'Salt Cartel enquiry'),
+      'Name: ' + f.get('name'),
+      'Trip: ' + trip,
+      'Group size: ' + f.get('people'),
+      'Preferred date: ' + f.get('date'),
+      f.get('message') ? 'Notes: ' + f.get('message') : null
+    ].filter(Boolean);
+    var number = isPackage ? '27725005179' : '27721398245';
+    window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n')), '_blank', 'noopener');
+  });
+</script>
+
 </body>
 </html>
