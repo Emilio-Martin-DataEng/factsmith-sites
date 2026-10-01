@@ -70,6 +70,8 @@
   .nav ul a{text-decoration:none; font-weight:700; font-size:.9rem;}
   .nav ul a:hover{color:var(--coral-dk);}
   .nav .btn{padding:9px 16px; font-size:.85rem;}
+  .lang{font:inherit; font-weight:800; font-size:.8rem; letter-spacing:.08em; min-width:44px; height:40px; border-radius:999px; border:2px solid var(--ink); background:transparent; color:var(--ink); cursor:pointer;}
+  .lang:hover{background:var(--ink); color:var(--sand);}
   @media (max-width:760px){ .nav ul{display:none;} }
 
   /* hero */
@@ -202,7 +204,10 @@
       <li><a href="#area">Map</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a class="btn btn-coral" href="#book">Book direct</a>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="lang" id="lang" type="button" aria-label="Skakel oor na Afrikaans">AF</button>
+      <a class="btn btn-coral" href="#book">Book direct</a>
+    </div>
   </nav>
 </header>
 
@@ -529,5 +534,6 @@
     else location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Booking request: " + f.get('unit')) + "&body=" + encodeURIComponent(body);
   });
 </script>
+<script src="af.js"></script>
 </body>
 </html>
