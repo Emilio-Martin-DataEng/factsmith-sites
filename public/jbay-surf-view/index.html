@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f2d36">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://sites.factsmith.co.za/jbay-surf-view/">
+<meta name="description" content="Three self-catering surf flats 150 m from the beach in Jeffreys Bay, five minutes' walk to Supertubes. Hosted by Dr Kurt, surfer and sports chiropractor. Concept build by FactSmith Sites.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JBay Surf View">
+<meta property="og:description" content="Surf, recover, repeat. Three self-catering flats above the Jeffreys Bay point breaks.">
+<meta property="og:image" content="https://sites.factsmith.co.za/jbay-surf-view/images/hero-deck.jpg">
+<title>JBay Surf View</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --ocean:#0f2d36;
+    --ocean-2:#16404b;
+    --sand:#f5efe4;
+    --sand-2:#ebe1cf;
+    --ink:#1b2a2f;
+    --muted:#5b6a6e;
+    --coral:#e2683f;
+    --coral-dk:#c4532d;
+    --kelp:#2f6f62;
+    --line:#d9cdb8;
+    --wa:#1fa855;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--sand); color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  h1,h2,h3{font-family:var(--font-display); font-weight:700; line-height:1.1; margin:0; text-wrap:balance;}
+  h2{font-size:clamp(1.9rem,4.5vw,2.8rem);}
+  h3{font-size:1.4rem;}
+  p{margin:0 0 1em;}
+  .wrap{max-width:1120px; margin-inline:auto; padding-inline:16px;}
+  .section{padding-block:clamp(56px,9vw,104px);}
+  .eyebrow{font-weight:800; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--coral-dk); margin-bottom:12px;}
+  .lede{font-size:1.1rem; color:var(--muted); max-width:62ch;}
+  .dark{background:var(--ocean); color:var(--sand);}
+  .dark .lede{color:#b8c9cc;}
+  .dark .eyebrow{color:#f19a77;}
+
+  /* buttons */
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:13px 20px; border-radius:999px; font-weight:800; font-size:.95rem; text-decoration:none; border:2px solid transparent; cursor:pointer; font-family:inherit;}
+  .btn-wa{background:var(--wa); color:#fff;}
+  .btn-wa:hover{filter:brightness(1.07);}
+  .btn-coral{background:var(--coral); color:#fff;}
+  .btn-coral:hover{background:var(--coral-dk);}
+  .btn-ghost{border-color:currentColor; background:transparent;}
+  .btn svg{width:18px; height:18px; fill:currentColor;}
+
+  /* concept banner */
+  .concept{background:#fff3c4; color:#5a4700; font-size:.82rem; text-align:center; padding:8px 16px;}
+
+  /* nav */
+  header.site{position:sticky; top:0; z-index:40; background:rgba(245,239,228,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:12px;}
+  .brand{font-family:var(--font-display); font-weight:700; font-size:1.35rem; text-decoration:none; line-height:1;}
+  .brand small{display:block; font-family:var(--font-body); font-size:.6rem; font-weight:800; letter-spacing:.24em; text-transform:uppercase; color:var(--kelp); margin-top:4px;}
+  .nav ul{display:flex; gap:24px; list-style:none; margin:0; padding:0;}
+  .nav ul a{text-decoration:none; font-weight:700; font-size:.9rem;}
+  .nav ul a:hover{color:var(--coral-dk);}
+  .nav .btn{padding:9px 16px; font-size:.85rem;}
+  @media (max-width:760px){ .nav ul{display:none;} }
+
+  /* hero */
+  .hero{position:relative; min-height:min(88vh,760px); display:flex; align-items:flex-end; color:#fff; background:var(--ocean) url('images/hero-deck.jpg') center/cover;}
+  .hero::before{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(15,45,54,.1) 0%,rgba(15,45,54,.55) 40%,rgba(15,45,54,.92) 100%);}
+  .hero .eyebrow{color:#ffd2bf; text-shadow:0 1px 6px rgba(0,0,0,.5);}
+  section[id]{scroll-margin-top:64px;}
+  .hero .wrap{position:relative; padding-block:56px;}
+  .hero h1{font-size:clamp(2.4rem,7vw,4.6rem); max-width:16ch;}
+  .hero p{font-size:1.15rem; max-width:52ch; margin-top:16px; color:#e8eef0;}
+  .hero .ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;}
+  .facts{display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:32px; font-weight:700; font-size:.92rem;}
+  .facts span::before{content:"~ "; color:#f19a77;}
+
+  /* reviews strip */
+  .reviews{display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .review{background:#fff; border:1px solid var(--line); border-radius:16px; padding:22px;}
+  .review p{font-family:var(--font-display); font-size:1.08rem; line-height:1.45;}
+  .review cite{font-style:normal; font-weight:700; font-size:.85rem; color:var(--muted);}
+  .scores{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;}
+  .score{border:1px dashed var(--coral); border-radius:12px; padding:10px 16px; font-size:.85rem; color:var(--muted);}
+  .score b{color:var(--ink);}
+
+  /* units */
+  .units{display:grid; gap:28px; margin-top:40px;}
+  .unit{display:grid; grid-template-columns:1.15fr 1fr; background:#fff; border:1px solid var(--line); border-radius:20px; overflow:hidden;}
+  .unit:nth-child(even){grid-template-columns:1fr 1.15fr;}
+  .unit:nth-child(even) .gallery{order:2;}
+  @media (max-width:860px){ .unit,.unit:nth-child(even){grid-template-columns:1fr;} .unit:nth-child(even) .gallery{order:0;} }
+  .gallery{display:grid; grid-template-columns:2fr 1fr; grid-template-rows:1fr 1fr; gap:4px; min-height:320px;}
+  .gallery img{width:100%; height:100%; object-fit:cover;}
+  .gallery img:first-child{grid-row:span 2;}
+  .unit-body{padding:28px;}
+  .unit-meta{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 16px;}
+  .chip{background:var(--sand); border-radius:999px; padding:4px 12px; font-size:.8rem; font-weight:700;}
+  .price{font-family:var(--font-display); font-size:1.6rem;}
+  .price small{font-family:var(--font-body); font-size:.8rem; color:var(--muted); font-weight:600;}
+  .unit ul{padding-left:18px; margin:0 0 18px; color:var(--muted);}
+  .unit .ctas{display:flex; flex-wrap:wrap; gap:10px;}
+  details.cal{margin-top:16px; border-top:1px solid var(--line); padding-top:12px;}
+  details.cal summary{cursor:pointer; font-weight:800; color:var(--kelp);}
+  details.cal iframe{width:100%; height:420px; border:0; margin-top:12px; border-radius:10px;}
+
+  /* kurt */
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;}
+  @media (max-width:860px){ .split{grid-template-columns:1fr;} }
+  .split img{border-radius:20px; aspect-ratio:4/3; object-fit:cover; width:100%;}
+  .offers{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); margin:24px 0;}
+  .offer{background:var(--ocean-2); border-radius:14px; padding:18px;}
+  .offer h3{font-size:1.1rem; margin-bottom:6px;}
+  .offer p{font-size:.92rem; color:#b8c9cc; margin:0;}
+
+  /* surf guide */
+  .breaks{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:32px;}
+  .break{border-left:4px solid var(--coral); background:#fff; padding:16px 18px; border-radius:0 12px 12px 0;}
+  .break b{display:block; font-family:var(--font-display); font-size:1.15rem;}
+  .break span{font-size:.9rem; color:var(--muted);}
+
+  /* add-ons */
+  table.addons{width:100%; border-collapse:collapse; margin-top:24px; background:#fff; border-radius:14px; overflow:hidden;}
+  .addons td{padding:14px 18px; border-bottom:1px solid var(--line);}
+  .addons td:last-child{text-align:right; font-weight:800; white-space:nowrap;}
+
+  /* faq */
+  .faq{max-width:780px; margin-top:28px;}
+  .faq details{border-bottom:1px solid var(--line); padding:16px 0;}
+  .faq summary{cursor:pointer; font-weight:800; font-size:1.05rem;}
+  .faq p{margin:10px 0 0; color:var(--muted);}
+  .tbc{background:#fff3c4; color:#5a4700; border-radius:4px; padding:0 5px; font-size:.85em; font-weight:700;}
+
+  /* book */
+  .book{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media (max-width:860px){ .book{grid-template-columns:1fr;} }
+  form{display:grid; gap:12px;}
+  label{font-weight:700; font-size:.85rem;}
+  input,select,textarea{width:100%; font:inherit; padding:12px 14px; border-radius:10px; border:1px solid #3a5d66; background:var(--ocean-2); color:var(--sand);}
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .nap{font-style:normal; line-height:1.9;}
+  .nap a{color:#f19a77;}
+
+  footer{background:#0a2027; color:#8fa5aa; font-size:.85rem; padding-block:28px;}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;}
+
+  .float-wa{position:fixed; right:16px; bottom:16px; z-index:50; box-shadow:0 8px 24px rgba(0,0,0,.25);}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"LodgingBusiness",
+  "name":"JBay Surf View",
+  "description":"Three self-catering surf flats (Tubes, Point, Salads) 150 m from the beach in Jeffreys Bay, a five-minute walk along the beach to Supertubes. Hosted by Dr Kurt Mariano, surfer and sports chiropractor.",
+  "url":"https://www.jbaysurfview.com/",
+  "email":"jbaysurfviewrentals@gmail.com",
+  "image":"https://sites.factsmith.co.za/jbay-surf-view/images/hero-deck.jpg",
+  "address":{"@type":"PostalAddress","addressLocality":"Jeffreys Bay","addressRegion":"Eastern Cape","addressCountry":"ZA"},
+  "priceRange":"R600 - R1,800 per night",
+  "amenityFeature":[
+    {"@type":"LocationFeatureSpecification","name":"Sea view","value":true},
+    {"@type":"LocationFeatureSpecification","name":"Braai area","value":true},
+    {"@type":"LocationFeatureSpecification","name":"Self-catering kitchen","value":true}
+  ]
+}
+</script>
+</head>
+<body>
+
+<div class="concept">Concept preview by FactSmith Sites for Dr Kurt. Not the live site. Photos are from jbaysurfview.com; items marked <span class="tbc">TBC</span> need Kurt's confirmation.</div>
+
+<header class="site">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="#top">JBay Surf View<small>Jeffreys Bay &middot; surf flats</small></a>
+    <ul>
+      <li><a href="#stay">Stay</a></li>
+      <li><a href="#kurt">Dr Kurt</a></li>
+      <li><a href="#surf">Surf</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-coral" href="#book">Book direct</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Self-catering surf flats &middot; Jeffreys Bay</div>
+    <h1>Wake up above the best right-hander in the world.</h1>
+    <p>Three private flats, 150 m from the water and a five-minute beach walk to Supertubes. Your host is a local surfer and sports chiropractor who'll show you where to paddle out and fix your back afterwards.</p>
+    <div class="ctas">
+      <a class="btn btn-wa" data-wa="Hi Kurt, I'd like to check dates at JBay Surf View." href="#book"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1Z"/></svg>WhatsApp Kurt</a>
+      <a class="btn btn-ghost" href="#stay">See the flats</a>
+    </div>
+    <div class="facts"><span>150 m to the beach</span><span>5 min walk to Supertubes</span><span>Sleeps 1 to 12 across 3 flats</span><span>Host on site</span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">What guests say</div>
+    <div class="reviews">
+      <figure class="review" style="margin:0"><p>"The flat is fantastic, just a few minutes walking from the beach and with an unforgettable view."</p><cite>Vittoria Lamonaca</cite></figure>
+      <figure class="review" style="margin:0"><p>"Kurt welcomed us with open arms despite it being 9pm at night! My friends had an awesome time jamming with him at the garage studio."</p><cite>Faridah Saad</cite></figure>
+      <figure class="review" style="margin:0"><p>"Great apartment with lots of space, a nice terrace and superb view of all the surfing spots. Kurt is a great host too."</p><cite>Nicole Van den Adel</cite></figure>
+    </div>
+    <div class="scores">
+      <div class="score"><b>Airbnb</b> rating <span class="tbc">TBC</span></div>
+      <div class="score"><b>Booking.com</b> score <span class="tbc">TBC</span></div>
+      <div class="score"><b>Google</b> rating <span class="tbc">TBC</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="stay" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Choose your spot</div>
+    <h2>Three flats, each named after a break.</h2>
+    <p class="lede">Every flat has its own entrance and security. Kurt lives upstairs, so help is always one knock away. Check the live calendar, then WhatsApp or request to book in one step.</p>
+
+    <div class="units">
+
+      <article class="unit" id="tubes">
+        <div class="gallery">
+          <img src="images/tubes-lounge.jpg" alt="Tubes lounge opening onto the deck, with Jeffreys Bay and the surf beyond" loading="lazy">
+          <img src="images/tubes-bedroom.jpg" alt="Tubes en-suite bedroom with white linen" loading="lazy">
+          <img src="images/tubes-shower.jpg" alt="Tubes sandstone shower with a bay view window" loading="lazy">
+        </div>
+        <div class="unit-body">
+          <h3>Tubes &middot; the luxury front flat</h3>
+          <div class="unit-meta"><span class="chip">Sleeps 4</span><span class="chip">2 en-suite bedrooms</span><span class="chip">Sea-view deck</span></div>
+          <div class="price">from R1,200 <small>per night &middot; to R1,800 in season <span class="tbc">TBC</span></small></div>
+          <ul>
+            <li>Surf views from the kitchen, lounge, bedroom and shower</li>
+            <li>Private deck and garden braai</li>
+            <li>Smart TV, full kitchen, Wi-Fi</li>
+          </ul>
+          <div class="ctas">
+            <a class="btn btn-wa" data-wa="Hi Kurt, are these dates open in Tubes?" href="#book">WhatsApp about Tubes</a>
+            <a class="btn btn-ghost" href="#book" data-unit="Tubes">Request to book</a>
+          </div>
+          <details class="cal"><summary>Check Tubes availability</summary><iframe title="Tubes availability calendar" loading="lazy" data-src="https://calendar.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;showTitle=0&amp;wkst=2&amp;hl=en_GB&amp;bgcolor=%23FFFFFF&amp;src=livethelife.eu_i154843u58f8ar91oom8hg2mvo%40group.calendar.google.com&amp;color=%231B887A&amp;ctz=Africa%2FJohannesburg"></iframe></details>
+        </div>
+      </article>
+
+      <article class="unit" id="point">
+        <div class="gallery">
+          <img src="images/point.jpg" alt="Point flatlet with double bed and kitchenette" loading="lazy">
+          <img src="images/point-bed.jpg" alt="Point double bedroom with sea painting" loading="lazy">
+          <img src="images/point-kitchen.jpg" alt="Point kitchenette" loading="lazy">
+        </div>
+        <div class="unit-body">
+          <h3>Point &middot; the modern flatlet</h3>
+          <div class="unit-meta"><span class="chip">Sleeps 1 to 2</span><span class="chip">Double bedroom</span><span class="chip">Outdoor fire area</span></div>
+          <div class="price">from R600 <small>per night &middot; to R1,000 in season <span class="tbc">TBC</span></small></div>
+          <ul>
+            <li>Built for a solo surfer or a couple</li>
+            <li>Kitchenette, Wi-Fi, outdoor fire area</li>
+            <li>Same 150 m walk to the water</li>
+          </ul>
+          <div class="ctas">
+            <a class="btn btn-wa" data-wa="Hi Kurt, are these dates open in Point?" href="#book">WhatsApp about Point</a>
+            <a class="btn btn-ghost" href="#book" data-unit="Point">Request to book</a>
+          </div>
+          <details class="cal"><summary>Check Point availability</summary><iframe title="Point availability calendar" loading="lazy" data-src="https://calendar.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;showTitle=0&amp;wkst=2&amp;hl=en_GB&amp;bgcolor=%23FFFFFF&amp;src=livethelife.eu_o79s93ri0j74dt5sm4p7pbjk9s%40group.calendar.google.com&amp;color=%23125A12&amp;ctz=Africa%2FJohannesburg"></iframe></details>
+        </div>
+      </article>
+
+      <article class="unit" id="salads">
+        <div class="gallery">
+          <img src="images/salads-patio.jpg" alt="Salads private patio with built-in braai" loading="lazy">
+          <img src="images/salads-bunks.jpg" alt="Salads bunk room for kids" loading="lazy">
+          <img src="images/salads-bedroom.jpg" alt="Salads double bedroom" loading="lazy">
+        </div>
+        <div class="unit-body">
+          <h3>Salads &middot; the family flat</h3>
+          <div class="unit-meta"><span class="chip">Sleeps up to 6</span><span class="chip">Double + bunk room</span><span class="chip">Verandah</span></div>
+          <div class="price">from R750 <small>per night &middot; to R1,350 &middot; long-stay rates <span class="tbc">TBC</span></small></div>
+          <ul>
+            <li>Double room plus a second room with a double and bunks</li>
+            <li>Verandah and private braai patio</li>
+            <li>Sandstone shower, full kitchen</li>
+          </ul>
+          <div class="ctas">
+            <a class="btn btn-wa" data-wa="Hi Kurt, are these dates open in Salads?" href="#book">WhatsApp about Salads</a>
+            <a class="btn btn-ghost" href="#book" data-unit="Salads">Request to book</a>
+          </div>
+          <details class="cal"><summary>Check Salads availability</summary><iframe title="Salads availability calendar" loading="lazy" data-src="https://calendar.google.com/calendar/embed?showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;showTitle=0&amp;wkst=2&amp;hl=en_GB&amp;bgcolor=%23FFFFFF&amp;src=livethelife.eu_7jnl0j7eln86siccf84c66k0ds%40group.calendar.google.com&amp;color=%235229A3&amp;ctz=Africa%2FJohannesburg"></iframe></details>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="kurt">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow">Surf, recover, repeat</div>
+      <h2>Your host is a surfer and a sports chiropractor.</h2>
+      <p class="lede" style="margin-top:16px">Dr Kurt came from Hawaii about 20 years ago for the waves and stayed. He specialises in chiropractic sports orthopaedics: pain management and rehab. No other stay in JBay puts that in the same house as your surfboard.</p>
+      <div class="offers">
+        <div class="offer"><h3>In-house consult</h3><p>Back, neck or shoulder after a long paddle? Book a session between surfs. <span class="tbc">TBC</span></p></div>
+        <div class="offer"><h3>Massage</h3><p>Arranged during your stay. <span class="tbc">TBC</span></p></div>
+        <div class="offer"><h3>Rehab programme</h3><p>A plan that keeps you surfing for the whole trip. <span class="tbc">TBC</span></p></div>
+        <div class="offer"><h3>Braai jam</h3><p>Kurt plays guitar and sings. Join him in the studio or round the fire.</p></div>
+      </div>
+      <a class="btn btn-wa" data-wa="Hi Kurt, I'd like to book a consult during my stay." href="#book">Ask about a consult</a>
+    </div>
+    <img src="images/braai.jpg" alt="Garden braai with a view over Jeffreys Bay" loading="lazy">
+  </div>
+</section>
+
+<section class="section" id="surf">
+  <div class="wrap split">
+    <img src="images/wave.jpg" alt="A long right-hander peeling along the Jeffreys Bay point, seen from JBay Surf View" loading="lazy">
+    <div>
+      <div class="eyebrow">Surf guide</div>
+      <h2>Pick your wave from the garden.</h2>
+      <p class="lede" style="margin-top:16px">You can see most of the JBay breaks from the house. Kurt will show you around the lineup and set you up with lessons and boards.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="breaks">
+      <div class="break"><b>Supertubes</b><span>5 min walk along the beach. The famous one: fast, hollow, best on a winter swell.</span></div>
+      <div class="break"><b>Salad Bowl</b><span>Walking distance <span class="tbc">TBC</span>. Friendlier section; the flat Salads is named after it.</span></div>
+      <div class="break"><b>The Point</b><span>Walking distance <span class="tbc">TBC</span>. Softer wave, good for improvers and longboards.</span></div>
+      <div class="break"><b>Best season</b><span>Big swells roll in from about May to September. Summer brings smaller waves and warmer water.</span></div>
+    </div>
+
+    <h3 style="margin-top:56px">Add-ons</h3>
+    <table class="addons">
+      <tr><td>Airport taxi, Port Elizabeth (Gqeberha) to JBay</td><td>R800 <span class="tbc">TBC</span></td></tr>
+      <tr><td>Private surf lesson, 1.5 hours</td><td>R450 <span class="tbc">TBC</span></td></tr>
+      <tr><td>Surfboard hire</td><td>from R100/day <span class="tbc">TBC</span></td></tr>
+      <tr><td>Beach bike hire</td><td>R250/day <span class="tbc">TBC</span></td></tr>
+      <tr><td>Tours, including Baviaanskloof</td><td>on request</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Staying at JBay Surf View</div>
+    <h2>Questions guests ask</h2>
+    <div class="faq">
+      <details open><summary>How far is JBay Surf View from Supertubes?</summary><p>About 150 m down to the beach, then roughly five minutes' walk along the sand to Supertubes.</p></details>
+      <details><summary>Is it self-catering?</summary><p>Yes. Each of the three flats has its own kitchen or kitchenette, private entrance and braai or fire area.</p></details>
+      <details><summary>Which flat suits a family?</summary><p>Salads sleeps up to 6, with a double room plus a room with a double bed and bunks. Tubes sleeps 4 in two en-suite bedrooms.</p></details>
+      <details><summary>What are the check-in and check-out times?</summary><p>Check-in from <span class="tbc">TBC</span>, check-out by <span class="tbc">TBC</span>. Kurt checks you in personally.</p></details>
+      <details><summary>Is there a minimum stay?</summary><p><span class="tbc">TBC</span> Long-stay rates are available on Salads.</p></details>
+      <details><summary>Can I get a chiropractic treatment during my stay?</summary><p>Yes. Dr Kurt is a sports chiropractor and offers in-house consults, plus arranged massage and rehab programmes.</p></details>
+      <details><summary>How do I book?</summary><p>Check the calendar on the flat you want, then WhatsApp Kurt or send a booking request below. A deposit secures your dates. <span class="tbc">TBC</span></p></details>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="book">
+  <div class="wrap book">
+    <div>
+      <div class="eyebrow">Book direct</div>
+      <h2>Book with Kurt, not a booking site.</h2>
+      <p class="lede" style="margin-top:16px">Booking direct means the best rate and a host who already knows when you're arriving. Send your dates and he'll confirm and send a deposit link.</p>
+      <address class="nap">
+        <b>JBay Surf View</b><br>
+        <span class="tbc">Street address TBC</span>, Jeffreys Bay, Eastern Cape<br>
+        WhatsApp / phone: <span class="tbc">TBC</span><br>
+        Email: <a href="mailto:jbaysurfviewrentals@gmail.com">jbaysurfviewrentals@gmail.com</a>
+      </address>
+    </div>
+    <form id="bookform">
+      <div><label for="f-unit">Flat</label>
+        <select id="f-unit" name="unit"><option>Tubes (sleeps 4)</option><option>Point (sleeps 1 to 2)</option><option>Salads (sleeps 6)</option><option>Not sure, advise me</option></select></div>
+      <div class="row2">
+        <div><label for="f-in">Arrive</label><input id="f-in" name="arrive" type="date" required></div>
+        <div><label for="f-out">Leave</label><input id="f-out" name="leave" type="date" required></div>
+      </div>
+      <div class="row2">
+        <div><label for="f-guests">Guests</label><input id="f-guests" name="guests" type="number" min="1" max="12" value="2"></div>
+        <div><label for="f-name">Your name</label><input id="f-name" name="name" required></div>
+      </div>
+      <div><label for="f-extra">Add-ons or questions</label><textarea id="f-extra" name="extra" rows="3" placeholder="Surf lesson, board hire, airport taxi, a chiro consult..."></textarea></div>
+      <button class="btn btn-coral" type="submit">Send booking request</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; JBay Surf View &middot; jbaysurfview.com &middot; jbaysurfview.co.za</span>
+    <span>Concept by <a href="https://sites.factsmith.co.za/">FactSmith Sites</a></span>
+  </div>
+</footer>
+
+<a class="btn btn-wa float-wa" data-wa="Hi Kurt, I'd like to check dates at JBay Surf View." href="#book" aria-label="WhatsApp Kurt"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>WhatsApp</a>
+
+<script>
+  // Kurt's WhatsApp number is not published yet. Set it (e.g. "2782...") and every
+  // WhatsApp button goes live; until then they fall back to the booking form.
+  const WHATSAPP = "";
+  const EMAIL = "jbaysurfviewrentals@gmail.com";
+
+  if (WHATSAPP) document.querySelectorAll('[data-wa]').forEach(a => {
+    a.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(a.dataset.wa);
+  });
+
+  // Calendars load only when opened, so the page stays fast.
+  document.querySelectorAll('details.cal').forEach(d => d.addEventListener('toggle', () => {
+    const f = d.querySelector('iframe');
+    if (d.open && !f.src) f.src = f.dataset.src;
+  }));
+
+  // "Request to book" preselects the flat.
+  document.querySelectorAll('[data-unit]').forEach(a => a.addEventListener('click', () => {
+    const sel = document.getElementById('f-unit');
+    sel.selectedIndex = [...sel.options].findIndex(o => o.text.startsWith(a.dataset.unit));
+  }));
+
+  // ponytail: mailto hand-off, swap for Formspree or WhatsApp once Kurt picks a channel.
+  document.getElementById('bookform').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const body = `Flat: ${f.get('unit')}\nArrive: ${f.get('arrive')}\nLeave: ${f.get('leave')}\nGuests: ${f.get('guests')}\nName: ${f.get('name')}\n\n${f.get('extra')}`;
+    if (WHATSAPP) location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(body);
+    else location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Booking request: " + f.get('unit')) + "&body=" + encodeURIComponent(body);
+  });
+</script>
+</body>
+</html>
