@@ -199,7 +199,21 @@ const AF = {
   "A long right-hander peeling along the Jeffreys Bay point, seen from JBay Surf View": "'n Lang regterbrander wat langs die Jeffreysbaai-punt afbreek, gesien van JBay Surf View",
   "Satellite map of JBay Surf View, Jeffreys Bay": "Satellietkaart van JBay Surf View, Jeffreysbaai",
   "JBay Surf View on Facebook": "JBay Surf View op Facebook",
-  "Surf lesson, board hire, airport taxi, a chiro consult...": "Surfles, plankhuur, lughawetaxi, 'n kiropraktiese konsultasie..."
+  "Surf lesson, board hire, airport taxi, a chiro consult...": "Surfles, plankhuur, lughawetaxi, 'n kiropraktiese konsultasie...",
+  "Weather": "Weer",
+  "Weather & swell": "Weer & deining",
+  "This week in Jeffreys Bay.": "Hierdie week in Jeffreysbaai.",
+  "Live forecast for the house and the open-ocean swell off the point. SW wind is offshore at Supers.": "Regstreekse voorspelling vir die huis en die oopsee-deining by die punt. 'n Suidwestewind is aflandig by Supers.",
+  "Loading forecast...": "Laai voorspelling...",
+  "Forecast: Open-Meteo. Swell is a model of the open ocean, not a surf report; the point refracts and shrinks it. Kurt will tell you where it's breaking.": "Voorspelling: Open-Meteo. Die deining is 'n model van die oop see, nie 'n surfverslag nie; die punt buig en verklein dit. Kurt sal jou sê waar dit breek.",
+  "Forecast unavailable right now. Try again shortly.": "Voorspelling nou nie beskikbaar nie. Probeer weer later.",
+  "Today": "Vandag", "Tomorrow": "Môre",
+  "Sun": "So", "Mon": "Ma", "Tue": "Di", "Wed": "Wo", "Thu": "Do", "Fri": "Vr", "Sat": "Sa",
+  "Clear": "Helder", "Mostly clear": "Meestal helder", "Partly cloudy": "Gedeeltelik bewolk", "Overcast": "Bewolk", "Fog": "Mis",
+  "Light drizzle": "Ligte motreën", "Drizzle": "Motreën", "Heavy drizzle": "Swaar motreën", "Light rain": "Ligte reën", "Rain": "Reën",
+  "Heavy rain": "Swaar reën", "Showers": "Buie", "Heavy showers": "Swaar buie", "Thunderstorm": "Donderstorm", "Mixed": "Gemeng",
+  "from": "uit", "rain": "reën", "sea": "see",
+  "Offshore": "Aflandig", "Onshore": "Aanlandig", "Cross-shore": "Dwarswind"
 };
 
 const ATTRS = ["alt", "placeholder", "aria-label", "title"];

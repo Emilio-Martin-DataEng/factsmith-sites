@@ -107,6 +107,18 @@
   .todo div{background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px;}
   .todo b{display:block; margin-bottom:4px;}
   .todo span{font-size:.9rem; color:var(--muted);}
+  .wx-now{display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); margin-top:28px;}
+  .wx-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px;}
+  .wx-card .day{font-weight:800; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--coral-dk);}
+  .wx-card .temp{font-family:var(--font-display); font-size:1.8rem; margin:4px 0;}
+  .wx-card .temp span{color:var(--muted); font-size:1.2rem;}
+  .wx-card .row{font-size:.88rem; color:var(--muted); margin:2px 0;}
+  .wx-card .row b{color:var(--ink);}
+  .wx-week{display:grid; gap:10px; grid-template-columns:repeat(7,minmax(118px,1fr)); margin-top:20px; overflow-x:auto; padding-bottom:6px;}
+  .wx-week .wx-card{padding:12px; text-align:center;}
+  .wx-week .temp{font-size:1.2rem;}
+  .tag{display:inline-block; border-radius:999px; padding:1px 8px; font-size:.72rem; font-weight:800;}
+  .tag.off{background:#d9efe6; color:var(--kelp);} .tag.on{background:#fbe1d6; color:var(--coral-dk);} .tag.cross{background:var(--sand-2); color:var(--muted);}
 
   /* units */
   .units{display:grid; gap:28px; margin-top:40px;}
@@ -201,6 +213,7 @@
       <li><a href="#stay">Stay</a></li>
       <li><a href="#kurt">Dr Kurt</a></li>
       <li><a href="#surf">Surf</a></li>
+      <li><a href="#weather">Weather</a></li>
       <li><a href="#area">Map</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
@@ -399,6 +412,17 @@
   </div>
 </section>
 
+<section class="section" id="weather" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Weather &amp; swell</div>
+    <h2>This week in Jeffreys Bay.</h2>
+    <p class="lede">Live forecast for the house and the open-ocean swell off the point. SW wind is offshore at Supers.</p>
+    <div class="wx-now" id="wx-now"><p class="lede">Loading forecast...</p></div>
+    <div class="wx-week" id="wx-week"></div>
+    <p class="caption" style="color:var(--muted)">Forecast: Open-Meteo. Swell is a model of the open ocean, not a surf report; the point refracts and shrinks it. Kurt will tell you where it's breaking.</p>
+  </div>
+</section>
+
 <section class="section" id="area" style="padding-top:0">
   <div class="wrap">
     <div class="eyebrow">Where we are</div>
@@ -533,6 +557,45 @@
     if (WHATSAPP) location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(body);
     else location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Booking request: " + f.get('unit')) + "&body=" + encodeURIComponent(body);
   });
+</script>
+<script>
+  // ponytail: fixed coords, no geolocation. House on Tamarisk Square; swell point just offshore of the bay.
+  const WX = "https://api.open-meteo.com/v1/forecast?latitude=-34.028&longitude=24.927&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&timezone=Africa%2FJohannesburg&forecast_days=7";
+  const SEA = "https://marine-api.open-meteo.com/v1/marine?latitude=-34.04&longitude=24.95&daily=swell_wave_height_max,swell_wave_period_max,swell_wave_direction_dominant&hourly=sea_surface_temperature&timezone=Africa%2FJohannesburg&forecast_days=7";
+  const WMO = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",
+    61:"Light rain",63:"Rain",65:"Heavy rain",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+  const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
+  // Supers faces roughly east: SW-W blows offshore, NE-SE onshore.
+  const windTag = d => d >= 200 && d <= 290 ? ["off","Offshore"] : d >= 30 && d <= 150 ? ["on","Onshore"] : ["cross","Cross-shore"];
+  const ft = m => Math.round(m * 3.28);
+
+  function card(i, w, m, sst, big) {
+    const [cls, wind] = windTag(w.wind_direction_10m_dominant[i]);
+    const day = big ? (i === 0 ? "Today" : "Tomorrow") : DAYS[new Date(w.time[i] + "T12:00").getDay()];
+    return `<article class="wx-card">
+      <div class="day">${day}</div>
+      <div class="temp">${Math.round(w.temperature_2m_max[i])}&deg; <span>/ ${Math.round(w.temperature_2m_min[i])}&deg;</span></div>
+      <div class="row"><span>${WMO[w.weather_code[i]] ?? "Mixed"}</span></div>
+      <div class="row"><b>${ft(m.swell_wave_height_max[i])} ft</b> @ ${Math.round(m.swell_wave_period_max[i])} s <span>from</span> ${compass(m.swell_wave_direction_dominant[i])}</div>
+      <div class="row">${Math.round(w.wind_speed_10m_max[i])} km/h ${compass(w.wind_direction_10m_dominant[i])} <span class="tag ${cls}">${wind}</span></div>
+      ${big ? `<div class="row">${w.precipitation_probability_max[i]}% <span>rain</span> &middot; UV ${Math.round(w.uv_index_max[i])}${sst != null ? ` &middot; <span>sea</span> ${Math.round(sst)}&deg;` : ""}</div>` : `<div class="row">${w.precipitation_probability_max[i]}% <span>rain</span></div>`}
+    </article>`;
+  }
+
+  (async () => {
+    const now = document.getElementById("wx-now"), week = document.getElementById("wx-week");
+    try {
+      const [w, m] = await Promise.all([WX, SEA].map(u => fetch(u).then(r => { if (!r.ok) throw r.status; return r.json(); })));
+      const temps = m.hourly.sea_surface_temperature.slice(0, 24).filter(t => t != null);
+      const sst = temps.length ? temps.reduce((a, b) => a + b) / temps.length : null;
+      now.innerHTML = [0, 1].map(i => card(i, w.daily, m.daily, i === 0 ? sst : null, true)).join("");
+      week.innerHTML = w.daily.time.map((_, i) => card(i, w.daily, m.daily, null, false)).join("");
+    } catch {
+      now.innerHTML = '<p class="lede">Forecast unavailable right now. Try again shortly.</p>';
+    }
+    if (document.documentElement.lang.startsWith("af")) setLang("af");
+  })();
 </script>
 <script src="af.js"></script>
 </body>
