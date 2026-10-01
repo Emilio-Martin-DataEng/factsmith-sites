@@ -87,6 +87,41 @@ export const samples = [
     url: "https://sastahill.co.za",
     blurb:
       "Dorm-style self-catering lodge in the Transkei. Five pages with a live weather and wind/wave page, Google map, and SEO, FAQ schema and llms.txt from day one.",
+    hero: "/images/work/sasta-hill/hero.webp",
+    heroAlt: "Wild Coast landscape and seascape at Lwandile",
+    images: [
+      { src: "/images/work/sasta-hill/homestead.webp", alt: "Wild Coast homestead at Lwandile" },
+      { src: "/images/work/sasta-hill/hike.webp", alt: "Hiking to Lwandile with a local fishing guide" },
+    ],
+    status: "live" as const,
+  },
+  {
+    slug: "andante-lodge",
+    title: "Andante Lodge",
+    kind: "Live client — Pretoria East",
+    url: "https://andantelodge.co.za",
+    blurb:
+      "Guest lodge and venue. Rebuilt around a hero and booking CTA, suites, venues and a clear contact footer, where the old site had no visible address, phone or rates.",
+    hero: "/images/work/andante/hero.jpg",
+    heroAlt: "Bell Luxury Suite bedroom at Andante Lodge",
+    images: [
+      { src: "/images/work/andante/garden-suite.webp", alt: "Garden Suite at Andante Lodge" },
+    ],
+    status: "live" as const,
+  },
+  {
+    slug: "mydo",
+    title: "Mydo Fishing Lures",
+    kind: "Live client — online shop, ZA and export",
+    url: "https://mydofishinglures.co.za",
+    blurb:
+      "WooCommerce shop for hand-made fishing lures. Baitswimmers by weight and rigging, dropper packs, and separate South African and international pricing.",
+    hero: "/images/work/mydo/hero.jpg",
+    heroAlt: "Mydo silver bullet baitswimmer lure",
+    images: [
+      { src: "/images/work/mydo/baitswimmer.jpg", alt: "Mydo three-ounce baitswimmer" },
+      { src: "/images/work/mydo/flying-fish.jpg", alt: "Mydo flying fish head lure" },
+    ],
     status: "live" as const,
   },
 ] as const;
@@ -187,20 +222,6 @@ export const inProcess = [
       { src: "/images/work/jbay-surf-view/aerial.jpg", alt: "Aerial view of the flats and the bay" },
     ],
     currentUrl: "https://jbaysurfview.com",
-  },
-  {
-    slug: "andante-lodge",
-    title: "Andante Lodge",
-    kind: "Pretoria East · guest lodge and venue",
-    package: "In process · build in review",
-    blurb:
-      "Image-heavy site with no visible contact details, rates or booking path. Rebuilding with a hero and booking CTA, suites, venues and a clear contact footer. Private build, no public preview yet.",
-    hero: "/images/work/andante/hero.jpg",
-    heroAlt: "Bell Luxury Suite bedroom at Andante Lodge",
-    images: [
-      { src: "/images/work/andante/garden-suite.webp", alt: "Garden Suite at Andante Lodge" },
-    ],
-    currentUrl: "https://andantelodge.co.za",
   },
 ] as const;
 
