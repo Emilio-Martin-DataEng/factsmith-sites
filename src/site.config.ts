@@ -80,6 +80,15 @@ export const samples = [
       "The actual brochure package: Astro build, WhatsApp-first, domain in the client’s name, R0 hosting.",
     status: "live" as const,
   },
+  {
+    slug: "sasta-hill",
+    title: "Sasta Hill Lodge",
+    kind: "Live client — Lwandile Point, Wild Coast",
+    url: "https://sastahill.co.za",
+    blurb:
+      "Dorm-style self-catering lodge in the Transkei. Five pages with a live weather and wind/wave page, Google map, and SEO, FAQ schema and llms.txt from day one.",
+    status: "live" as const,
+  },
 ] as const;
 
 /**
@@ -162,6 +171,36 @@ export const inProcess = [
       },
     ],
     currentUrl: "https://www.hentonhomes.co.za",
+  },
+  {
+    slug: "jbay-surf-view",
+    title: "JBay Surf View",
+    kind: "Jeffreys Bay · three self-catering surf flats",
+    package: "Concept · preview live",
+    blurb:
+      "Built from a digital presence audit: WhatsApp on every flat, live availability calendar per unit, surf guide, weather and swell forecast, EN/AF toggle. Concept preview, not yet approved by the owner.",
+    previewUrl: "https://sites.factsmith.co.za/jbay-surf-view/",
+    hero: "/images/work/jbay-surf-view/hero-deck.jpg",
+    heroAlt: "JBay Surf View deck looking over the bay",
+    images: [
+      { src: "/images/work/jbay-surf-view/wave.jpg", alt: "A wave breaking at Supertubes" },
+      { src: "/images/work/jbay-surf-view/aerial.jpg", alt: "Aerial view of the flats and the bay" },
+    ],
+    currentUrl: "https://jbaysurfview.com",
+  },
+  {
+    slug: "andante-lodge",
+    title: "Andante Lodge",
+    kind: "Pretoria East · guest lodge and venue",
+    package: "In process · build in review",
+    blurb:
+      "Image-heavy site with no visible contact details, rates or booking path. Rebuilding with a hero and booking CTA, suites, venues and a clear contact footer. Private build, no public preview yet.",
+    hero: "/images/work/andante/hero.jpg",
+    heroAlt: "Bell Luxury Suite bedroom at Andante Lodge",
+    images: [
+      { src: "/images/work/andante/garden-suite.webp", alt: "Garden Suite at Andante Lodge" },
+    ],
+    currentUrl: "https://andantelodge.co.za",
   },
 ] as const;
 
