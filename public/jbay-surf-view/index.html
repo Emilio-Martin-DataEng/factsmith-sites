@@ -163,8 +163,9 @@
   "description":"Three self-catering surf flats (Tubes, Point, Salads) 150 m from the beach in Jeffreys Bay, a five-minute walk along the beach to Supertubes. Hosted by Dr Kurt Mariano, surfer and sports chiropractor.",
   "url":"https://www.jbaysurfview.com/",
   "email":"jbaysurfviewrentals@gmail.com",
+  "telephone":"+27828687009",
   "image":"https://sites.factsmith.co.za/jbay-surf-view/images/hero-deck.jpg",
-  "address":{"@type":"PostalAddress","addressLocality":"Jeffreys Bay","addressRegion":"Eastern Cape","addressCountry":"ZA"},
+  "address":{"@type":"PostalAddress","streetAddress":"Tamarisk 10","addressLocality":"Jeffreys Bay","addressRegion":"Eastern Cape","addressCountry":"ZA"},
   "priceRange":"R600 - R1,800 per night",
   "amenityFeature":[
     {"@type":"LocationFeatureSpecification","name":"Sea view","value":true},
@@ -373,9 +374,11 @@
       <p class="lede" style="margin-top:16px">Booking direct means the best rate and a host who already knows when you're arriving. Send your dates and he'll confirm and send a deposit link.</p>
       <address class="nap">
         <b>JBay Surf View</b><br>
-        <span class="tbc">Street address TBC</span>, Jeffreys Bay, Eastern Cape<br>
-        WhatsApp / phone: <span class="tbc">TBC</span><br>
-        Email: <a href="mailto:jbaysurfviewrentals@gmail.com">jbaysurfviewrentals@gmail.com</a>
+        Tamarisk 10, Jeffreys Bay, Eastern Cape<br>
+        WhatsApp / phone (SA): <a href="tel:+27828687009">+27 82 868 7009</a><br>
+        Europe: <a href="tel:+33777937172">+33 7 77 93 71 72</a><br>
+        Bookings: <a href="mailto:jbaysurfviewrentals@gmail.com">jbaysurfviewrentals@gmail.com</a><br>
+        Rentals manager: <a href="mailto:yves@livethelife.tv">yves@livethelife.tv</a>
       </address>
     </div>
     <form id="bookform">
@@ -407,9 +410,8 @@
 <a class="btn btn-wa float-wa" data-wa="Hi Kurt, I'd like to check dates at JBay Surf View." href="#book" aria-label="WhatsApp Kurt"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>WhatsApp</a>
 
 <script>
-  // Kurt's WhatsApp number is not published yet. Set it (e.g. "2782...") and every
-  // WhatsApp button goes live; until then they fall back to the booking form.
-  const WHATSAPP = "";
+  // SA number from jbaysurfview.com/contact. Empty string = buttons fall back to the booking form.
+  const WHATSAPP = "27828687009";
   const EMAIL = "jbaysurfviewrentals@gmail.com";
 
   if (WHATSAPP) document.querySelectorAll('[data-wa]').forEach(a => {
