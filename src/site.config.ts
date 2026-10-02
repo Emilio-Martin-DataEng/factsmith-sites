@@ -231,9 +231,9 @@ export const inProcess = [
     blurb:
       "New site for the Jeffreys Bay branch, which today has no site of its own and sends visitors to the Vaal business. Local service pages, compliance certificate page for sellers and agents, WhatsApp and call buttons. Concept preview, not yet approved.",
     previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-jbay/",
-    hero: "/images/work/secure-electric-fencing/hero-jbay.svg",
-    heroAlt: "Secure Electric Fencing Jeffreys Bay concept banner",
-    images: [],
+    hero: "/images/work/secure-electric-fencing/hero-sign.jpg",
+    heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
+    images: [{ src: "/images/work/secure-electric-fencing/warning.jpg", alt: "Warning electric fence sign on a post (stock photo)" }],
   },
   {
     slug: "secure-electric-fencing-vaal",
@@ -243,9 +243,9 @@ export const inProcess = [
     blurb:
       "Rebuild of a company-profile site that only has one page on Google. Leads with trading since 2000, a page per service and area, https, and the compliance certificate page. Concept preview, not yet approved.",
     previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-vaal/",
-    hero: "/images/work/secure-electric-fencing/hero-vaal.svg",
-    heroAlt: "Secure Electric Fencing Vaal Triangle concept banner",
-    images: [],
+    hero: "/images/work/secure-electric-fencing/hero-sign.jpg",
+    heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
+    images: [{ src: "/images/work/secure-electric-fencing/warning.jpg", alt: "Warning electric fence sign on a post (stock photo)" }],
   },
 ] as const;
 
