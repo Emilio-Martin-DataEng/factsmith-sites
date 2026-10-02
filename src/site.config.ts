@@ -229,7 +229,7 @@ export const inProcess = [
     kind: "Jeffreys Bay · electric fencing",
     package: "Concept · preview live",
     blurb:
-      "New site for the Jeffreys Bay branch, which today has no site of its own and sends visitors to the Vaal business. Local service pages, compliance certificate page for sellers and agents, WhatsApp and call buttons. Concept preview, not yet approved.",
+      "Full six-page concept site for the Jeffreys Bay branch, which today has no site of its own. Built around what the strongest competitor sites share: services by job, fast repairs, a compliance certificate page, areas, FAQ and quote form. Not yet approved.",
     previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-jbay/",
     hero: "/images/work/secure-electric-fencing/hero-sign.jpg",
     heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
@@ -241,7 +241,7 @@ export const inProcess = [
     kind: "Vanderbijlpark · fencing, gates, security",
     package: "Concept · preview live",
     blurb:
-      "Rebuild of a company-profile site that only has one page on Google. Leads with trading since 2000, a page per service and area, https, and the compliance certificate page. Concept preview, not yet approved.",
+      "Full six-page rebuild of a one-page company-profile site. Leads with trading since 2000 and one team for fence, gates, garage doors, alarms and CCTV, plus certificate, areas and FAQ pages. Not yet approved.",
     previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-vaal/",
     hero: "/images/work/secure-electric-fencing/hero-sign.jpg",
     heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
