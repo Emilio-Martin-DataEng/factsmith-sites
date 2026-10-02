@@ -124,6 +124,20 @@ export const samples = [
     ],
     status: "live" as const,
   },
+  {
+    slug: "eagles-roost",
+    title: "Eagle’s Roost B&B",
+    kind: "Live client — Umtentweni, South Coast",
+    url: "https://eaglesroost.co.za",
+    blurb:
+      "Heritage Port Master’s House above the Umzimkulu. WhatsApp-first booking, rooms and rates, experiences and guest recommendations on the home page.",
+    hero: "/images/work/eagles-roost/hero.jpg",
+    heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
+    images: [
+      { src: "/images/work/eagles-roost/verandah.jpg", alt: "Covered verandah at first light" },
+    ],
+    status: "live" as const,
+  },
 ] as const;
 
 /**
@@ -131,52 +145,6 @@ export const samples = [
  * agreed mockups — not stock. Henton is Cape Town / larger than the brochure bar.
  */
 export const inProcess = [
-  {
-    slug: "eagles-roost",
-    title: "Eagle’s Roost B&B",
-    kind: "Umtentweni · South Coast",
-    package: "In process · preview live",
-    blurb:
-      "Heritage Port Master’s House above the Umzimkulu. West Hill layout feel, WhatsApp-first booking, guest recommendations on the home page. Work-in-progress preview is live for review.",
-    previewUrl: "https://sites.factsmith.co.za/eagles-roost/",
-    hero: "/images/work/eagles-roost/hero.jpg",
-    heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
-    images: [
-      {
-        src: "/images/work/eagles-roost/concept-c.png",
-        alt: "Direction C phone mockups — first screen, the house, rates",
-      },
-      {
-        src: "/images/work/eagles-roost/concept-c-p2.png",
-        alt: "Direction C phone mockups — what’s included, the area, enquire",
-      },
-      {
-        src: "/images/work/eagles-roost/verandah.jpg",
-        alt: "Covered verandah at first light",
-      },
-    ],
-  },
-  {
-    slug: "khaya-la-manzi",
-    title: "Khaya La Manzi Guest Lodge",
-    kind: "Hibberdene · South Coast",
-    package: "In process · overhaul",
-    blurb:
-      "Existing table-layout site, not mobile, no tap-to-call. Rebuild using their own sunset, lodge and beach photography. Approved; in process.",
-    hero: "/images/work/khaya/hero.jpg",
-    heroAlt: "Khaya La Manzi sunset header from the current site",
-    images: [
-      {
-        src: "/images/work/khaya/lodge.jpg",
-        alt: "Khaya La Manzi lodge building",
-      },
-      {
-        src: "/images/work/khaya/beach.jpg",
-        alt: "Hibberdene beach near the lodge",
-      },
-    ],
-    currentUrl: "https://khayalamanzi.co.za",
-  },
   {
     slug: "henton",
     title: "Henton Timber Homes",
