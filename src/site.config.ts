@@ -223,6 +223,30 @@ export const inProcess = [
     ],
     currentUrl: "https://jbaysurfview.com",
   },
+  {
+    slug: "secure-electric-fencing-jbay",
+    title: "Secure Electric Fencing JBay",
+    kind: "Jeffreys Bay · electric fencing",
+    package: "Concept · preview live",
+    blurb:
+      "New site for the Jeffreys Bay branch, which today has no site of its own and sends visitors to the Vaal business. Local service pages, compliance certificate page for sellers and agents, WhatsApp and call buttons. Concept preview, not yet approved.",
+    previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-jbay/",
+    hero: "/images/work/secure-electric-fencing/hero-jbay.svg",
+    heroAlt: "Secure Electric Fencing Jeffreys Bay concept banner",
+    images: [],
+  },
+  {
+    slug: "secure-electric-fencing-vaal",
+    title: "Secure Electric Fencing Vaal",
+    kind: "Vanderbijlpark · fencing, gates, security",
+    package: "Concept · preview live",
+    blurb:
+      "Rebuild of a company-profile site that only has one page on Google. Leads with trading since 2000, a page per service and area, https, and the compliance certificate page. Concept preview, not yet approved.",
+    previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-vaal/",
+    hero: "/images/work/secure-electric-fencing/hero-vaal.svg",
+    heroAlt: "Secure Electric Fencing Vaal Triangle concept banner",
+    images: [],
+  },
 ] as const;
 
 /** Free opener for prospects — lighter than the Henton Timber Homes deep audit. */
