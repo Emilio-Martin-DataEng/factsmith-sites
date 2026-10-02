@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12304a">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://sites.factsmith.co.za/jbay-cpt-coach/">
+<title>Jeffreys Bay to Cape Town by Coach</title>
+<meta name="description" content="Sample route page: compare coach operators from Jeffreys Bay to Cape Town. Concept build by FactSmith Sites; fares and times are illustrative.">
+<style>
+:root{--navy:#12304a;--sky:#e8f1f8;--ink:#1c2a35;--muted:#5d6b77;--accent:#f08a24;--line:#d5e0ea;--ok:#2f7d5b}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 -apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink);background:var(--sky)}
+header{background:var(--navy);color:#fff;padding:28px 16px 64px}
+.w{max-width:900px;margin:0 auto}
+h1{margin:0 0 6px;font-size:clamp(1.6rem,4vw,2.4rem)}
+header p{margin:0;opacity:.85}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:-40px auto 24px}
+.fact{background:#fff;border-radius:10px;padding:14px;box-shadow:0 2px 8px #0001}
+.fact b{display:block;font-size:1.3rem}.fact span{color:var(--muted);font-size:.85rem}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.bar button{border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:99px;cursor:pointer;font:inherit}
+.bar button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.trip{background:#fff;border-radius:10px;padding:16px;margin-bottom:10px;display:grid;grid-template-columns:1.2fr 1.4fr auto;gap:12px;align-items:center;box-shadow:0 1px 4px #0001}
+.trip h3{margin:0;font-size:1.05rem}
+.tag{display:inline-block;font-size:.75rem;background:var(--sky);color:var(--navy);padding:2px 8px;border-radius:99px;margin:4px 4px 0 0}
+.tag.best{background:var(--ok);color:#fff}
+.time{font-size:1.15rem;font-weight:600}.time small{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.price{text-align:right}.price b{font-size:1.4rem;display:block}
+.price a{display:inline-block;margin-top:4px;background:var(--accent);color:#fff;text-decoration:none;padding:8px 16px;border-radius:8px;font-weight:600}
+h2{margin:32px 0 10px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:#fff;border-radius:10px;padding:16px}
+.card h3{margin:0 0 6px}
+details{background:#fff;border-radius:10px;padding:12px 16px;margin-bottom:8px}
+summary{cursor:pointer;font-weight:600}
+footer{color:var(--muted);font-size:.8rem;padding:24px 16px 40px;text-align:center}
+@media(max-width:640px){.trip{grid-template-columns:1fr}.price{text-align:left}}
+</style>
+</head>
+<body>
+<header><div class="w">
+<h1>Jeffreys Bay to Cape Town by coach</h1>
+<p>Overnight services, about 590 km along the N2 and Garden Route.</p>
+</div></header>
+
+<main class="w">
+<div class="facts">
+<div class="fact"><b>~10h 35m</b><span>average journey</span></div>
+<div class="fact"><b>from R380</b><span>cheapest fare</span></div>
+<div class="fact"><b>21</b><span>departures a day</span></div>
+<div class="fact"><b>590 km</b><span>distance</span></div>
+</div>
+
+<div class="bar" id="bar">
+<button class="on" data-s="price">Cheapest</button>
+<button data-s="dur">Fastest</button>
+<button data-s="dep">Earliest</button>
+</div>
+<div id="list"></div>
+
+<h2>Where you board and get off</h2>
+<div class="cols">
+<div class="card"><h3>Jeffreys Bay</h3><p>Caltex Garage, Mentors Plaza, next to the N2 off-ramp.</p></div>
+<div class="card"><h3>Cape Town</h3><p>Long Distance Bus Facility (Old Marine Drive), Civic Centre or Bellville (Mabel Street), depending on operator.</p></div>
+</div>
+
+<h2>On board</h2>
+<div class="cols">
+<div class="card"><h3>Comfort</h3><p>Toilets and power outlets on most coaches. WiFi on select operators; reports on its quality are mixed.</p></div>
+<div class="card"><h3>Top rated</h3><p>Williams Coaches scores 4.3 / 5 from 671 reviews, praised for staff and cleanliness.</p></div>
+</div>
+
+<h2>Questions</h2>
+<details><summary>How long does the trip take?</summary>Around 10 hours 35 minutes on average. The fastest service is about 8 hours 50 minutes.</details>
+<details><summary>What is the cheapest way to travel?</summary>Budget operators start around R380 for the earliest-booked seats; prices rise closer to travel date.</details>
+<details><summary>Are tickets refundable?</summary>Refundable options are offered on most listed services. Check the operator's terms at booking.</details>
+<details><summary>Which Cape Town stop should I pick?</summary>The Civic Centre suits the city centre; Bellville suits the northern suburbs and airport side.</details>
+</main>
+
+<footer>Concept build by FactSmith Sites. Operators, times and fares are illustrative sample data, not live availability. Not affiliated with any operator.</footer>
+
+<script>
+// Sample data. dep = minutes after midnight, dur = minutes, price in ZAR.
+const trips=[
+{op:"APMWC",dep:"02:00",d:1,dur:640,price:380,tags:["Cheapest"]},
+{op:"Williams Coaches",dep:"20:15",d:0,dur:630,price:600,tags:["Top rated","Toilet","Power"]},
+{op:"Intercape Mainliner",dep:"01:25",d:1,dur:625,price:720,tags:["Toilet","Power","WiFi"]},
+{op:"Greyhound",dep:"22:20",d:0,dur:640,price:770,tags:["Toilet","Power"]},
+{op:"Big Sky",dep:"20:45",d:0,dur:660,price:900,tags:["Toilet","Power","WiFi"]},
+{op:"ilulaBus",dep:"22:00",d:0,dur:530,price:1000,tags:["Fastest"]}
+];
+const mins=t=>{const[h,m]=t.split(":");return h*60+ +m};
+const dur=m=>Math.floor(m/60)+"h "+String(m%60).padStart(2,"0")+"m";
+const arr=t=>{const a=(mins(t.dep)+t.dur)%1440;return String(Math.floor(a/60)).padStart(2,"0")+":"+String(a%60).padStart(2,"0")};
+const key={price:t=>t.price,dur:t=>t.dur,dep:t=>mins(t.dep)+(t.d?0:1440)};
+function show(s){
+ document.getElementById("list").innerHTML=[...trips].sort((a,b)=>key[s](a)-key[s](b)).map(t=>
+ `<div class="trip"><div><h3>${t.op}</h3>${t.tags.map(x=>`<span class="tag${x=="Cheapest"||x=="Fastest"||x=="Top rated"?" best":""}">${x}</span>`).join("")}</div>
+ <div class="time">${t.dep} &rarr; ${arr(t)}<small>${dur(t.dur)}</small></div>
+ <div class="price"><b>R${t.price}</b><a href="#">Select</a></div></div>`).join("");
+}
+document.getElementById("bar").onclick=e=>{
+ if(!e.target.dataset.s)return;
+ document.querySelectorAll("#bar button").forEach(b=>b.classList.toggle("on",b==e.target));
+ show(e.target.dataset.s);
+};
+show("price");
+</script>
+</body>
+</html>
