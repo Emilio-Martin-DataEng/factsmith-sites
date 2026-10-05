@@ -28,6 +28,16 @@ import { methodSteps } from "../site.config";
             <div>
               <h2 class="font-display text-lg font-semibold text-ink-900">{step.title}</h2>
               <p class="mt-1 text-sm leading-relaxed text-ink-700 sm:text-base">{step.text}</p>
+              {"link" in step ? (
+                <a
+                  href={step.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-2 inline-flex text-sm font-semibold text-sea-700 hover:text-sea-500"
+                >
+                  {step.link.label} →
+                </a>
+              ) : null}
             </div>
           </li>
         ))
@@ -36,6 +46,9 @@ import { methodSteps } from "../site.config";
 
     <div class="mt-12 flex flex-wrap items-center gap-4">
       <WhatsAppButton label="Start with a WhatsApp" />
+      <a href="/included" class="text-sm font-semibold text-sea-700 hover:text-sea-500">
+        What every site includes →
+      </a>
       <a href="/offer" class="text-sm font-semibold text-sea-700 hover:text-sea-500">
         Full offer details →
       </a>

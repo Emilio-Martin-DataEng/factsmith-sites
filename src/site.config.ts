@@ -319,7 +319,15 @@ export const methodSteps = [
   },
   {
     title: "Build from a sample",
-    text: "Mobile-first site. WhatsApp as the main button. Contact form included.",
+    text: "Mobile-first site. WhatsApp as the main button. Contact form included. Map with a Google Earth fly-to, live weather, SEO, GEO and AEO are built in from the first build — not add-ons.",
+  },
+  {
+    title: "Photos: placeholders first, then yours",
+    text: "We build with your old photos or stock, each in a named slot (dolphin-1, home-hero). After your shoot, each new photo is saved under its slot name and replaces the placeholder — no layout changes.",
+    link: {
+      label: "Example: Khaya La Manzi photo slots",
+      href: "https://sites.factsmith.co.za/khaya-la-manzi/photos.html",
+    },
   },
   {
     title: "Preview + two rounds",
