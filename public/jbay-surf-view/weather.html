@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f2d36">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://sites.factsmith.co.za/jbay-surf-view/weather.html">
+<meta name="description" content="Hour-by-hour surf and weather forecast for Jeffreys Bay: swell, wind, tides, sea temperature and the week ahead, from JBay Surf View.">
+<title>JBay Surf &amp; Weather Forecast</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --ocean:#0f2d36; --ocean-2:#16404b; --sand:#f5efe4; --sand-2:#ebe1cf; --ink:#1b2a2f; --muted:#5b6a6e;
+    --coral:#e2683f; --coral-dk:#c4532d; --kelp:#2f6f62; --line:#d9cdb8;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Manrope', -apple-system, 'Segoe UI', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--sand); color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  h1,h2,h3{font-family:var(--font-display); font-weight:700; line-height:1.1; margin:0; text-wrap:balance;}
+  h1{font-size:clamp(2.2rem,6vw,3.6rem);}
+  h2{font-size:clamp(1.6rem,4vw,2.3rem);}
+  h3{font-size:1.25rem; margin:28px 0 10px;}
+  p{margin:0 0 1em;}
+  .wrap{max-width:1120px; margin-inline:auto; padding-inline:16px;}
+  .section{padding-block:clamp(40px,7vw,72px);}
+  .eyebrow{font-weight:800; font-size:.72rem; letter-spacing:.2em; text-transform:uppercase; color:var(--coral-dk); margin-bottom:12px;}
+  .lede{font-size:1.05rem; color:var(--muted); max-width:66ch;}
+  .dark{background:var(--ocean); color:var(--sand);}
+  .dark .lede{color:#b8c9cc;}
+  .dark .eyebrow{color:#f19a77;}
+  .caption{font-size:.85rem; color:var(--muted); margin-top:10px;}
+  .btn{display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:999px; font-weight:800; font-size:.85rem; text-decoration:none; border:2px solid transparent; font-family:inherit;}
+  .btn-coral{background:var(--coral); color:#fff;}
+  .btn-coral:hover{background:var(--coral-dk);}
+  .concept{background:#fff3c4; color:#5a4700; font-size:.82rem; text-align:center; padding:8px 16px;}
+  .tbc{background:#fff3c4; color:#5a4700; border-radius:4px; padding:0 5px; font-size:.85em; font-weight:700;}
+
+  header.site{position:sticky; top:0; z-index:40; background:rgba(245,239,228,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-block:12px;}
+  .brand{font-family:var(--font-display); font-weight:700; font-size:1.35rem; text-decoration:none; line-height:1;}
+  .brand small{display:block; font-family:var(--font-body); font-size:.6rem; font-weight:800; letter-spacing:.24em; text-transform:uppercase; color:var(--kelp); margin-top:4px;}
+  .nav ul{display:flex; gap:24px; list-style:none; margin:0; padding:0;}
+  .nav ul a{text-decoration:none; font-weight:700; font-size:.9rem;}
+  .nav ul a:hover, .nav ul a[aria-current]{color:var(--coral-dk);}
+  .lang{font:inherit; font-weight:800; font-size:.8rem; letter-spacing:.08em; min-width:44px; height:40px; border-radius:999px; border:2px solid var(--ink); background:transparent; color:var(--ink); cursor:pointer;}
+  .lang:hover{background:var(--ink); color:var(--sand);}
+  @media (max-width:760px){ .nav ul{display:none;} }
+
+  /* forecast cards (same look as the homepage) */
+  .wx-now{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); margin-top:28px;}
+  .wx-card{background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px; color:var(--ink);}
+  .wx-card .day{font-weight:800; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--coral-dk);}
+  .wx-card .temp{font-family:var(--font-display); font-size:1.7rem; margin:4px 0;}
+  .wx-card .temp span{color:var(--muted); font-size:1.1rem;}
+  .wx-card .row{font-size:.86rem; color:var(--muted); margin:2px 0;}
+  .wx-card .row b{color:var(--ink);}
+  .wx-week{display:grid; gap:10px; grid-template-columns:repeat(7,minmax(118px,1fr)); margin-top:20px; overflow-x:auto; padding-bottom:6px;}
+  .wx-week .wx-card{padding:12px; text-align:center;}
+  .wx-week .temp{font-size:1.2rem;}
+  .tag{display:inline-block; border-radius:999px; padding:1px 8px; font-size:.72rem; font-weight:800;}
+  .tag.off{background:#d9efe6; color:var(--kelp);} .tag.on{background:#fbe1d6; color:var(--coral-dk);} .tag.cross{background:var(--sand-2); color:var(--muted);}
+
+  /* charts */
+  .chart{position:relative; height:280px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:12px; margin-top:12px;}
+  .charts{display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));}
+
+  /* hourly tables */
+  .scroll{overflow-x:auto; background:#fff; border:1px solid var(--line); border-radius:16px; margin-top:12px;}
+  table.hours{width:100%; border-collapse:collapse; font-size:.86rem; white-space:nowrap;}
+  .hours th{position:sticky; top:0; background:var(--sand-2); text-align:left; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; padding:8px 10px;}
+  .hours td{padding:6px 10px; border-top:1px solid var(--line);}
+  .hours td:first-child{font-weight:800;}
+  .hours tr.past{opacity:.45;}
+  .hours tr.now{background:#fff6e0;}
+  .hours small{color:var(--muted);}
+
+  /* tides */
+  .tides{display:grid; gap:10px; grid-template-columns:repeat(5,minmax(140px,1fr)); overflow-x:auto; margin-top:16px; padding-bottom:6px;}
+  .tides .row{display:flex; justify-content:space-between; gap:8px;}
+  .legend{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:20px;}
+  .legend div{background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; font-size:.9rem; color:var(--muted);}
+  .legend b{display:block; color:var(--ink); margin-bottom:4px;}
+
+  footer{background:#0a2027; color:#8fa5aa; font-size:.85rem; padding-block:28px;}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;}
+</style>
+</head>
+<body>
+
+<div class="concept">Concept preview by FactSmith Sites for Dr Kurt. Not the live site. Photos are from jbaysurfview.com; items marked <span class="tbc">TBC</span> need Kurt's confirmation.</div>
+
+<header class="site">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="index.html">JBay Surf View<small>Jeffreys Bay &middot; surf flats</small></a>
+    <ul>
+      <li><a href="index.html#stay">Stay</a></li>
+      <li><a href="index.html#kurt">Dr Kurt</a></li>
+      <li><a href="index.html#surf">Surf</a></li>
+      <li><a href="weather.html" aria-current="page">Weather</a></li>
+      <li><a href="index.html#area">Map</a></li>
+      <li><a href="index.html#faq">FAQ</a></li>
+    </ul>
+    <div style="display:flex; gap:8px; align-items:center">
+      <button class="lang" id="lang" type="button" aria-label="Skakel oor na Afrikaans">AF</button>
+      <a class="btn btn-coral" href="index.html#book">Book direct</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section class="section dark">
+  <div class="wrap">
+    <div class="eyebrow">Surf &amp; weather forecast</div>
+    <h1>Jeffreys Bay, hour by hour.</h1>
+    <p class="lede" style="margin-top:16px">Swell, wind, tides and weather for the house and the point, updated every hour. SW wind is offshore at Supers.</p>
+    <div class="wx-now" id="now"><p class="lede">Loading forecast...</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">Next 48 hours</div>
+    <h2>Today and tomorrow.</h2>
+    <div class="charts">
+      <div><h3>Surf</h3><div class="chart"><canvas id="c-surf" aria-label="Wave and swell height and swell period, next 48 hours" role="img"></canvas></div></div>
+      <div><h3>Wind</h3><div class="chart"><canvas id="c-wind" aria-label="Wind speed and gusts, next 48 hours" role="img"></canvas></div></div>
+      <div><h3>Weather</h3><div class="chart"><canvas id="c-air" aria-label="Air temperature and chance of rain, next 48 hours" role="img"></canvas></div></div>
+      <div><h3>Sea temperature &amp; cloud</h3><div class="chart"><canvas id="c-sea" aria-label="Sea temperature and cloud cover, next 48 hours" role="img"></canvas></div></div>
+    </div>
+
+    <h3>Today</h3>
+    <div class="scroll"><table class="hours" id="t-0"></table></div>
+    <h3>Tomorrow</h3>
+    <div class="scroll"><table class="hours" id="t-1"></table></div>
+
+    <div class="legend">
+      <div><b>Waves</b>Total sea height offshore: groundswell plus local wind chop.</div>
+      <div><b>Swell</b>The groundswell that wraps into the point. Longer period means more power; 12 s and up is when JBay lights up.</div>
+      <div><b>2nd swell</b>A smaller, second swell train from another direction. It can add peaks or make the line-up messy.</div>
+      <div><b>Wind</b>SW to W is offshore at Supers and grooms the walls. NE to SE is onshore and blows it out.</div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="tides">
+  <div class="wrap">
+    <div class="eyebrow">Tides</div>
+    <h2>High and low tide, next 5 days.</h2>
+    <div class="chart" style="height:300px"><canvas id="c-tide" aria-label="Tide level, next 5 days" role="img"></canvas></div>
+    <div class="tides" id="tide-days"></div>
+    <p class="caption" style="color:#b8c9cc">The tide curve comes from a global ocean model, not a harbour tide gauge. Times can be out by up to an hour and the real range is bigger than shown. Check the SA Navy tide tables when it matters.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">The week ahead</div>
+    <h2>7-day outlook.</h2>
+    <div class="wx-week" id="week"></div>
+    <p class="caption">Forecast: Open-Meteo (CC BY 4.0). Swell is a model of the open ocean, not a surf report; the point refracts and shrinks it. Kurt will tell you where it's breaking.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; JBay Surf View &middot; <a href="index.html">Back to the flats</a></span>
+    <span>Concept by <a href="https://sites.factsmith.co.za/">FactSmith Sites</a></span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  // Two Open-Meteo calls (forecast + marine), 7 days hourly; the page slices 48 h for surf and 120 h for tides.
+  const WX = "https://api.open-meteo.com/v1/forecast?latitude=-34.028&longitude=24.927&timezone=Africa%2FJohannesburg&forecast_days=7"
+    + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m"
+    + "&hourly=temperature_2m,apparent_temperature,precipitation_probability,cloud_cover,uv_index,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant,sunrise,sunset";
+  const SEA = "https://marine-api.open-meteo.com/v1/marine?latitude=-34.04&longitude=24.95&timezone=Africa%2FJohannesburg&forecast_days=7"
+    + "&hourly=wave_height,swell_wave_height,swell_wave_period,swell_wave_direction,secondary_swell_wave_height,secondary_swell_wave_period,secondary_swell_wave_direction,wind_wave_height,sea_surface_temperature,sea_level_height_msl"
+    + "&daily=swell_wave_height_max,swell_wave_period_max,swell_wave_direction_dominant";
+
+  // Copied from index.html; extract to a shared file if a third page needs them.
+  const WMO = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",
+    61:"Light rain",63:"Rain",65:"Heavy rain",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+  const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
+  const windTag = d => d >= 200 && d <= 290 ? ["off","Offshore"] : d >= 30 && d <= 150 ? ["on","Onshore"] : ["cross","Cross-shore"];
+  const ft = m => Math.round(m * 3.28);
+  const r = Math.round;
+  const n = (v, f) => v == null ? "–" : f(v);  // models leave gaps (e.g. no 2nd swell)
+  const hhmm = t => t.slice(11, 16);
+  const dayName = t => DAYS[new Date(t.slice(0, 10) + "T12:00").getDay()];
+  const t = s => document.documentElement.lang.startsWith("af") && typeof AF !== "undefined" && AF[s] || s;  // chart text isn't in the DOM, so translate it here
+
+  function card(i, w, m) {
+    const [cls, wind] = windTag(w.wind_direction_10m_dominant[i]);
+    return `<article class="wx-card">
+      <div class="day">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(w.time[i])}</div>
+      <div class="temp">${r(w.temperature_2m_max[i])}&deg; <span>/ ${r(w.temperature_2m_min[i])}&deg;</span></div>
+      <div class="row"><span>${WMO[w.weather_code[i]] ?? "Mixed"}</span></div>
+      <div class="row"><b>${ft(m.swell_wave_height_max[i])} ft</b> @ ${r(m.swell_wave_period_max[i])} s <span>from</span> ${compass(m.swell_wave_direction_dominant[i])}</div>
+      <div class="row">${r(w.wind_speed_10m_max[i])} km/h ${compass(w.wind_direction_10m_dominant[i])} <span class="tag ${cls}">${wind}</span></div>
+      <div class="row">${w.precipitation_probability_max[i]}% <span>rain</span></div>
+    </article>`;
+  }
+
+  // High/low tide: local max/min of the hourly series, refined to the minute with a parabola through 3 points.
+  function extrema(times, v) {
+    const out = [];
+    for (let i = 1; i < v.length - 1; i++) {
+      const [a, b, c] = [v[i - 1], v[i], v[i + 1]];
+      if (a == null || b == null || c == null) continue;
+      const high = b > a && b >= c, low = b < a && b <= c;
+      if (!high && !low) continue;
+      const den = a - 2 * b + c, off = den ? 0.5 * (a - c) / den : 0;
+      const at = new Date(new Date(times[i] + ":00Z").getTime() + off * 3600e3).toISOString().slice(0, 16);  // tz-free arithmetic on local wall time
+      out.push({ i, high, at, h: b - 0.25 * (a - c) * off });
+    }
+    return out;
+  }
+  { // self-check: 2 days of a 12.42 h tide, peak at 03:00, gives 4 highs, 4 lows, first high at 03:00
+    const T = Array.from({ length: 48 }, (_, k) => `2026-01-0${1 + (k / 24 | 0)}T${String(k % 24).padStart(2, "0")}:00`);
+    const e = extrema(T, T.map((_, k) => Math.cos(2 * Math.PI * (k - 3) / 12.42)));
+    console.assert(e.filter(x => x.high).length === 4 && e.filter(x => !x.high).length === 4 && e[0].at === "2026-01-01T03:00", "tide extrema", e);
+  }
+
+  let data, charts = [];
+  const C = { ocean: "#0f2d36", coral: "#e2683f", kelp: "#2f6f62", muted: "#5b6a6e", sand: "#b9ad98", sky: "#6aa9c4" };
+  const TAGC = { off: C.kelp, on: C.coral, cross: C.sand };
+
+  function drawCharts() {
+    if (!data || !window.Chart) return;
+    charts.forEach(c => c.destroy());
+    Chart.defaults.font.family = "Manrope, sans-serif";
+    Chart.defaults.color = C.muted;
+    const { w, m } = data, H = 48;
+    const labels = w.hourly.time.slice(0, H).map(x => t(dayName(x)) + " " + hhmm(x));
+    const s = (o, k) => o.hourly[k].slice(0, H);
+    const opts = (y, y2) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { boxWidth: 12 } } },
+      scales: { x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } }, y: { title: { display: true, text: t(y) }, beginAtZero: true },
+        ...(y2 && { y2: { position: "right", title: { display: true, text: t(y2) }, grid: { drawOnChartArea: false }, beginAtZero: true } }) } });
+    const line = (label, d, color, more) => ({ type: "line", label: t(label), data: d, borderColor: color, backgroundColor: color, pointRadius: 0, tension: .3, borderWidth: 2, ...more });
+
+    charts = [
+      new Chart("c-surf", { type: "bar", data: { labels, datasets: [
+        { label: t("Waves (ft)"), data: s(m, "wave_height").map(v => n(v, x => x * 3.28)), backgroundColor: "#cfe0e4" },
+        line("Swell (ft)", s(m, "swell_wave_height").map(v => n(v, x => x * 3.28)), C.ocean),
+        line("2nd swell (ft)", s(m, "secondary_swell_wave_height").map(v => n(v, x => x * 3.28)), C.sky, { borderDash: [4, 3] }),
+        line("Swell period (s)", s(m, "swell_wave_period"), C.coral, { yAxisID: "y2" }) ] }, options: opts("feet", "seconds") }),
+      new Chart("c-wind", { type: "bar", data: { labels, datasets: [
+        { label: t("Wind (km/h)"), data: s(w, "wind_speed_10m"), backgroundColor: s(w, "wind_direction_10m").map(d => TAGC[windTag(d)[0]]) },
+        line("Gusts (km/h)", s(w, "wind_gusts_10m"), C.ocean, { borderDash: [4, 3] }) ] },
+        options: { ...opts("km/h"), plugins: { legend: { labels: { boxWidth: 12 } }, subtitle: { display: true, text: t("Bar colour: green offshore, orange onshore, grey cross-shore") } } } }),
+      new Chart("c-air", { type: "bar", data: { labels, datasets: [
+        { label: t("Rain chance (%)"), data: s(w, "precipitation_probability"), backgroundColor: "#cfe0e4", yAxisID: "y2" },
+        line("Air (°C)", s(w, "temperature_2m"), C.coral),
+        line("Feels like (°C)", s(w, "apparent_temperature"), C.muted, { borderDash: [4, 3] }) ] },
+        options: (o => (o.scales.y.beginAtZero = false, o.scales.y2.max = 100, o))(opts("°C", "%")) }),
+      new Chart("c-sea", { type: "line", data: { labels, datasets: [
+        line("Sea (°C)", s(m, "sea_surface_temperature"), C.ocean),
+        line("Cloud (%)", s(w, "cloud_cover"), C.sand, { yAxisID: "y2", fill: true, backgroundColor: "rgba(185,173,152,.2)" }) ] },
+        options: (o => (o.scales.y.beginAtZero = false, o.scales.y2.max = 100, o))(opts("°C", "%")) }),
+    ];
+
+    const TH = 120, tt = m.hourly.time.slice(0, TH), lv = m.hourly.sea_level_height_msl.slice(0, TH), ex = new Map(extrema(tt, lv).map(e => [e.i, e]));
+    charts.push(new Chart("c-tide", { type: "line", data: { labels: tt.map(x => t(dayName(x)) + " " + hhmm(x)), datasets: [
+      line("Tide (m)", lv, C.ocean, { fill: "start", backgroundColor: "rgba(15,45,54,.12)" }),
+      { type: "line", label: t("High / low"), data: lv.map((v, i) => ex.has(i) ? v : null), showLine: false, pointRadius: 5,
+        pointBackgroundColor: lv.map((_, i) => ex.get(i)?.high ? C.coral : C.kelp), borderColor: "transparent" } ] },
+      options: (o => (o.scales.y.beginAtZero = false, o))(opts("metres")) }));
+  }
+
+  function table(day, w, m, nowIdx, tide) {
+    const rows = [];
+    for (let i = day * 24; i < day * 24 + 24; i++) {
+      const [cls, tag] = windTag(w.wind_direction_10m[i]);
+      const dl = tide[i + 1] - tide[i - 1];
+      rows.push(`<tr class="${i < nowIdx ? "past" : i === nowIdx ? "now" : ""}">
+        <td>${hhmm(w.time[i])}</td><td>${WMO[w.weather_code[i]] ?? "Mixed"}</td>
+        <td>${r(w.temperature_2m[i])}&deg;</td><td>${w.precipitation_probability[i] ?? 0}%</td>
+        <td>${r(w.wind_speed_10m[i])} <small>/ ${r(w.wind_gusts_10m[i])}</small></td>
+        <td>${compass(w.wind_direction_10m[i])} <span class="tag ${cls}">${tag}</span></td>
+        <td><b>${n(m.swell_wave_height[i], ft)} ft</b> ${n(m.swell_wave_period[i], r)} s ${n(m.swell_wave_direction[i], compass)}</td>
+        <td>${n(m.secondary_swell_wave_height[i], ft)} ft ${n(m.secondary_swell_wave_period[i], r)} s ${n(m.secondary_swell_wave_direction[i], compass)}</td>
+        <td>${n(m.wave_height[i], ft)} ft</td>
+        <td>${n(tide[i], v => v.toFixed(1))} m ${isNaN(dl) ? "" : dl > 0 ? "&uarr;" : "&darr;"}</td>
+        <td>${n(w.uv_index[i], r)}</td></tr>`);
+    }
+    return `<thead><tr><th>Time</th><th>Sky</th><th>Air</th><th>Rain</th><th>Wind km/h</th><th>Wind dir</th><th>Swell</th><th>2nd swell</th><th>Waves</th><th>Tide</th><th>UV</th></tr></thead><tbody>${rows.join("")}</tbody>`;
+  }
+
+  (async () => {
+    const now = document.getElementById("now");
+    try {
+      const [w, m] = await Promise.all([WX, SEA].map(u => fetch(u).then(x => { if (!x.ok) throw x.status; return x.json(); })));
+      data = { w, m };
+      const H = w.hourly, M = m.hourly, cur = w.current;
+      const ni = Math.max(0, H.time.findIndex(x => x > cur.time) - 1);
+      const tide = M.sea_level_height_msl;
+      const next = extrema(M.time, tide).find(e => e.at > cur.time);
+      const [cls, tag] = windTag(cur.wind_direction_10m);
+      const sun = w.daily;
+
+      now.innerHTML = `
+        <article class="wx-card"><div class="day">Now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div>
+          <div class="row"><span>${WMO[cur.weather_code] ?? "Mixed"}</span></div><div class="row"><span>Feels like</span> ${r(cur.apparent_temperature)}&deg;</div></article>
+        <article class="wx-card"><div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div>
+          <div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row"><span>Gusts</span> ${r(cur.wind_gusts_10m)} km/h</div></article>
+        <article class="wx-card"><div class="day">Swell</div><div class="temp">${n(M.swell_wave_height[ni], ft)} <span>ft</span></div>
+          <div class="row">${n(M.swell_wave_period[ni], r)} s <span>from</span> ${n(M.swell_wave_direction[ni], compass)}</div><div class="row"><span>Waves</span> ${n(M.wave_height[ni], ft)} ft</div></article>
+        <article class="wx-card"><div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div>
+          <div class="row"><span>Water temperature</span></div></article>
+        <article class="wx-card"><div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div>
+          <div class="row"><span>${next ? (next.high ? "High tide" : "Low tide") : ""}</span></div><div class="row"><span>${next ? (next.high ? "Rising" : "Dropping") : ""}</span></div></article>
+        <article class="wx-card"><div class="day">Daylight</div><div class="temp">${hhmm(sun.sunrise[0])} <span>/ ${hhmm(sun.sunset[0])}</span></div>
+          <div class="row"><span>Sunrise / sunset</span></div><div class="row"><span>UV max</span> ${r(sun.uv_index_max[0])}</div></article>`;
+
+      [0, 1].forEach(d => document.getElementById("t-" + d).innerHTML = table(d, H, M, ni, tide));
+
+      const ex = extrema(M.time.slice(0, 120), tide.slice(0, 120));
+      document.getElementById("tide-days").innerHTML = sun.time.slice(0, 5).map((day, i) => `<article class="wx-card">
+        <div class="day">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(day)}</div>
+        ${ex.filter(e => e.at.startsWith(day)).map(e => `<div class="row"><span>${e.high ? "High" : "Low"}</span><b>${hhmm(e.at)}</b><span>${e.h.toFixed(1)} m</span></div>`).join("")}
+      </article>`).join("");
+
+      document.getElementById("week").innerHTML = sun.time.map((_, i) => card(i, w.daily, m.daily)).join("");
+      drawCharts();
+    } catch (e) {
+      console.error(e);
+      now.innerHTML = '<p class="lede">Forecast unavailable right now. Try again shortly.</p>';
+    }
+    if (document.documentElement.lang.startsWith("af")) setLang("af");
+  })();
+
+  // Charts draw on canvas, so redraw them in the new language when the AF/EN toggle flips <html lang>.
+  new MutationObserver(drawCharts).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+</script>
+<script src="af.js"></script>
+</body>
+</html>
