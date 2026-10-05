@@ -273,7 +273,8 @@ export const standardFeatures = [
   },
   {
     title: "Fly-to",
-    text: "The map opens on the region and flies in to your door, so visitors see where you are before they read the address.",
+    text: "A “Fly there in Google Earth” button next to the map. One tap flies visitors in over your building in 3D, so they see the place before they arrive.",
+    example: { label: "Khaya La Manzi contact", href: "https://sites.factsmith.co.za/khaya-la-manzi/contact.html" },
   },
   {
     title: "Live weather",
