@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#14284b">
+<meta name="robots" content="noindex">
+<title>Weather, sea and tides | Khaya La Manzi, Hibberdene</title>
+<meta name="description" content="Hour-by-hour weather, sea, tides and live maps for Hibberdene on the KZN South Coast, from Khaya La Manzi Guest Lodge.">
+<link rel="canonical" href="https://khayalamanzi.co.za/weather.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Khaya La Manzi Guest Lodge"><meta property="og:locale" content="en_ZA">
+<meta property="og:title" content="Weather, sea and tides | Khaya La Manzi, Hibberdene"><meta property="og:description" content="Hour-by-hour weather, sea, tides and live maps for Hibberdene on the KZN South Coast, from Khaya La Manzi Guest Lodge."><meta property="og:image" content="https://khayalamanzi.co.za/img/home-hero.jpg">
+<meta name="geo.region" content="ZA-NL"><meta name="geo.placename" content="Hibberdene"><meta name="geo.position" content="-30.5749;30.5726"><meta name="ICBM" content="-30.5749, 30.5726">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://khayalamanzi.co.za/"}, {"@type": "ListItem", "position": 2, "name": "Weather", "item": "https://khayalamanzi.co.za/weather.html"}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="concept">Concept preview by FactSmith Sites. Not the live site. Photos are from the current site until the shoot; dashed boxes are photo slots, <span class="tbc">TBC</span> items need confirming. <a href="logo.html">Logo options</a> &middot; <a href="photos.html">Photo slots</a></div>
+<header class="site"><nav class="wrap nav" aria-label="Main">
+  <a class="brand" href="index.html" aria-label="Khaya La Manzi home"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M6 30 32 9l26 21" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 40a12 12 0 0 1 24 0Z" fill="#c8962e"/><path d="M8 46c4-3 8-3 12 0s8 3 12 0 8-3 12 0 8 3 12 0M14 54c3-2.5 6-2.5 9 0s6 2.5 9 0 6-2.5 9 0 6 2.5 9 0" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg><span class="wm">Khaya La Manzi<small>Guest Lodge &middot; B&amp;B &middot; Hibberdene</small></span></a>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="navlist">Menu</button>
+  <ul id="navlist"><li><a href="index.html">Home</a></li><li><a href="rooms.html">Rooms</a></li><li><a href="facilities.html">Facilities &amp; Conferences</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <a class="btn btn-gold nav-cta" href="contact.html#enquiry">Book online</a>
+</nav></header>
+<main id="main">
+<style>
+  .now{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:24px}
+  .now .wx{text-align:left}
+  .charts{display:grid;gap:0 24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr))}
+  .charts h3,.wxh3{font:400 1.3rem var(--serif);color:var(--navy);margin:28px 0 10px}
+  .dark .wxh3{color:#fff}
+  .chart{position:relative;height:280px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+  .scroll{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:14px}
+  table.hours{width:100%;border-collapse:collapse;font-size:.86rem;white-space:nowrap}
+  .hours th{position:sticky;top:0;background:var(--sand);text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;color:var(--navy)}
+  .hours td{padding:6px 10px;border-top:1px solid var(--line)}
+  .hours td:first-child{font-weight:800}
+  .hours tr.past{opacity:.45}.hours tr.now{background:#fff6e0}
+  .hours small{color:var(--muted)}
+  .tides{display:grid;gap:10px;grid-template-columns:repeat(5,minmax(140px,1fr));overflow-x:auto;margin-top:14px;padding-bottom:6px}
+  .tides .r{display:flex;justify-content:space-between;gap:8px}
+  .map{display:block;width:100%;height:420px;border:0;border-radius:14px;background:var(--sand)}
+</style>
+
+<section class="section dark"><div class="wrap">
+  <div class="eyebrow">Weather &amp; sea</div><h1 style="color:#fff">Hibberdene, hour by hour.</h1>
+  <p class="lede" style="margin-top:14px">Weather, sea, tides and live maps for the lodge and the beach below, updated every hour.</p>
+  <div class="now" id="now"><p>Loading forecast...</p></div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="eyebrow">Next 48 hours</div><h2>Today and tomorrow.</h2>
+  <div class="charts">
+    <div><h3>Weather</h3><div class="chart"><canvas id="c-air" role="img" aria-label="Air temperature and chance of rain, next 48 hours"></canvas></div></div>
+    <div><h3>Wind</h3><div class="chart"><canvas id="c-wind" role="img" aria-label="Wind speed, gusts and direction, next 48 hours"></canvas></div></div>
+    <div><h3>Sea</h3><div class="chart"><canvas id="c-sea" role="img" aria-label="Wave and swell height, swell period and direction, next 48 hours"></canvas></div></div>
+    <div><h3>Sea temperature &amp; cloud</h3><div class="chart"><canvas id="c-sst" role="img" aria-label="Sea temperature and cloud cover, next 48 hours"></canvas></div></div>
+  </div>
+  <h3 class="wxh3">Today</h3><div class="scroll"><table class="hours" id="t-0"></table></div>
+  <h3 class="wxh3">Tomorrow</h3><div class="scroll"><table class="hours" id="t-1"></table></div>
+  <p class="caption">Waves: total sea height offshore. Swell: the longer ocean swell under it. Arrows and directions show where the wind or swell is heading.</p>
+</div></section>
+
+<section class="section dark"><div class="wrap">
+  <div class="eyebrow">Tides</div><h2>High and low tide, next 5 days.</h2>
+  <p class="lede">For rock and surf fishing, the ski-boat launch and walks along the lagoon.</p>
+  <div class="chart" style="margin-top:20px"><canvas id="c-tide" role="img" aria-label="Tide level, next 5 days"></canvas></div>
+  <div class="tides" id="tide-days"></div>
+  <p class="caption">The tide curve comes from a global ocean model, not a harbour tide gauge. Times can be out by up to an hour and the real range is bigger than shown. Check the SA Navy tide tables when it matters.</p>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="eyebrow">Live maps</div><h2>See it coming.</h2>
+  <p class="lede">Animated forecast maps from Windy, and the latest real satellite picture from EUMETSAT. Press play to run the forecast forward.</p>
+  <div class="charts">
+    <div><h3>Waves</h3><iframe class="map" title="Windy wave forecast map for the KZN South Coast" loading="lazy" src="https://embed.windy.com/embed.html?type=map&amp;location=coordinates&amp;metricRain=mm&amp;metricTemp=%C2%B0C&amp;metricWind=km/h&amp;zoom=7&amp;overlay=waves&amp;product=ecmwfWaves&amp;level=surface&amp;lat=-30.8&amp;lon=30.7&amp;marker=true&amp;detailLat=-30.5749&amp;detailLon=30.5726"></iframe></div>
+    <div><h3>Thunderstorms</h3><iframe class="map" title="Windy thunderstorm forecast map for KwaZulu-Natal" loading="lazy" src="https://embed.windy.com/embed.html?type=map&amp;location=coordinates&amp;metricRain=mm&amp;metricTemp=%C2%B0C&amp;metricWind=km/h&amp;zoom=6&amp;overlay=thunder&amp;product=ecmwf&amp;level=surface&amp;lat=-29.5&amp;lon=30&amp;marker=true&amp;detailLat=-30.5749&amp;detailLon=30.5726"></iframe></div>
+  </div>
+  <h3 class="wxh3">Satellite</h3>
+  <div id="sat" class="map" role="img" aria-label="Latest Meteosat satellite image over South Africa"></div>
+  <p class="caption">Satellite: &copy; EUMETSAT, Meteosat, refreshed every 15 minutes. Natural colour shows daylight only; switch to infrared at night (top-right button). The dot is the lodge.</p>
+</div></section>
+
+<section class="section dark"><div class="wrap">
+  <div class="eyebrow">The week ahead</div><h2>7-day outlook.</h2>
+  <div class="wx-week" id="week"></div>
+  <p class="caption">Forecast: Open-Meteo (CC BY 4.0). Swell is an offshore model, not a surf report.</p>
+  <p class="center"><a class="btn btn-gold" href="contact.html#enquiry">Book online</a></p>
+</div></section>
+</main>
+<footer><div class="wrap foot">
+  <div><div class="brand brand-f"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M6 30 32 9l26 21" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 40a12 12 0 0 1 24 0Z" fill="#c8962e"/><path d="M8 46c4-3 8-3 12 0s8 3 12 0 8-3 12 0 8 3 12 0M14 54c3-2.5 6-2.5 9 0s6 2.5 9 0 6-2.5 9 0 6 2.5 9 0" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/></svg><span class="wm">Khaya La Manzi<small>Guest Lodge &middot; B&amp;B &middot; Hibberdene</small></span></div><address>158 Riviera Highway<br>Hibberdene, KZN South Coast, 4220<br>
+    <a href="tel:+27833004725">083 300 4725</a> &middot; <a href="mailto:bookings@khayalamanzi.co.za">bookings@khayalamanzi.co.za</a></address></div>
+  <div><b>Stay</b><a href="rooms.html#lodge">The Lodge</a><a href="rooms.html#bachelor">Bachelor rooms</a><a href="rooms.html#family">Family rooms</a></div>
+  <div><b>Sea-facing apartments</b><a href="dolphin.html">Dolphin</a><a href="elephant.html">Elephant</a><a href="seahorse.html">Seahorse</a><a href="whale.html">Whale</a></div>
+  <div><b>Plan</b><a href="facilities.html">Facilities</a><a href="contact.html#directions">Directions</a><a href="weather.html">Weather &amp; sea</a><a href="terms.html">Terms &amp; Conditions</a></div>
+</div><div class="wrap small"><span>&copy; Khaya La Manzi Guest Lodge &middot; concept v1, 2026-10-05</span><span>Website by <a href="https://sites.factsmith.co.za/">FactSmith Sites</a></span></div></footer>
+<a class="btn btn-wa float-wa" href="https://wa.me/27833004725?text=Hi, I&#x27;d like to check dates at Khaya La Manzi." aria-label="WhatsApp Khaya La Manzi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1Z"/></svg><span>WhatsApp</span></a>
+<script src="site.js" defer></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // Two Open-Meteo calls (forecast + marine), 7 days hourly; the page slices 48 h for the charts and 120 h for tides.
+  // Lodge coords; marine point just offshore (the model has no data on land).
+  const LAT = -30.5749, LON = 30.5726;
+  const TZ = "&timezone=Africa%2FJohannesburg&forecast_days=7";
+  const WX = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}${TZ}`
+    + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m"
+    + "&hourly=temperature_2m,apparent_temperature,precipitation_probability,cloud_cover,uv_index,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset";
+  const SEA = `https://marine-api.open-meteo.com/v1/marine?latitude=-30.59&longitude=30.62${TZ}`
+    + "&hourly=wave_height,swell_wave_height,swell_wave_period,swell_wave_direction,sea_surface_temperature,sea_level_height_msl"
+    + "&daily=swell_wave_height_max";
+
+  const WMO = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Drizzle",53:"Drizzle",55:"Drizzle",
+    61:"Light rain",63:"Rain",65:"Heavy rain",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorms",96:"Thunderstorms",99:"Thunderstorms"};
+  const sky = c => WMO[c] ?? "Mixed";
+  const r = Math.round;
+  const n = (v, f) => v == null ? "–" : f(v);  // models leave gaps
+  const m1 = v => v.toFixed(1);
+  const compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
+  const hhmm = t => t.slice(11, 16);
+  const dayName = t => ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(t.slice(0, 10) + "T12:00").getDay()];
+  const C = { navy: "#14284b", navy2: "#1e3a66", gold: "#c8962e", sunset: "#e8743b", muted: "#5d6678", pale: "#d6e0ee", sand: "#d8c9a8" };
+
+  // High/low tide: local max/min of the hourly series, refined to the minute with a parabola through 3 points.
+  function extrema(times, v) {
+    const out = [];
+    for (let i = 1; i < v.length - 1; i++) {
+      const [a, b, c] = [v[i - 1], v[i], v[i + 1]];
+      if (a == null || b == null || c == null) continue;
+      const high = b > a && b >= c, low = b < a && b <= c;
+      if (!high && !low) continue;
+      const den = a - 2 * b + c, off = den ? 0.5 * (a - c) / den : 0;
+      const at = new Date(new Date(times[i] + ":00Z").getTime() + off * 3600e3).toISOString().slice(0, 16);  // tz-free arithmetic on local wall time
+      out.push({ i, high, at, h: b - 0.25 * (a - c) * off });
+    }
+    return out;
+  }
+  { // self-check: 2 days of a 12.42 h tide, peak at 03:00, gives 4 highs, 4 lows, first high at 03:00
+    const T = Array.from({ length: 48 }, (_, k) => `2026-01-0${1 + (k / 24 | 0)}T${String(k % 24).padStart(2, "0")}:00`);
+    const e = extrema(T, T.map((_, k) => Math.cos(2 * Math.PI * (k - 3) / 12.42)));
+    console.assert(e.filter(x => x.high).length === 4 && e.filter(x => !x.high).length === 4 && e[0].at === "2026-01-01T03:00", "tide extrema", e);
+  }
+
+  function drawCharts(w, m) {
+    Chart.defaults.font.family = "Manrope, sans-serif";
+    Chart.defaults.color = C.muted;
+    const H = 48;
+    const labels = w.hourly.time.slice(0, H).map(x => dayName(x) + " " + hhmm(x));
+    const s = (o, k) => o.hourly[k].slice(0, H);
+    const opts = (y, y2) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { boxWidth: 12 } } },
+      scales: { x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } }, y: { title: { display: true, text: y }, beginAtZero: true },
+        ...(y2 && { y2: { position: "right", title: { display: true, text: y2 }, grid: { drawOnChartArea: false }, beginAtZero: true } }) } });
+    const line = (label, d, color, more) => ({ type: "line", label, data: d, borderColor: color, backgroundColor: color, pointRadius: 0, tension: .3, borderWidth: 2, ...more });
+    // Direction arrows every 3 h. The arrow image points up; Chart.js rotates it by (from + 180) so it points the way the wind/swell travels.
+    const arrow = color => { const c = document.createElement("canvas"), g = c.getContext("2d"); c.width = c.height = 16;
+      g.fillStyle = color; g.beginPath(); g.moveTo(8, 0); g.lineTo(15, 15); g.lineTo(8, 11); g.lineTo(1, 15); g.closePath(); g.fill(); return c; };
+    const arrows = (dir, color) => ({ pointStyle: arrow(color), rotation: dir.map(d => (d ?? 0) + 180), pointRadius: dir.map((d, i) => i % 3 || d == null ? 0 : 8), pointHoverRadius: 8 });
+    const from = (dir, label) => ({ afterBody: ([it]) => { const d = dir[it.dataIndex]; return d == null ? "" : `${label} from ${compass(d)} (${r(d)}°)`; } });
+    const pct = o => (o.scales.y.beginAtZero = false, o.scales.y2.max = 100, o);
+
+    const windDir = s(w, "wind_direction_10m"), swellDir = s(m, "swell_wave_direction");
+    const windOpts = opts("km/h"), seaOpts = opts("metres", "seconds");
+    windOpts.plugins.tooltip = { callbacks: from(windDir, "Wind") };
+    windOpts.plugins.subtitle = { display: true, text: "Arrows show which way the wind blows" };
+    seaOpts.plugins.tooltip = { callbacks: from(swellDir, "Swell") };
+    seaOpts.plugins.subtitle = { display: true, text: "Arrows show which way the swell is travelling" };
+
+    new Chart("c-air", { type: "bar", data: { labels, datasets: [
+      { label: "Rain chance (%)", data: s(w, "precipitation_probability"), backgroundColor: C.pale, yAxisID: "y2", order: 2 },
+      line("Air (°C)", s(w, "temperature_2m"), C.sunset),
+      line("Feels like (°C)", s(w, "apparent_temperature"), C.muted, { borderDash: [4, 3] }) ] }, options: pct(opts("°C", "%")) });
+    new Chart("c-wind", { type: "bar", data: { labels, datasets: [
+      { label: "Wind (km/h)", data: s(w, "wind_speed_10m"), backgroundColor: C.navy2, order: 2 },
+      line("Gusts (km/h)", s(w, "wind_gusts_10m"), C.navy, { borderDash: [4, 3], ...arrows(windDir, C.gold) }) ] }, options: windOpts });
+    new Chart("c-sea", { type: "bar", data: { labels, datasets: [
+      { label: "Waves (m)", data: s(m, "wave_height"), backgroundColor: C.pale, order: 2 },
+      line("Swell (m)", s(m, "swell_wave_height"), C.navy, arrows(swellDir, C.navy)),
+      line("Swell period (s)", s(m, "swell_wave_period"), C.gold, { yAxisID: "y2" }) ] }, options: seaOpts });
+    new Chart("c-sst", { type: "line", data: { labels, datasets: [
+      line("Sea (°C)", s(m, "sea_surface_temperature"), C.navy),
+      line("Cloud (%)", s(w, "cloud_cover"), C.sand, { yAxisID: "y2", fill: true, backgroundColor: "rgba(216,201,168,.25)" }) ] },
+      options: (o => (o.scales.y.grace = 1, o))(pct(opts("°C", "%"))) });  // grace: a 0.3° wobble shouldn't fill the chart
+
+    const TH = 120, tt = m.hourly.time.slice(0, TH), lv = m.hourly.sea_level_height_msl.slice(0, TH), ex = new Map(extrema(tt, lv).map(e => [e.i, e]));
+    new Chart("c-tide", { type: "line", data: { labels: tt.map(x => dayName(x) + " " + hhmm(x)), datasets: [
+      line("Tide (m)", lv, C.navy, { fill: "start", backgroundColor: "rgba(20,40,75,.12)" }),
+      { type: "line", label: "High / low", data: lv.map((v, i) => ex.has(i) ? v : null), showLine: false, pointRadius: 5,
+        pointBackgroundColor: lv.map((_, i) => ex.get(i)?.high ? C.gold : C.navy), borderColor: "transparent" } ] },
+      options: (o => (o.scales.y.beginAtZero = false, o))(opts("metres")) });
+  }
+
+  function table(day, w, m, nowIdx, tide) {
+    const rows = [];
+    for (let i = day * 24; i < day * 24 + 24; i++) {
+      const dl = tide[i + 1] - tide[i - 1];
+      rows.push(`<tr class="${i < nowIdx ? "past" : i === nowIdx ? "now" : ""}">
+        <td>${hhmm(w.time[i])}</td><td>${sky(w.weather_code[i])}</td>
+        <td>${r(w.temperature_2m[i])}&deg;</td><td>${w.precipitation_probability[i] ?? 0}%</td>
+        <td>${r(w.wind_speed_10m[i])} <small>/ ${r(w.wind_gusts_10m[i])}</small></td><td>${compass(w.wind_direction_10m[i])}</td>
+        <td>${n(m.wave_height[i], m1)} m</td>
+        <td>${n(m.swell_wave_height[i], m1)} m <small>${n(m.swell_wave_period[i], r)} s ${n(m.swell_wave_direction[i], compass)}</small></td>
+        <td>${n(tide[i], m1)} m ${isNaN(dl) ? "" : dl > 0 ? "&uarr;" : "&darr;"}</td>
+        <td>${n(w.uv_index[i], r)}</td></tr>`);
+    }
+    return `<thead><tr><th>Time</th><th>Sky</th><th>Air</th><th>Rain</th><th>Wind km/h</th><th>From</th><th>Waves</th><th>Swell</th><th>Tide</th><th>UV</th></tr></thead><tbody>${rows.join("")}</tbody>`;
+  }
+
+  const tile = (title, big, ...rows) => `<div class="wx"><div class="d">${title}</div><div class="t">${big}</div>${rows.map(x => `<div class="r">${x}</div>`).join("")}</div>`;
+
+  (async () => {
+    const now = document.getElementById("now");
+    try {
+      const [w, m] = await Promise.all([WX, SEA].map(u => fetch(u).then(x => { if (!x.ok) throw x.status; return x.json(); })));
+      const H = w.hourly, M = m.hourly, cur = w.current, d = w.daily;
+      const ni = Math.max(0, H.time.findIndex(x => x > cur.time) - 1);
+      const tide = M.sea_level_height_msl;
+      const next = extrema(M.time, tide).find(e => e.at > cur.time);
+
+      now.innerHTML = [
+        tile("Now", `${r(cur.temperature_2m)}&deg;`, sky(cur.weather_code), `Feels like ${r(cur.apparent_temperature)}&deg;`),
+        tile("Wind", `${r(cur.wind_speed_10m)} <span>km/h</span>`, `From ${compass(cur.wind_direction_10m)}`, `Gusts ${r(cur.wind_gusts_10m)} km/h`),
+        tile("Sea", `${n(M.wave_height[ni], m1)} <span>m</span>`, `Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}`),
+        tile("Water", `${n(M.sea_surface_temperature[ni], r)}&deg;`, "Sea temperature"),
+        tile("Next tide", next ? hhmm(next.at) : "–", next ? (next.high ? "High tide" : "Low tide") : ""),
+        tile("Daylight", `${hhmm(d.sunrise[0])} <span>/ ${hhmm(d.sunset[0])}</span>`, `UV max ${r(d.uv_index_max[0])}`),
+      ].join("");
+
+      [0, 1].forEach(day => document.getElementById("t-" + day).innerHTML = table(day, H, M, ni, tide));
+
+      const ex = extrema(M.time.slice(0, 120), tide.slice(0, 120));
+      document.getElementById("tide-days").innerHTML = d.time.slice(0, 5).map((day, i) => `<div class="wx">
+        <div class="d">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(day)}</div>
+        ${ex.filter(e => e.at.startsWith(day)).map(e => `<div class="r"><span>${e.high ? "High" : "Low"}</span><b>${hhmm(e.at)}</b><span>${m1(e.h)} m</span></div>`).join("")}
+      </div>`).join("");
+
+      // Same 7-day cards as the homepage strip.
+      const sst = M.sea_surface_temperature;
+      document.getElementById("week").innerHTML = d.time.map((t, i) => {
+        const day = sst.slice(i * 24, i * 24 + 24).filter(x => x != null), sea = day.length ? r(day.reduce((a, b) => a + b) / day.length) : null;
+        return `<div class="wx"><div class="d">${i ? dayName(t) : "Today"}</div>
+          <div class="t">${r(d.temperature_2m_max[i])}&deg; <span>/ ${r(d.temperature_2m_min[i])}&deg;</span></div>
+          <div class="r">${sky(d.weather_code[i])} &middot; ${d.precipitation_probability_max[i]}% rain</div>
+          <div class="r">${sea != null ? `Sea ${sea}&deg; &middot; ` : ""}swell ${m1(m.daily.swell_wave_height_max[i])} m</div>
+          <div class="r">UV ${r(d.uv_index_max[i])} &middot; wind ${r(d.wind_speed_10m_max[i])} km/h</div></div>`;
+      }).join("");
+
+      drawCharts(w, m);
+    } catch (e) {
+      console.error(e);
+      now.innerHTML = "<p>Forecast unavailable right now. Try again shortly.</p>";
+    }
+  })();
+
+  // EUMETSAT WMS (free, no key). Natural colour by day, infrared (works at night) otherwise; coastline drawn on top.
+  {
+    const wms = (layers, more) => L.tileLayer.wms("https://view.eumetsat.int/geoserver/wms", { layers, format: "image/png", transparent: true, attribution: "&copy; EUMETSAT", ...more });
+    const sast = (new Date().getUTCHours() + 2) % 24;
+    const natural = wms("msg_fes:rgb_naturalenhncd"), infrared = wms("msg_fes:ir108");
+    const map = L.map("sat", { scrollWheelZoom: false, layers: [sast >= 6 && sast < 18 ? natural : infrared] }).setView([-30, 28], 5);
+    wms("backgrounds:ne_10m_coastline", { zIndex: 10 }).addTo(map);
+    L.control.layers({ "Natural colour": natural, "Infrared": infrared }).addTo(map);
+    L.circleMarker([LAT, LON], { radius: 6, color: "#fff", fillColor: C.gold, fillOpacity: 1, weight: 2 }).addTo(map);
+  }
+</script>
+</body>
+</html>
