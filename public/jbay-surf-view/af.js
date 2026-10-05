@@ -248,6 +248,12 @@ const AF = {
   "Waves (ft)": "Branders (vt)", "Swell (ft)": "Deining (vt)", "2nd swell (ft)": "2de deining (vt)", "Swell period (s)": "Deiningperiode (s)",
   "Wind (km/h)": "Wind (km/h)", "Gusts (km/h)": "Rukwinde (km/h)", "Rain chance (%)": "Kans op reën (%)", "Air (°C)": "Lug (°C)",
   "Feels like (°C)": "Voel soos (°C)", "Sea (°C)": "See (°C)", "Cloud (%)": "Wolke (%)", "Tide (m)": "Gety (m)", "High / low": "Hoog / laag",
+  "Live maps": "Regstreekse kaarte", "See it coming.": "Sien dit aankom.", "Thunderstorms": "Donderstorms", "Satellite": "Satelliet",
+  "Animated forecast maps from Windy, and the latest real satellite picture from EUMETSAT. Press play to run the forecast forward.": "Geanimeerde voorspellingskaarte van Windy, en die nuutste werklike satellietbeeld van EUMETSAT. Druk speel om die voorspelling vorentoe te laat loop.",
+  "Satellite: © EUMETSAT, Meteosat, refreshed every 15 minutes. Natural colour shows daylight only; switch to infrared at night (top-right button). The dot is the house.": "Satelliet: © EUMETSAT, Meteosat, elke 15 minute bygewerk. Natuurlike kleur wys net bedags; skakel snags oor na infrarooi (knoppie regs bo). Die kolletjie is die huis.",
+  "Latest Meteosat satellite image over South Africa": "Nuutste Meteosat-satellietbeeld oor Suid-Afrika",
+  "Windy wave forecast map for Jeffreys Bay": "Windy-branderkaart vir Jeffreysbaai",
+  "Windy thunderstorm forecast map for South Africa": "Windy-donderstormkaart vir Suid-Afrika",
   "feet": "voet", "seconds": "sekondes", "metres": "meter",
   "Bar colour: green offshore, orange onshore, grey cross-shore": "Staafkleur: groen aflandig, oranje aanlandig, grys dwarswind"
 };

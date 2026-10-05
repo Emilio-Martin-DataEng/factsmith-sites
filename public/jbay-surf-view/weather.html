@@ -85,6 +85,8 @@
   .legend div{background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px; font-size:.9rem; color:var(--muted);}
   .legend b{display:block; color:var(--ink); margin-bottom:4px;}
 
+  .map{display:block; width:100%; height:420px; border:0; border-radius:16px; background:var(--sand-2); margin-top:12px;}
+
   footer{background:#0a2027; color:#8fa5aa; font-size:.85rem; padding-block:28px;}
   footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px;}
 </style>
@@ -157,6 +159,23 @@
   </div>
 </section>
 
+<section class="section" id="maps">
+  <div class="wrap">
+    <div class="eyebrow">Live maps</div>
+    <h2>See it coming.</h2>
+    <p class="lede">Animated forecast maps from Windy, and the latest real satellite picture from EUMETSAT. Press play to run the forecast forward.</p>
+    <div class="charts">
+      <div><h3>Waves</h3><iframe class="map" title="Windy wave forecast map for Jeffreys Bay" loading="lazy"
+        src="https://embed.windy.com/embed.html?type=map&amp;location=coordinates&amp;metricRain=mm&amp;metricTemp=%C2%B0C&amp;metricWind=km/h&amp;zoom=7&amp;overlay=waves&amp;product=ecmwfWaves&amp;level=surface&amp;lat=-34.3&amp;lon=24.9&amp;marker=true&amp;detailLat=-34.05&amp;detailLon=24.93"></iframe></div>
+      <div><h3>Thunderstorms</h3><iframe class="map" title="Windy thunderstorm forecast map for South Africa" loading="lazy"
+        src="https://embed.windy.com/embed.html?type=map&amp;location=coordinates&amp;metricRain=mm&amp;metricTemp=%C2%B0C&amp;metricWind=km/h&amp;zoom=5&amp;overlay=thunder&amp;product=ecmwf&amp;level=surface&amp;lat=-31&amp;lon=25&amp;marker=true&amp;detailLat=-34.05&amp;detailLon=24.93"></iframe></div>
+    </div>
+    <h3>Satellite</h3>
+    <div id="sat" class="map" role="img" aria-label="Latest Meteosat satellite image over South Africa"></div>
+    <p class="caption">Satellite: &copy; EUMETSAT, Meteosat, refreshed every 15 minutes. Natural colour shows daylight only; switch to infrared at night (top-right button). The dot is the house.</p>
+  </div>
+</section>
+
 <section class="section">
   <div class="wrap">
     <div class="eyebrow">The week ahead</div>
@@ -176,6 +195,20 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // EUMETSAT WMS (free, no key). Natural colour by day, infrared (works at night) otherwise; coastline drawn on top.
+  {
+    const wms = (layers, more) => L.tileLayer.wms("https://view.eumetsat.int/geoserver/wms", { layers, format: "image/png", transparent: true, attribution: "&copy; EUMETSAT", ...more });
+    const sast = (new Date().getUTCHours() + 2) % 24;
+    const natural = wms("msg_fes:rgb_naturalenhncd"), infrared = wms("msg_fes:ir108");
+    const map = L.map("sat", { scrollWheelZoom: false, layers: [sast >= 7 && sast < 18 ? natural : infrared] }).setView([-33, 25], 5);
+    wms("backgrounds:ne_10m_coastline", { zIndex: 10 }).addTo(map);
+    L.control.layers({ "Natural colour": natural, "Infrared": infrared }).addTo(map);
+    L.circleMarker([-34.028, 24.927], { radius: 6, color: "#fff", fillColor: "#e2683f", fillOpacity: 1, weight: 2 }).addTo(map);
+  }
+</script>
 <script>
   // Two Open-Meteo calls (forecast + marine), 7 days hourly; the page slices 48 h for surf and 120 h for tides.
   const WX = "https://api.open-meteo.com/v1/forecast?latitude=-34.028&longitude=24.927&timezone=Africa%2FJohannesburg&forecast_days=7"
