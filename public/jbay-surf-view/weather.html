@@ -281,17 +281,30 @@
       scales: { x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } }, y: { title: { display: true, text: t(y) }, beginAtZero: true },
         ...(y2 && { y2: { position: "right", title: { display: true, text: t(y2) }, grid: { drawOnChartArea: false }, beginAtZero: true } }) } });
     const line = (label, d, color, more) => ({ type: "line", label: t(label), data: d, borderColor: color, backgroundColor: color, pointRadius: 0, tension: .3, borderWidth: 2, ...more });
+    // Direction arrows every 3 h. The arrow image points up; Chart.js rotates it by (from + 180) so it points the way the swell/wind travels.
+    const arrow = color => { const c = document.createElement("canvas"), g = c.getContext("2d"); c.width = c.height = 16;
+      g.fillStyle = color; g.beginPath(); g.moveTo(8, 0); g.lineTo(15, 15); g.lineTo(8, 11); g.lineTo(1, 15); g.closePath(); g.fill(); return c; };
+    const arrows = (dir, color) => ({ pointStyle: dir.map(d => arrow(typeof color === "function" ? color(d) : color)),
+      rotation: dir.map(d => (d ?? 0) + 180), pointRadius: dir.map((d, i) => i % 3 || d == null ? 0 : 8), pointHoverRadius: 8 });
+    const from = (dir, label, tag) => ({ afterBody: ([it]) => { const d = dir[it.dataIndex]; return d == null ? "" :
+      `${t(label)} ${t("from")} ${compass(d)} (${r(d)}°)${tag ? " · " + t(windTag(d)[1]) : ""}`; } });
+    const swellDir = s(m, "swell_wave_direction"), swell2Dir = s(m, "secondary_swell_wave_direction"), windDir = s(w, "wind_direction_10m");
+    const surfOpts = opts("feet", "seconds"), windOpts = opts("km/h");
+    surfOpts.plugins.tooltip = { callbacks: from(swellDir, "Swell") };
+    surfOpts.plugins.subtitle = { display: true, text: t("Arrows show which way the swell is travelling") };
+    windOpts.plugins.tooltip = { callbacks: from(windDir, "Wind", true) };
+    windOpts.plugins.subtitle = { display: true, text: t("Arrows show which way the wind blows. Green offshore, orange onshore, grey cross-shore") };
 
     charts = [
       new Chart("c-surf", { type: "bar", data: { labels, datasets: [
-        { label: t("Waves (ft)"), data: s(m, "wave_height").map(v => n(v, x => x * 3.28)), backgroundColor: "#cfe0e4" },
-        line("Swell (ft)", s(m, "swell_wave_height").map(v => n(v, x => x * 3.28)), C.ocean),
-        line("2nd swell (ft)", s(m, "secondary_swell_wave_height").map(v => n(v, x => x * 3.28)), C.sky, { borderDash: [4, 3] }),
-        line("Swell period (s)", s(m, "swell_wave_period"), C.coral, { yAxisID: "y2" }) ] }, options: opts("feet", "seconds") }),
+        { label: t("Waves (ft)"), data: s(m, "wave_height").map(v => n(v, x => x * 3.28)), backgroundColor: "#cfe0e4", order: 2 },
+        line("Swell (ft)", s(m, "swell_wave_height").map(v => n(v, x => x * 3.28)), C.ocean, arrows(swellDir, C.ocean)),
+        line("2nd swell (ft)", s(m, "secondary_swell_wave_height").map(v => n(v, x => x * 3.28)), C.sky, { borderDash: [4, 3], ...arrows(swell2Dir, C.sky) }),
+        line("Swell period (s)", s(m, "swell_wave_period"), C.coral, { yAxisID: "y2" }) ] }, options: surfOpts }),
       new Chart("c-wind", { type: "bar", data: { labels, datasets: [
-        { label: t("Wind (km/h)"), data: s(w, "wind_speed_10m"), backgroundColor: s(w, "wind_direction_10m").map(d => TAGC[windTag(d)[0]]) },
-        line("Gusts (km/h)", s(w, "wind_gusts_10m"), C.ocean, { borderDash: [4, 3] }) ] },
-        options: { ...opts("km/h"), plugins: { legend: { labels: { boxWidth: 12 } }, subtitle: { display: true, text: t("Bar colour: green offshore, orange onshore, grey cross-shore") } } } }),
+        { label: t("Wind (km/h)"), data: s(w, "wind_speed_10m"), backgroundColor: windDir.map(d => TAGC[windTag(d)[0]]), order: 2 },
+        line("Gusts (km/h)", s(w, "wind_gusts_10m"), C.ocean, { borderDash: [4, 3], ...arrows(windDir, d => TAGC[windTag(d)[0]]) }) ] },
+        options: windOpts }),
       new Chart("c-air", { type: "bar", data: { labels, datasets: [
         { label: t("Rain chance (%)"), data: s(w, "precipitation_probability"), backgroundColor: "#cfe0e4", yAxisID: "y2" },
         line("Air (°C)", s(w, "temperature_2m"), C.coral),

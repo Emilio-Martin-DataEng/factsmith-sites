@@ -255,7 +255,8 @@ const AF = {
   "Windy wave forecast map for Jeffreys Bay": "Windy-branderkaart vir Jeffreysbaai",
   "Windy thunderstorm forecast map for South Africa": "Windy-donderstormkaart vir Suid-Afrika",
   "feet": "voet", "seconds": "sekondes", "metres": "meter",
-  "Bar colour: green offshore, orange onshore, grey cross-shore": "Staafkleur: groen aflandig, oranje aanlandig, grys dwarswind"
+  "Arrows show which way the swell is travelling": "Pyltjies wys in watter rigting die deining beweeg",
+  "Arrows show which way the wind blows. Green offshore, orange onshore, grey cross-shore": "Pyltjies wys in watter rigting die wind waai. Groen aflandig, oranje aanlandig, grys dwarswind"
 };
 
 const ATTRS = ["alt", "placeholder", "aria-label", "title"];
