@@ -146,6 +146,22 @@ export const samples = [
  */
 export const inProcess = [
   {
+    slug: "khaya-la-manzi",
+    title: "Khaya La Manzi Guest Lodge",
+    kind: "Hibberdene · South Coast",
+    package: "In process · preview live",
+    blurb:
+      "Overhaul of a table-layout site that wasn't mobile and had no tap-to-call. Ten pages with a page per sea-facing apartment, NightsBridge booking buttons, WhatsApp on every unit, live weather and sea temperature, and a new sunset logo. Approved; photo shoot next.",
+    previewUrl: "https://sites.factsmith.co.za/khaya-la-manzi/",
+    hero: "/images/work/khaya/deck.jpg",
+    heroAlt: "Breakfast table on a Khaya La Manzi deck above the palms and the Indian Ocean",
+    images: [
+      { src: "/images/work/khaya/lodge.jpg", alt: "Khaya La Manzi lodge building at dusk" },
+      { src: "/images/work/khaya/dolphin.jpg", alt: "Sea-facing bedroom in the Dolphin apartment" },
+    ],
+    currentUrl: "https://khayalamanzi.co.za",
+  },
+  {
     slug: "henton",
     title: "Henton Timber Homes",
     kind: "Melkbosstrand · timber construction",
