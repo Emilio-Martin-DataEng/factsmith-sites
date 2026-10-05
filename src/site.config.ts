@@ -54,6 +54,7 @@ export const launchOffer = {
 
 export const nav = [
   { label: "Work", href: "/work" },
+  { label: "Included", href: "/included" },
   { label: "Method", href: "/method" },
   { label: "Offer", href: "/offer" },
   { label: "South Coast", href: "/south-coast" },
@@ -130,7 +131,7 @@ export const samples = [
     kind: "Live client — Umtentweni, South Coast",
     url: "https://eaglesroost.co.za",
     blurb:
-      "Heritage Port Master’s House above the Umzimkulu. WhatsApp-first booking, rooms and rates, experiences and guest recommendations on the home page.",
+      "Heritage Port Master’s House above the Umzimkulu. WhatsApp-first booking, rooms and rates, experiences and guest recommendations on the home page. New: an hour-by-hour weather page with tides, Windy wave and storm maps and a live satellite view.",
     hero: "/images/work/eagles-roost/hero.jpg",
     heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
     images: [
@@ -151,7 +152,7 @@ export const inProcess = [
     kind: "Hibberdene · South Coast",
     package: "In process · preview live",
     blurb:
-      "Overhaul of a table-layout site that wasn't mobile and had no tap-to-call. Ten pages with a page per sea-facing apartment, NightsBridge booking buttons, WhatsApp on every unit, live weather and sea temperature, and a new sunset logo. Approved; photo shoot next.",
+      "Overhaul of a table-layout site that wasn't mobile and had no tap-to-call. Ten pages with a page per sea-facing apartment, NightsBridge booking buttons, WhatsApp on every unit, an hour-by-hour weather page with sea temperature, tides, Windy maps and satellite, and a new sunset logo. Approved; photo shoot next.",
     previewUrl: "https://sites.factsmith.co.za/khaya-la-manzi/",
     hero: "/images/work/khaya/deck.jpg",
     heroAlt: "Breakfast table on a Khaya La Manzi deck above the palms and the Indian Ocean",
@@ -197,7 +198,7 @@ export const inProcess = [
     kind: "Jeffreys Bay · three self-catering surf flats",
     package: "Concept · preview live",
     blurb:
-      "Built from a digital presence audit: WhatsApp on every flat, live availability calendar per unit, surf guide, weather and swell forecast, EN/AF toggle. Concept preview, not yet approved by the owner.",
+      "Built from a digital presence audit: WhatsApp on every flat, live availability calendar per unit, surf guide, hourly surf and weather forecast with swell and wind direction, tides, Windy wave and storm maps, EUMETSAT satellite, EN/AF toggle. Concept preview, not yet approved by the owner.",
     previewUrl: "https://sites.factsmith.co.za/jbay-surf-view/",
     hero: "/images/work/jbay-surf-view/hero-deck.jpg",
     heroAlt: "JBay Surf View deck looking over the bay",
@@ -231,6 +232,21 @@ export const inProcess = [
     heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
     images: [{ src: "/images/work/secure-electric-fencing/warning.jpg", alt: "Warning electric fence sign on a post (stock photo)" }],
   },
+  {
+    slug: "pollution-control-services",
+    title: "Pollution Control Services",
+    kind: "Jeffreys Bay · 24/7 industrial cleaning and hazmat response",
+    package: "Concept · preview live",
+    blurb:
+      "Full concept site for a 175-staff industrial cleaner: services by job, fleet, compliance, areas and case studies, with a Fleet Live demo page that maps the trucks. Not yet approved.",
+    previewUrl: "https://sites.factsmith.co.za/pollution-control-services/",
+    hero: "/images/work/pollution-control-services/hero.jpg",
+    heroAlt: "Pollution Control Services super sucker truck on site",
+    images: [
+      { src: "/images/work/pollution-control-services/jetting-unit.jpg", alt: "High-pressure jetting unit" },
+      { src: "/images/work/pollution-control-services/fleet-line.jpg", alt: "Pollution Control Services fleet lined up" },
+    ],
+  },
 ] as const;
 
 /** Free opener for prospects — lighter than the Henton Timber Homes deep audit. */
@@ -244,6 +260,44 @@ export const freeAuditPack = {
   ],
   nextStep: "If they like the sample: R4 000 pack (deposit + domain form).",
 } as const;
+
+/**
+ * Standard on every FactSmith site, from the first build — not add-ons.
+ * Shown on /included. `example` links to a live page that shows it.
+ */
+export const standardFeatures = [
+  {
+    title: "Map and directions",
+    text: "Your pin on a live map, with one-tap Google Maps directions to the door.",
+    example: { label: "Eagle’s Roost contact", href: "https://eaglesroost.co.za/contact/" },
+  },
+  {
+    title: "Fly-to",
+    text: "The map opens on the region and flies in to your door, so visitors see where you are before they read the address.",
+  },
+  {
+    title: "Live weather",
+    text: "Hour-by-hour charts for today and tomorrow, a 7-day outlook, sea temperature and tides, animated Windy wave and storm maps, and the latest satellite picture.",
+    example: { label: "Eagle’s Roost weather", href: "https://eaglesroost.co.za/weather/" },
+  },
+  {
+    title: "SEO",
+    text: "Fast static pages, a title and description on every page, sitemap, robots.txt, and schema.org data for your business, address and reviews.",
+  },
+  {
+    title: "GEO — generative engine optimisation",
+    text: "An llms.txt file with your key facts, and plain factual pages, so ChatGPT, Gemini and Perplexity can describe you correctly.",
+    example: { label: "Sasta Hill llms.txt", href: "https://sastahill.co.za/llms.txt" },
+  },
+  {
+    title: "AEO — answer engine optimisation",
+    text: "Real questions answered in a FAQ with FAQPage schema, so Google and voice assistants can quote the answer and name you.",
+  },
+  {
+    title: "WhatsApp and tap-to-call",
+    text: "A WhatsApp button and a tap-to-call number on every page, built for the phone first.",
+  },
+] as const;
 
 export const methodSteps = [
   {

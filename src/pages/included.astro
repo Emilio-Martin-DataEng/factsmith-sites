@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { standardFeatures } from "../site.config";
+---
+
+<BaseLayout
+  title="Included"
+  description="Standard on every FactSmith site from day one: map and directions, fly-to, live weather, SEO, GEO and AEO, WhatsApp and tap-to-call."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <h1 class="font-display text-4xl font-semibold text-ink-900">Included on every site</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-700">
+      Built in from the first build, not sold as add-ons. Every FactSmith site gets all of these.
+    </p>
+
+    <ul class="mt-12 grid gap-6 sm:grid-cols-2">
+      {
+        standardFeatures.map((feature) => (
+          <li class="rounded-2xl border border-sea-100 bg-white p-5 shadow-sm sm:p-6">
+            <h2 class="font-display text-lg font-semibold text-ink-900">{feature.title}</h2>
+            <p class="mt-1 text-sm leading-relaxed text-ink-700 sm:text-base">{feature.text}</p>
+            {"example" in feature ? (
+              <a
+                href={feature.example.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-3 inline-flex text-sm font-semibold text-sea-700 hover:text-sea-500"
+              >
+                See it: {feature.example.label} →
+              </a>
+            ) : null}
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-12 flex flex-wrap items-center gap-4">
+      <WhatsAppButton label="Start with a WhatsApp" />
+      <a href="/work" class="text-sm font-semibold text-sea-700 hover:text-sea-500">See the work →</a>
+    </div>
+  </section>
+</BaseLayout>
