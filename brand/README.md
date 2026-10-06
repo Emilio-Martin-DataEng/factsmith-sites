@@ -5,7 +5,7 @@ Two brands live in this repo. Keep them apart, and copy from here instead of red
 ## 1. FactSmith (the product): use on demos, audits, proposals and FactSmith-branded pages
 
 - **Mark:** an Ember spark rising off an anvil bar. Files: `factsmith/mark.svg` (light backgrounds) and `factsmith/mark-on-dark.svg`.
-  Copied verbatim from the live site mark (vault `wiki/factsmith/marketing/facebook-page/render/profile.html`). The source of truth is `src/dashboard/src/brand/LogoMark.tsx` in the product repo.
+  Copied verbatim from the live site mark (vault `wiki/factsmith/marketing/facebook-page/render/profile.html`). The source of truth is `src/dashboard/src/brand/LogoMark.tsx` in the product repo (`C:/Users/Emilio/FactSmith`); same geometry, checked 2026-10-06. Website favicons and OG card: `factsmith-website/assets/brand/`.
 - **Wordmark:** "FactSmith" in Sora 600, letter-spacing -0.03em, ink. The wordmark is never Ember.
 - **Colour:**
   - Ember `#F26F1E` (dark mode `#FF8A3D`). The spark and the accent only, at most 10%.
