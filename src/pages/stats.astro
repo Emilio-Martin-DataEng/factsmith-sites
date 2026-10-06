@@ -1,0 +1,297 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Stats" description="Private site statistics." noindex>
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h1 class="font-display text-3xl font-semibold text-ink-900">Site stats</h1>
+        <p class="mt-1 text-sm text-ink-500">Private. Sign in with a Google account that has access to the GA4 property.</p>
+      </div>
+      <div id="controls" class="hidden flex-wrap items-center gap-3">
+        <label class="text-sm text-ink-700">Site
+          <select id="site" class="ml-1 rounded-md border border-sea-200 bg-white px-2 py-1 text-sm"></select>
+        </label>
+        <label class="text-sm text-ink-700">Range
+          <select id="days" class="ml-1 rounded-md border border-sea-200 bg-white px-2 py-1 text-sm">
+            <option value="7">Last 7 days</option>
+            <option value="28" selected>Last 28 days</option>
+            <option value="90">Last 90 days</option>
+          </select>
+        </label>
+        <button id="signout" class="text-sm text-sea-700 underline hover:text-sea-500">Sign out</button>
+      </div>
+    </div>
+
+    <div id="signin" class="mt-10">
+      <button id="signin-btn" class="rounded-full bg-sea-600 px-5 py-2.5 font-semibold text-white hover:bg-sea-700">Sign in with Google</button>
+    </div>
+
+    <p id="status" class="mt-6 text-sm text-ink-700" role="status"></p>
+
+    <div id="dash" class="hidden">
+      <div id="kpis" class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4"></div>
+
+      <div class="mt-8 rounded-xl border border-sea-100 bg-white p-5">
+        <h2 class="font-display text-lg font-semibold text-ink-900">Sessions per day</h2>
+        <div id="chart" class="relative mt-4"></div>
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-2">
+        <div class="rounded-xl border border-sea-100 bg-white p-5">
+          <h2 class="font-display text-lg font-semibold text-ink-900">Top pages</h2>
+          <table id="t-pages" class="mt-3 w-full text-sm"></table>
+        </div>
+        <div class="rounded-xl border border-sea-100 bg-white p-5">
+          <h2 class="font-display text-lg font-semibold text-ink-900">Where visitors came from</h2>
+          <table id="t-sources" class="mt-3 w-full text-sm"></table>
+        </div>
+        <div class="rounded-xl border border-sea-100 bg-white p-5">
+          <h2 class="font-display text-lg font-semibold text-ink-900">Countries</h2>
+          <table id="t-countries" class="mt-3 w-full text-sm"></table>
+        </div>
+        <div class="rounded-xl border border-sea-100 bg-white p-5">
+          <h2 class="font-display text-lg font-semibold text-ink-900">Google searches</h2>
+          <p id="gsc-summary" class="mt-1 text-xs text-ink-500"></p>
+          <table id="t-queries" class="mt-3 w-full text-sm"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+  // Public by design: the OAuth client ID and GA4 property IDs are not secrets.
+  // Data access is enforced by Google — only accounts granted on the GA4 property
+  // (and Search Console property) get rows back.
+  const CLIENT_ID = "100784841708-0upqda0t9akcchhnehdi2g2nj4m4faqa.apps.googleusercontent.com";
+  const SITES = [
+    { name: "Eagle's Roost", ga4: "556065843", gsc: "sc-domain:eaglesroost.co.za" },
+  ];
+  const SCOPES =
+    "https://www.googleapis.com/auth/analytics.readonly https://www.googleapis.com/auth/webmasters.readonly";
+
+  const $ = (id: string) => document.getElementById(id)!;
+  const siteSel = $("site") as HTMLSelectElement;
+  const daysSel = $("days") as HTMLSelectElement;
+  const status = (msg: string) => ($("status").textContent = msg);
+  SITES.forEach((s, i) => siteSel.add(new Option(s.name, String(i))));
+
+  let token = "";
+  try {
+    const saved = JSON.parse(sessionStorage.getItem("stats-token") || "null");
+    if (saved && saved.exp > Date.now()) token = saved.token;
+  } catch {}
+
+  let tokenClient: any;
+  function signIn() {
+    const g = (window as any).google;
+    if (!g?.accounts?.oauth2) return status("Google sign-in still loading, try again in a second.");
+    tokenClient ??= g.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      callback: (r: any) => {
+        if (r.error) return status(`Sign-in failed: ${r.error}`);
+        token = r.access_token;
+        try {
+          sessionStorage.setItem("stats-token", JSON.stringify({ token, exp: Date.now() + (r.expires_in - 60) * 1000 }));
+        } catch {}
+        load();
+      },
+    });
+    tokenClient.requestAccessToken({ prompt: "" });
+  }
+
+  function signOut() {
+    (window as any).google?.accounts?.oauth2?.revoke(token, () => {});
+    token = "";
+    try { sessionStorage.removeItem("stats-token"); } catch {}
+    $("dash").classList.add("hidden");
+    $("controls").classList.add("hidden");
+    $("signin").classList.remove("hidden");
+    status("Signed out.");
+  }
+
+  async function api(url: string, body: unknown) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (res.status === 401) {
+      token = "";
+      try { sessionStorage.removeItem("stats-token"); } catch {}
+      throw new Error("Session expired. Sign in again.");
+    }
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.error?.message || res.statusText);
+    return json;
+  }
+
+  const ymd = (d: Date) => d.toLocaleDateString("en-CA"); // local YYYY-MM-DD, matches GA property timezone (SAST)
+  const daysAgo = (n: number) => new Date(Date.now() - n * 864e5);
+  const fmt = (n: number) => Math.round(n).toLocaleString("en-ZA");
+  const num = (row: any, i: number) => Number(row?.metricValues?.[i]?.value ?? 0);
+
+  async function load() {
+    const site = SITES[Number(siteSel.value)];
+    const days = Number(daysSel.value);
+    $("signin").classList.add("hidden");
+    $("controls").classList.remove("hidden");
+    $("controls").classList.add("flex");
+    status("Loading…");
+
+    const range = { startDate: `${days - 1}daysAgo`, endDate: "today" };
+    const prev = { startDate: `${2 * days - 1}daysAgo`, endDate: `${days}daysAgo` };
+    const top = (dim: string, metric: string) => ({
+      dateRanges: [range],
+      dimensions: [{ name: dim }],
+      metrics: [{ name: metric }],
+      orderBys: [{ metric: { metricName: metric }, desc: true }],
+      limit: 10,
+    });
+
+    try {
+      const ga = await api(`https://analyticsdata.googleapis.com/v1beta/properties/${site.ga4}:batchRunReports`, {
+        requests: [
+          {
+            dateRanges: [range, prev],
+            metrics: ["activeUsers", "sessions", "screenPageViews", "averageSessionDuration"].map((name) => ({ name })),
+          },
+          { dateRanges: [range], dimensions: [{ name: "date" }], metrics: [{ name: "sessions" }] },
+          top("pagePath", "screenPageViews"),
+          top("sessionSourceMedium", "sessions"),
+          top("country", "activeUsers"),
+        ],
+      });
+      const [totals, daily, pages, sources, countries] = ga.reports;
+      renderKpis(totals);
+      renderChart(daily, days);
+      renderTable("t-pages", pages, ["Page", "Views"]);
+      renderTable("t-sources", sources, ["Source / medium", "Sessions"]);
+      renderTable("t-countries", countries, ["Country", "Users"]);
+      $("dash").classList.remove("hidden");
+      status("");
+    } catch (e: any) {
+      if (!token) $("signin").classList.remove("hidden");
+      return status(`Analytics: ${e.message}`);
+    }
+
+    // Search Console is optional; lags ~3 days, so its window ends 3 days ago.
+    const gscUrl = `https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(site.gsc)}/searchAnalytics/query`;
+    const gscRange = { startDate: ymd(daysAgo(days + 2)), endDate: ymd(daysAgo(3)) };
+    try {
+      const [sum, q] = await Promise.all([
+        api(gscUrl, gscRange),
+        api(gscUrl, { ...gscRange, dimensions: ["query"], rowLimit: 10 }),
+      ]);
+      const t = sum.rows?.[0];
+      $("gsc-summary").textContent = t
+        ? `${fmt(t.clicks)} clicks · ${fmt(t.impressions)} impressions · avg position ${t.position.toFixed(1)} (${gscRange.startDate} to ${gscRange.endDate})`
+        : "No search data yet.";
+      fillTable("t-queries", ["Search term", "Clicks", "Shown"], (q.rows || []).map((r: any) => [r.keys[0], fmt(r.clicks), fmt(r.impressions)]));
+    } catch (e: any) {
+      $("gsc-summary").textContent = `Search Console: ${e.message}`;
+    }
+  }
+
+  function renderKpis(report: any) {
+    // With two date ranges GA adds a dateRange dimension: date_range_0 = current, date_range_1 = previous.
+    const pick = (r: string) => report.rows?.find((x: any) => x.dimensionValues?.[0]?.value === r);
+    const cur = pick("date_range_0");
+    const old = pick("date_range_1");
+    const labels = ["Visitors", "Sessions", "Page views", "Avg. visit"];
+    $("kpis").replaceChildren(
+      ...labels.map((label, i) => {
+        const v = num(cur, i);
+        const p = num(old, i);
+        const div = document.createElement("div");
+        div.className = "rounded-xl border border-sea-100 bg-white p-4";
+        const value = i === 3 ? `${Math.floor(v / 60)}m ${Math.round(v % 60)}s` : fmt(v);
+        const delta = p ? Math.round(((v - p) / p) * 100) : null;
+        div.innerHTML = `<p class="text-xs font-medium uppercase tracking-wide text-ink-500"></p>
+          <p class="mt-1 font-display text-3xl font-semibold text-ink-900"></p>
+          <p class="mt-1 text-xs text-ink-500"></p>`;
+        const [a, b, c] = div.querySelectorAll("p");
+        a.textContent = label;
+        b.textContent = value;
+        c.textContent = delta === null ? "no previous data" : `${delta >= 0 ? "▲" : "▼"} ${Math.abs(delta)}% vs previous period`;
+        return div;
+      }),
+    );
+  }
+
+  function renderChart(report: any, days: number) {
+    const byDate = new Map<string, number>((report.rows || []).map((r: any) => [r.dimensionValues[0].value, num(r, 0)]));
+    // GA omits zero days; fill them so gaps show as gaps.
+    const data = Array.from({ length: days }, (_, i) => {
+      const d = daysAgo(days - 1 - i);
+      return { d, v: byDate.get(ymd(d).replaceAll("-", "")) ?? 0 };
+    });
+    const W = 800, H = 200, pad = 24, max = Math.max(1, ...data.map((x) => x.v));
+    const bw = (W - pad) / days;
+    const bars = data
+      .map(({ v }, i) => {
+        const h = (v / max) * (H - 20);
+        return `<rect x="${pad + i * bw + 1}" y="${H - h}" width="${Math.max(1, bw - 2)}" height="${h}" rx="2" fill="#1d6a7a"/>
+          <rect x="${pad + i * bw}" y="0" width="${bw}" height="${H}" fill="transparent" data-i="${i}"/>`;
+      })
+      .join("");
+    const el = $("chart");
+    el.innerHTML = `<svg viewBox="0 0 ${W} ${H + 18}" class="w-full" role="img" aria-label="Sessions per day">
+        <line x1="${pad}" x2="${W}" y1="${H}" y2="${H}" stroke="#d7ebef"/>
+        <text x="0" y="12" font-size="11" fill="#66707e">${max}</text>
+        <text x="0" y="${H}" font-size="11" fill="#66707e">0</text>
+        <text x="${pad}" y="${H + 14}" font-size="11" fill="#66707e">${data[0].d.toLocaleDateString("en-ZA", { day: "numeric", month: "short" })}</text>
+        <text x="${W}" y="${H + 14}" font-size="11" fill="#66707e" text-anchor="end">Today</text>
+        ${bars}
+      </svg><div class="pointer-events-none absolute hidden rounded-md bg-ink-900 px-2 py-1 text-xs text-white"></div>`;
+    const tip = el.querySelector("div")!;
+    el.querySelector("svg")!.addEventListener("mousemove", (e) => {
+      const i = (e.target as Element).getAttribute("data-i");
+      if (i === null) return tip.classList.add("hidden");
+      const { d, v } = data[Number(i)];
+      tip.textContent = `${d.toLocaleDateString("en-ZA", { weekday: "short", day: "numeric", month: "short" })}: ${v} sessions`;
+      const box = el.getBoundingClientRect();
+      tip.style.left = `${Math.min(e.clientX - box.left + 8, box.width - 160)}px`;
+      tip.style.top = `${e.clientY - box.top - 30}px`;
+      tip.classList.remove("hidden");
+    });
+    el.querySelector("svg")!.addEventListener("mouseleave", () => tip.classList.add("hidden"));
+  }
+
+  function renderTable(id: string, report: any, head: string[]) {
+    fillTable(id, head, (report.rows || []).map((r: any) => [r.dimensionValues[0].value, fmt(num(r, 0))]));
+  }
+
+  function fillTable(id: string, head: string[], rows: string[][]) {
+    const t = $(id);
+    t.replaceChildren();
+    const tr = t.insertRow();
+    head.forEach((h, i) => {
+      const th = document.createElement("th");
+      th.textContent = h;
+      th.className = `pb-2 text-xs font-medium text-ink-500 ${i ? "text-right" : "text-left"}`;
+      tr.append(th);
+    });
+    if (!rows.length) t.insertRow().insertCell().textContent = "No data yet.";
+    rows.forEach((r) => {
+      const row = t.insertRow();
+      row.className = "border-t border-sea-50";
+      r.forEach((v, i) => {
+        const c = row.insertCell();
+        c.textContent = v;
+        c.className = i ? "py-1.5 text-right tabular-nums" : "py-1.5 break-all pr-3";
+      });
+    });
+  }
+
+  $("signin-btn").addEventListener("click", signIn);
+  $("signout").addEventListener("click", signOut);
+  siteSel.addEventListener("change", load);
+  daysSel.addEventListener("change", load);
+  if (token) load();
+</script>
