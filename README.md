@@ -18,6 +18,8 @@ npm install
 npm run dev
 ```
 
+Brand assets (FactSmith mark, colours, rules): [`brand/README.md`](brand/README.md).
+
 Build: `npm run build` · output `dist`. Deploy: push to `master` (Actions → Pages).
 
 Optional Formspree: set `PUBLIC_FORMSPREE_ENDPOINT` as a repo Actions variable / secret baked at build, or leave WhatsApp-only.
