@@ -13,7 +13,7 @@ Two brands live in this repo. Keep them apart, and copy from here instead of red
   - Validate green `#0FA37F` is for status only.
 - **Type:** Sora (display), Inter (body), JetBrains Mono (code / SQL).
 - **Taglines:** "Say it. Get the fact." · "Answers, not dashboards."
-- **Retired, do not use:** Forge Ink navy `#0E2A47` and the green `FactSmith-Brand-Pack.zip`. See vault `wiki/factsmith/marketing/Brand_Identity_Reconciliation.md`.
+- **Retired, do not use:** Forge Ink navy `#0E2A47` the green `FactSmith-Brand-Pack.zip`, and `Downloads/FactSmith-Logo-Suite/` (an August 2026 draft with a navy bar). See vault `wiki/factsmith/marketing/Brand_Identity_Reconciliation.md`.
 
 ## 2. FactSmith Sites (this studio site)
 
