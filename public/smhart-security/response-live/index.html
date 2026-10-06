@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en-ZA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow"><style>*{box-sizing:border-box}html,body{margin:0}body{font-size:14px}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Smhart Response Live</title>
+</head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: FactSmith brand bar, control-room console (KPI strip, map + live feed, town table, heatmap, Ask), FactSmith footer. Stacks on phones.
+   Brand: FactSmith canonical - Ember spark on warm neutrals, ink dominant, Sora / Inter / JetBrains Mono. Ember is rationed to the spark and selection. */
+:root {
+  --bg: #F9F9F7; --panel: #FCFCFB; --ink: #0B0B0B; --muted: #5E6670; --line: #E1E1DC;
+  --land: #ECEBE6; --land-edge: #C5C3BB; --sea: #E3E8EC;
+  --accent: #F26F1E; --accent-ink: #B4500F; --on-ink: #FCFCFB;
+  --ok: #0FA37F; --warn: #B98900; --miss: #C8372D; --empty: #EEEDE9;
+  --display: "Sora", "Segoe UI", sans-serif;
+  --body: "Inter", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111110; --panel: #1A1A18; --ink: #EDECE8; --muted: #9C9B94; --line: #2E2D2A;
+  --land: #252522; --land-edge: #45443F; --sea: #151719;
+  --accent: #FF8A3D; --accent-ink: #FF8A3D; --on-ink: #111110;
+  --ok: #2BC497; --warn: #E0B23A; --miss: #EE6158; --empty: #242421;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111110; --panel: #1A1A18; --ink: #EDECE8; --muted: #9C9B94; --line: #2E2D2A;
+  --land: #252522; --land-edge: #45443F; --sea: #151719;
+  --accent: #FF8A3D; --accent-ink: #FF8A3D; --on-ink: #111110;
+  --ok: #2BC497; --warn: #E0B23A; --miss: #EE6158; --empty: #242421;
+  color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; }
+.wrap { padding-block: 16px 32px; padding-inline: 16px; max-width: 1280px; margin: 0 auto; display: grid; gap: 12px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+h1 { font-family: var(--display); font-weight: 700; font-size: 28px; letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+h1 span { color: var(--accent); }
+h2 { font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: -.005em; margin: 0; }
+.sample { font-size: 12.5px; color: var(--muted); max-width: 70ch; }
+.sample b { color: var(--accent-ink); text-transform: uppercase; letter-spacing: .07em; font-size: 11px; }
+.clock { font-family: var(--mono); font-size: 12px; color: var(--muted); white-space: nowrap; }
+.live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--miss); margin-right: 6px; animation: pulse 1.6s infinite; }
+@keyframes pulse { 50% { opacity: .25; } }
+@media (prefers-reduced-motion: reduce) { .live-dot, .ring { animation: none !important; } }
+
+.controls { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { font: inherit; font-size: 13px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+.chip:focus-visible, .row:focus-visible, .ask button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.controls .lbl { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-right: 4px; }
+
+.strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; display: grid; gap: 1px; min-width: 0; }
+.stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.stat .v { font-family: var(--display); font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.stat .s { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.v.ok { color: var(--ok); } .v.warn { color: var(--warn); } .v.miss { color: var(--miss); }
+
+.main { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 12px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; }
+svg.map { width: 100%; height: auto; display: block; background: var(--sea); border-radius: 6px; }
+.map text { font-family: var(--body); font-size: 12px; fill: var(--ink); paint-order: stroke; stroke: var(--land); stroke-width: 3px; }
+.map .ref { fill: var(--muted); font-size: 11px; font-style: italic; }
+.map .town { cursor: pointer; }
+.map .town circle.dot { stroke: var(--panel); stroke-width: 1.5; }
+.map .town.sel circle.dot { stroke: var(--ink); stroke-width: 2.5; }
+.ring { fill: none; stroke: var(--miss); stroke-width: 2; animation: ring 1.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes ring { from { transform: scale(.6); opacity: 1; } to { transform: scale(2.2); opacity: 0; } }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: -1px; }
+
+.feed { display: grid; gap: 6px; max-height: 520px; overflow-y: auto; }
+.ev { border: 1px solid var(--line); border-left-width: 4px; border-radius: 6px; padding: 6px 10px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; }
+.ev.open { border-left-color: var(--miss); } .ev.scene { border-left-color: var(--warn); } .ev.closed { border-left-color: var(--line); }
+.ev .t { font-weight: 600; }
+.ev .m { font-size: 12px; color: var(--muted); grid-column: 1; }
+.ev .timer { font-family: var(--mono); font-size: 15px; font-variant-numeric: tabular-nums; text-align: right; grid-row: 1 / span 2; grid-column: 2; align-self: center; }
+.timer.ok { color: var(--ok); } .timer.miss { color: var(--miss); } .timer.warn { color: var(--warn); }
+.pill { display: inline-block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; padding: 1px 6px; border-radius: 4px; margin-right: 6px; border: 1px solid currentColor; vertical-align: 1px; }
+.pill.open { color: var(--miss); } .pill.scene { color: var(--warn); } .pill.closed { color: var(--muted); }
+
+.lower { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+td.n, th.n { text-align: right; }
+tr.row { cursor: pointer; }
+tr.row:hover td { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+tr.row.sel td { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.bar { display: inline-block; width: 70px; height: 8px; background: var(--empty); border-radius: 4px; vertical-align: middle; margin-right: 6px; overflow: hidden; }
+.bar b { display: block; height: 100%; }
+.ok-bg { background: var(--ok); } .warn-bg { background: var(--warn); } .miss-bg { background: var(--miss); }
+
+.heat { display: grid; grid-template-columns: 110px repeat(24, minmax(16px, 1fr)); gap: 2px; min-width: 560px; font-size: 11px; }
+.heat .h { color: var(--muted); text-align: center; font-family: var(--mono); font-size: 10px; }
+.heat .tn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 6px; }
+.heat .tn.sel { font-weight: 700; color: var(--accent-ink); }
+.heat .c { height: 18px; border-radius: 3px; background: var(--empty); }
+.heat .c.ok { background: color-mix(in srgb, var(--ok) 70%, var(--panel)); }
+.heat .c.warn { background: color-mix(in srgb, var(--warn) 75%, var(--panel)); }
+.heat .c.miss { background: var(--miss); }
+.note { font-size: 12px; color: var(--muted); }
+
+.detail { display: grid; gap: 4px; }
+.ask { display: grid; gap: 8px; }
+.ask .qs { display: flex; flex-wrap: wrap; gap: 6px; }
+.ask button { font: inherit; font-size: 13px; text-align: left; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.ask button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.answer { font-size: 14px; line-height: 1.45; max-width: 75ch; }
+pre { font-family: var(--mono); font-size: 11.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; overflow-x: auto; margin: 0; color: var(--muted); }
+.brandbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 4px 10px; border-bottom: 1px solid var(--line); }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; }
+.brand svg { width: 30px; height: 30px; flex: none; }
+.brand .wm { font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: -.02em; }
+.brand .tag { font-size: 12.5px; color: var(--muted); }
+.brandbar nav { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; }
+a { color: var(--ink); text-decoration-color: var(--accent); text-underline-offset: 3px; }
+a:hover { color: var(--accent-ink); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+footer { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px 24px; padding-block: 16px 4px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+footer h3 { font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--ink); margin: 0 0 6px; }
+footer p { margin: 0 0 6px; max-width: 70ch; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.sel-text { user-select: all; font-family: var(--mono); font-size: 12px; color: var(--ink); }
+@media (max-width: 700px) { footer { grid-template-columns: minmax(0, 1fr); } }
+
+@media (max-width: 900px) {
+  .brand .tag { display: none; }
+  .main, .lower { grid-template-columns: minmax(0, 1fr); }
+  .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feed { max-height: 380px; }
+}
+</style>
+
+<div class="wrap">
+  <div class="brandbar">
+    <a class="brand" href="https://www.factsmith.co.za" target="_blank" rel="noopener" aria-label="FactSmith home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--ink)"/><path d="M7 19.5h15.5c0 2.2-1.6 3.5-3.6 3.8l1.1 2.7H11l1.1-2.7C9.4 23 7.6 21.6 7 19.5Z" fill="var(--panel)"/><path d="M22.5 19.5h2.8c-.5 1-1.4 1.6-2.8 1.8Z" fill="var(--panel)"/><path d="M17.6 6.2l1.1 3.7 3.7-1.6-2.3 3.3 3.5 1.3-3.8.5.5 3.9-2.2-3.2-2.6 2.9.9-3.8-3.8-.3 3.4-1.7-2-3.4 3.6 1.5Z" fill="var(--accent)"/></svg><span class="wm">FactSmith</span><span class="tag">Say it. Get the fact.</span></a>
+    <nav aria-label="FactSmith links">
+      <a href="https://www.factsmith.co.za" target="_blank" rel="noopener">factsmith.co.za</a>
+      <a href="https://sites.factsmith.co.za" target="_blank" rel="noopener">FactSmith Sites</a>
+      <a href="https://www.linkedin.com/in/emilio-martin-18947823" target="_blank" rel="noopener">Emilio Martin on LinkedIn</a>
+    </nav>
+  </div>
+  <header>
+    <div>
+      <h1>Smhart <span>Response Live</span></h1>
+      <div class="sample"><b>Sample data</b> · A demo by FactSmith for Smhart Security. Every town, vehicle and figure below is invented to show what your own control-room data would look like. The live feed runs at 10x speed.</div>
+    </div>
+    <div class="clock"><span class="live-dot"></span><span id="clock">--:--</span></div>
+  </header>
+
+  <div class="controls" role="group" aria-label="Period">
+    <span class="lbl">Period</span>
+    <button class="chip" id="p-today" data-p="today" aria-pressed="false">Today</button>
+    <button class="chip" id="p-7" data-p="7" aria-pressed="false">Last 7 days</button>
+    <button class="chip" id="p-30" data-p="30" aria-pressed="true">Last 30 days</button>
+    <span class="lbl" style="margin-left:10px">Hours</span>
+    <button class="chip" id="h-all" data-h="all" aria-pressed="true">All</button>
+    <button class="chip" id="h-night" data-h="night" aria-pressed="false">Night 22:00 - 05:59</button>
+  </div>
+
+  <section class="strip" aria-label="Summary">
+    <div class="stat"><span class="k">Call-outs</span><span class="v" id="k-calls">0</span><span class="s" id="k-calls-s"></span></div>
+    <div class="stat"><span class="k">Average response</span><span class="v" id="k-avg">0:00</span><span class="s" id="k-avg-s"></span></div>
+    <div class="stat"><span class="k">Inside 5 minutes</span><span class="v" id="k-pct">0%</span><span class="s" id="k-pct-s"></span></div>
+    <div class="stat"><span class="k">Slowest town</span><span class="v" id="k-worst" style="font-size:22px">-</span><span class="s" id="k-worst-s"></span></div>
+    <div class="stat"><span class="k">Open right now</span><span class="v" id="k-open">0</span><span class="s">vehicles dispatched, not yet on scene</span></div>
+  </section>
+
+  <section class="main">
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Response by town</h2>
+        <div class="controls" role="group" aria-label="Map view">
+          <button class="chip" id="v-region" data-v="region" aria-pressed="true">Whole region</button>
+          <button class="chip" id="v-kouga" data-v="kouga" aria-pressed="false">Kouga</button>
+        </div>
+      </div>
+      <svg class="map" id="map" viewBox="0 0 800 440" role="img" aria-label="Map of towns served, coloured by share of call-outs inside 5 minutes"></svg>
+      <div class="legend">
+        <span><i class="ok-bg"></i>95% or more inside 5 min</span>
+        <span><i class="warn-bg"></i>85 - 95%</span>
+        <span><i class="miss-bg"></i>under 85%</span>
+        <span>Dot size = call-outs. Pulsing ring = vehicle on the way now. Tap a town to filter.</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Live call-outs</h2>
+        <button class="chip" id="clear-town" hidden>Show all towns</button>
+      </div>
+      <div class="feed" id="feed" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div class="panel">
+      <h2>Towns against the 5-minute promise</h2>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Town</th><th class="n">Vehicles</th><th class="n">Call-outs</th><th class="n">Average</th><th class="n">Slowest 10%</th><th>Inside 5 min</th></tr></thead>
+          <tbody id="tbl"></tbody>
+        </table>
+      </div>
+      <div class="detail" id="detail"></div>
+    </div>
+
+    <div class="panel">
+      <h2>When do we miss? Hour by town</h2>
+      <div class="scroll"><div class="heat" id="heat"></div></div>
+      <div class="note">Each cell is the share of call-outs inside 5 minutes for that town and hour. Grey means fewer than 3 call-outs.</div>
+    </div>
+  </section>
+
+  <section class="panel ask">
+    <h2>Ask FactSmith</h2>
+    <div class="note">In the real product you type or speak the question. Here, pick one. Answers are worked out from the sample data on this page, last 30 days.</div>
+    <div class="qs" id="qs"></div>
+    <div class="answer" id="answer"></div>
+    <pre id="sql" hidden></pre>
+  </section>
+
+  <footer>
+    <div>
+      <h3>How this works for real</h3>
+      <p>Read-only feeds from the control-room alarm software and vehicle tracking land in one Postgres warehouse every minute. A Kimball model joins each call-out to client, property, town, vehicle and officer. This page and the questions run on that model, inside South Africa, on your own server if you prefer.</p>
+      <p>Built by FactSmith for Smhart Security, October 2026. Sample data only.</p>
+    </div>
+    <div>
+      <h3>FactSmith</h3>
+      <ul>
+        <li><a href="https://www.factsmith.co.za" target="_blank" rel="noopener">www.factsmith.co.za</a>: FactSmith Ask, plain-language answers from your own data</li>
+        <li><a href="https://sites.factsmith.co.za" target="_blank" rel="noopener">sites.factsmith.co.za</a>: websites and digital presence</li>
+        <li><a href="https://www.linkedin.com/in/emilio-martin-18947823" target="_blank" rel="noopener">Emilio Martin</a>, data architect and founder</li>
+        <li>Email: <span class="sel-text">factsmith@outlook.com</span></li>
+      </ul>
+    </div>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const SPEED = 10, LIMIT = 300;
+  let seed = 20261006;
+  const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const gauss = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const pick = arr => arr[Math.floor(rnd() * arr.length)];
+  const wpick = (arr, w) => { let s = w.reduce((a, b) => a + b, 0), r = rnd() * s; for (let i = 0; i < arr.length; i++) { r -= w[i]; if (r <= 0) return arr[i]; } return arr[arr.length - 1]; };
+
+  // Sample towns; med = typical response in seconds, sig = spread. Rural towns are slower on purpose.
+  const TOWNS = [
+    { id: 'JB', name: 'Jeffreys Bay', lon: 24.915, lat: -34.045, veh: 6, med: 190, sig: 0.22, k: 1 },
+    { id: 'AB', name: 'Aston Bay', lon: 24.94, lat: -34.088, veh: 2, med: 200, sig: 0.22, k: 1 },
+    { id: 'HD', name: 'Humansdorp', lon: 24.77, lat: -34.03, veh: 4, med: 210, sig: 0.24, k: 1 },
+    { id: 'SF', name: 'St Francis Bay', lon: 24.83, lat: -34.165, veh: 4, med: 195, sig: 0.22, k: 1 },
+    { id: 'CS', name: 'Cape St Francis', lon: 24.835, lat: -34.2, veh: 2, med: 215, sig: 0.24, k: 1 },
+    { id: 'HK', name: 'Hankey', lon: 24.88, lat: -33.83, veh: 2, med: 220, sig: 0.25, k: 1 },
+    { id: 'PT', name: 'Patensie', lon: 24.82, lat: -33.76, veh: 2, med: 230, sig: 0.25, k: 1 },
+    { id: 'KW', name: 'Kirkwood', lon: 25.44, lat: -33.4, veh: 3, med: 235, sig: 0.27 },
+    { id: 'PB', name: 'Plettenberg Bay', lon: 23.37, lat: -34.05, veh: 5, med: 200, sig: 0.23 },
+    { id: 'MK', name: 'Makhanda', lon: 26.53, lat: -33.31, veh: 4, med: 200, sig: 0.25 },
+    { id: 'CR', name: 'Cradock', lon: 25.62, lat: -32.17, veh: 3, med: 225, sig: 0.25 },
+    { id: 'SE', name: 'Somerset East', lon: 25.58, lat: -32.72, veh: 2, med: 245, sig: 0.27 },
+    { id: 'GR', name: 'Graaff-Reinet', lon: 24.53, lat: -32.25, veh: 3, med: 220, sig: 0.25 },
+    { id: 'HB', name: 'Hartenbos', lon: 22.1, lat: -34.1, veh: 2, med: 230, sig: 0.25 },
+  ];
+  const T = Object.fromEntries(TOWNS.map(t => [t.id, t]));
+  const RURAL = new Set(['HK', 'PT', 'KW', 'CR', 'SE', 'GR']);
+  const SURN = ['Ndlovu', 'van Wyk', 'Botha', 'Mkhize', 'Jacobs', 'Pretorius', 'Dlamini', 'Fourie', 'Mbatha', 'Swart', 'Nel', 'Sityebi', 'Adams', 'Kruger', 'Mtshali', 'Booysen'];
+  const VEH = [];
+  TOWNS.forEach(t => { for (let i = 1; i <= t.veh; i++) VEH.push({ id: `${t.id}-0${i}`, town: t.id, f: 0.92 + rnd() * 0.18, officer: `${pick('ABCDEJKLMNPSTV')}. ${pick(SURN)}` }); });
+  VEH.find(v => v.id === 'KW-02').f = 1.28; // one slow vehicle, so the "which vehicle" question has an answer
+  const VBY = {}; VEH.forEach(v => (VBY[v.town] ||= []).push(v));
+  const TYPES = ['Intruder alarm', 'Panic app', 'Panic button', 'Electric fence', 'CCTV alert', 'Medical / fire assist'];
+  const TW = [50, 12, 10, 12, 6, 4];
+  const TYPES_R = [...TYPES, 'Farm patrol alert'], TW_R = [...TW, 10];
+  const HW = [3, 2.5, 2, 2, 2, 2.5, 3, 3, 2.5, 2, 2, 2, 2, 2, 2.5, 3, 4, 5, 5.5, 5, 4.5, 4, 3.5, 3];
+  const HOURS = [...Array(24).keys()];
+  const START = Date.now();
+  const now = () => new Date(START + (Date.now() - START) * SPEED);
+
+  function respTime(town, veh, hour, dow) {
+    let m = town.med * veh.f;
+    if (hour <= 5) m *= 1.12; else if (hour >= 16 && hour <= 19) m *= 1.07;
+    if ((dow === 5 || dow === 6) && (hour >= 22 || hour <= 3)) m *= 1.05;
+    return Math.max(70, Math.round(m * Math.exp(town.sig * gauss())));
+  }
+  function makeEvent(t, at, d) {
+    const v = pick(VBY[t.id]), rural = RURAL.has(t.id);
+    const hour = at.getHours();
+    return { town: t.id, veh: v.id, officer: v.officer, type: rural ? wpick(TYPES_R, TW_R) : wpick(TYPES, TW), client: 10000 + Math.floor(rnd() * 9000),
+      hour, dow: at.getDay(), d, at, rt: respTime(t, v, hour, at.getDay()) };
+  }
+
+  // 30 days of closed call-outs; today only up to the current hour
+  const HIST = [];
+  const today0 = new Date(START); today0.setHours(0, 0, 0, 0);
+  for (let d = 0; d < 30; d++) {
+    const day = new Date(today0.getTime() - d * 864e5);
+    TOWNS.forEach(t => {
+      const n = Math.round(t.veh * (1.5 + rnd() * 0.5) * (day.getDay() === 5 || day.getDay() === 6 ? 1.15 : 1));
+      for (let i = 0; i < n; i++) {
+        const h = wpick(HOURS, HW);
+        if (d === 0 && h >= new Date(START).getHours()) continue;
+        const at = new Date(day.getTime() + h * 36e5 + Math.floor(rnd() * 36e5));
+        HIST.push(makeEvent(t, at, d));
+      }
+    });
+  }
+
+  const LIVE = [];
+  function spawn(ageSec = 0) {
+    const t = wpick(TOWNS, TOWNS.map(x => x.veh));
+    const e = makeEvent(t, now(), 0);
+    e.t0 = Date.now() - ageSec * 1000 / SPEED;
+    LIVE.unshift(e);
+  }
+  spawn(150); spawn(60); spawn(20);
+
+  const state = { period: '30', hours: 'all', view: 'region', town: null, q: 0 };
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
+  const cls = p => p >= 95 ? 'ok' : p >= 85 ? 'warn' : 'miss';
+  const night = h => h >= 22 || h <= 5;
+  const pctl = (arr, p) => { if (!arr.length) return 0; const s = [...arr].sort((a, b) => a - b); return s[Math.min(s.length - 1, Math.floor(p * s.length))]; };
+  function filtered() {
+    const days = state.period === 'today' ? 1 : +state.period;
+    return HIST.filter(e => e.d < days && (state.hours === 'all' || night(e.hour)));
+  }
+  function stats(list) {
+    const rts = list.map(e => e.rt), n = rts.length;
+    const inside = rts.filter(r => r <= LIMIT).length;
+    return { n, avg: n ? rts.reduce((a, b) => a + b, 0) / n : 0, p90: pctl(rts, .9), pct: n ? inside / n * 100 : 0 };
+  }
+  const byTown = list => { const m = {}; TOWNS.forEach(t => m[t.id] = []); list.forEach(e => m[e.town].push(e)); return m; };
+
+  // Map
+  const COAST = [[21.85,-34.36],[22.0,-34.3],[22.15,-34.19],[22.14,-34.16],[22.11,-34.12],[22.15,-34.09],[22.24,-34.06],[22.4,-34.05],[22.55,-34.0],[22.8,-34.02],[23.06,-34.08],[23.3,-34.07],[23.4,-34.11],[23.38,-34.02],[23.56,-33.98],[23.9,-34.02],[24.2,-34.07],[24.5,-34.15],[24.65,-34.17],[24.75,-34.19],[24.84,-34.215],[24.86,-34.18],[24.88,-34.14],[24.92,-34.1],[24.94,-34.075],[24.935,-34.05],[24.96,-34.0],[25.03,-33.97],[25.2,-33.97],[25.42,-34.02],[25.6,-34.03],[25.7,-34.04],[25.64,-33.96],[25.63,-33.87],[25.7,-33.78],[26.0,-33.73],[26.3,-33.76],[26.67,-33.69],[26.9,-33.6],[27.15,-33.52]];
+  const VIEWS = { region: [21.85, 27.15, -31.95, -34.4], kouga: [24.55, 25.2, -33.66, -34.27] };
+  const W = 800, H = 440, PAD = 24;
+  function projector(view) {
+    const [x0, x1, yTop, yBot] = VIEWS[view], k = Math.cos(33.5 * Math.PI / 180);
+    const sx = (W - 2 * PAD) / ((x1 - x0) * k), sy = (H - 2 * PAD) / (yTop - yBot), s = Math.min(sx, sy);
+    const ox = (W - (x1 - x0) * k * s) / 2, oy = (H - (yTop - yBot) * s) / 2;
+    return (lon, lat) => [ox + (lon - x0) * k * s, oy + (yTop - lat) * s];
+  }
+  function drawMap(tm) {
+    const P = projector(state.view);
+    const pts = COAST.map(([a, b]) => P(a, b));
+    const land = `M${P(21.0, -30)[0]},-50 L${pts.map(p => p.join(',')).join(' L')} L${P(28, -30)[0]},-50 Z`;
+    const maxN = Math.max(...TOWNS.map(t => tm[t.id].length), 1);
+    const open = new Set(LIVE.filter(e => !e.arrived).map(e => e.town));
+    let svg = `<path d="${land}" fill="var(--land)" stroke="var(--land-edge)" stroke-width="1.2"/>`;
+    const gq = P(25.6, -33.96);
+    svg += `<text class="ref" x="${gq[0] + 6}" y="${gq[1] - 6}">Gqeberha</text>`;
+    if (state.view === 'region') {
+      const jb = P(24.9, -33.9);
+      svg += `<text class="ref" x="${jb[0] - 40}" y="${jb[1] - 22}">Kouga: 7 towns</text>`;
+    }
+    TOWNS.forEach(t => {
+      const [x, y] = P(t.lon, t.lat), s = stats(tm[t.id]);
+      const r = (state.view === 'region' ? 4 : 7) + Math.sqrt(s.n / maxN) * (state.view === 'region' ? 9 : 16);
+      const c = s.n ? `var(--${cls(s.pct)})` : 'var(--muted)';
+      const label = state.view === 'kouga' || !t.k;
+      const lx = x + r + 4, anchor = x > W - 140 ? 'end' : 'start', tx = anchor === 'end' ? x - r - 4 : lx;
+      svg += `<g class="town${state.town === t.id ? ' sel' : ''}" data-town="${t.id}" tabindex="0" role="button" aria-label="${t.name}: ${s.n} call-outs, ${Math.round(s.pct)}% inside 5 minutes">
+        ${open.has(t.id) ? `<circle class="ring" cx="${x}" cy="${y}" r="${r}"/>` : ''}
+        <circle class="dot" cx="${x}" cy="${y}" r="${r}" fill="${c}"/>
+        ${label ? `<text x="${tx}" y="${y + 4}" text-anchor="${anchor}">${t.name}</text>` : ''}</g>`;
+    });
+    const el = document.getElementById('map');
+    el.innerHTML = svg;
+    el.querySelectorAll('.town').forEach(g => {
+      const go = () => selectTown(g.dataset.town);
+      g.addEventListener('click', go);
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+  }
+
+  function selectTown(id) {
+    state.town = state.town === id ? null : id;
+    if (state.town && T[state.town].k && state.view === 'region') { /* keep region; user can zoom */ }
+    render();
+  }
+
+  function drawStrip(list, tm) {
+    const s = stats(list);
+    const label = { today: 'today so far', 7: 'last 7 days', 30: 'last 30 days' }[state.period] + (state.hours === 'night' ? ', nights' : '');
+    document.getElementById('k-calls').textContent = s.n.toLocaleString('en-ZA');
+    document.getElementById('k-calls-s').textContent = label;
+    document.getElementById('k-avg').textContent = fmt(s.avg);
+    document.getElementById('k-avg-s').textContent = `slowest 10% took over ${fmt(s.p90)}`;
+    const kp = document.getElementById('k-pct');
+    kp.textContent = `${s.pct.toFixed(1)}%`; kp.className = `v ${cls(s.pct)}`;
+    document.getElementById('k-pct-s').textContent = `${(s.n - Math.round(s.n * s.pct / 100)).toLocaleString('en-ZA')} call-outs over 5:00`;
+    let worst = null;
+    TOWNS.forEach(t => { const x = stats(tm[t.id]); if (x.n >= 3 && (!worst || x.pct < worst.pct)) worst = { t, ...x }; });
+    document.getElementById('k-worst').textContent = worst ? worst.t.name : '-';
+    document.getElementById('k-worst-s').textContent = worst ? `${worst.pct.toFixed(0)}% inside 5 min, average ${fmt(worst.avg)}` : '';
+    document.getElementById('k-open').textContent = LIVE.filter(e => !e.arrived).length;
+  }
+
+  function drawTable(tm) {
+    const rows = TOWNS.map(t => ({ t, ...stats(tm[t.id]) })).sort((a, b) => a.pct - b.pct);
+    document.getElementById('tbl').innerHTML = rows.map(r => `
+      <tr class="row${state.town === r.t.id ? ' sel' : ''}" data-town="${r.t.id}" tabindex="0">
+        <td>${r.t.name}</td><td class="n">${r.t.veh}</td><td class="n">${r.n}</td><td class="n">${fmt(r.avg)}</td><td class="n">${fmt(r.p90)}</td>
+        <td><span class="bar"><b class="${cls(r.pct)}-bg" style="width:${r.pct.toFixed(1)}%"></b></span>${r.n ? r.pct.toFixed(1) + '%' : '-'}</td></tr>`).join('');
+    document.querySelectorAll('#tbl tr').forEach(tr => {
+      tr.addEventListener('click', () => selectTown(tr.dataset.town));
+      tr.addEventListener('keydown', e => { if (e.key === 'Enter') selectTown(tr.dataset.town); });
+    });
+    const det = document.getElementById('detail');
+    if (!state.town) { det.innerHTML = '<div class="note">Tap a town to see each of its vehicles.</div>'; return; }
+    const list = tm[state.town];
+    const vs = VBY[state.town].map(v => ({ v, ...stats(list.filter(e => e.veh === v.id)) }));
+    det.innerHTML = `<h2 style="font-size:16px">${T[state.town].name}: vehicles</h2><div class="scroll"><table><thead><tr><th>Vehicle</th><th>Officer</th><th class="n">Call-outs</th><th class="n">Average</th><th>Inside 5 min</th></tr></thead><tbody>` +
+      vs.map(x => `<tr><td>${x.v.id}</td><td>${x.v.officer}</td><td class="n">${x.n}</td><td class="n">${fmt(x.avg)}</td><td><span class="bar"><b class="${cls(x.pct)}-bg" style="width:${x.pct.toFixed(1)}%"></b></span>${x.n ? x.pct.toFixed(1) + '%' : '-'}</td></tr>`).join('') + '</tbody></table></div>';
+  }
+
+  function drawHeat(tm) {
+    let h = '<div></div>' + HOURS.map(x => `<div class="h">${String(x).padStart(2, '0')}</div>`).join('');
+    TOWNS.forEach(t => {
+      h += `<div class="tn${state.town === t.id ? ' sel' : ''}">${t.name}</div>`;
+      HOURS.forEach(hr => {
+        const l = tm[t.id].filter(e => e.hour === hr), s = stats(l);
+        h += l.length >= 3 ? `<div class="c ${cls(s.pct)}" title="${t.name} ${String(hr).padStart(2, '0')}:00 - ${l.length} call-outs, ${s.pct.toFixed(0)}% inside 5 min"></div>` : '<div class="c" title="Fewer than 3 call-outs"></div>';
+      });
+    });
+    document.getElementById('heat').innerHTML = h;
+  }
+
+  function drawFeed() {
+    const nowMs = Date.now();
+    const live = LIVE.filter(e => !state.town || e.town === state.town).slice(0, 8);
+    const recent = HIST.filter(e => e.d === 0 && (!state.town || e.town === state.town)).sort((a, b) => b.at - a.at).slice(0, Math.max(0, 10 - live.length));
+    const time = d => d.toTimeString().slice(0, 5);
+    const row = (e, st, secs) => {
+      const tc = st === 'open' ? (secs > LIMIT ? 'miss' : secs > 240 ? 'warn' : '') : (secs <= LIMIT ? 'ok' : 'miss');
+      const lbl = { open: 'On the way', scene: 'On scene', closed: 'Closed' }[st];
+      return `<div class="ev ${st}"><div class="t"><span class="pill ${st}">${lbl}</span>${e.type} · ${T[e.town].name}</div>
+        <div class="timer ${tc}">${fmt(secs)}</div>
+        <div class="m">${time(e.at)} · Client #${e.client} · ${e.veh} · ${e.officer}</div></div>`;
+    };
+    document.getElementById('feed').innerHTML =
+      live.map(e => { const el = Math.min((nowMs - e.t0) / 1000 * SPEED, e.rt); return row(e, e.arrived ? 'scene' : 'open', e.arrived ? e.rt : el); }).join('') +
+      recent.map(e => row(e, 'closed', e.rt)).join('') ||
+      '<div class="note">No call-outs for this town today yet.</div>';
+    document.getElementById('clear-town').hidden = !state.town;
+  }
+
+  // Ask FactSmith: preset questions answered from the 30-day sample
+  const QS = [
+    { q: 'Which towns missed 5 minutes on more than 10% of call-outs last month?', a() {
+      const tm = byTown(HIST), bad = TOWNS.map(t => ({ t, ...stats(tm[t.id]) })).filter(x => 100 - x.pct > 10).sort((a, b) => a.pct - b.pct);
+      return bad.length ? `${bad.length} towns: ` + bad.map(x => `<b>${x.t.name}</b> (${(100 - x.pct).toFixed(0)}% over, average ${fmt(x.avg)})`).join(', ') + '. Longer distances to farms and outlying suburbs drive most of the misses.' : 'None. Every town is inside 5 minutes on at least 90% of call-outs.';
+    }, sql: `SELECT t.town_name,
+       COUNT(*) AS call_outs,
+       AVG(f.response_seconds) AS avg_seconds,
+       AVG(CASE WHEN f.response_seconds > 300 THEN 1.0 ELSE 0 END) AS share_over_5_min
+FROM   fact_response f
+JOIN   dim_town t ON t.town_key = f.town_key
+JOIN   dim_date d ON d.date_key = f.dispatch_date_key
+WHERE  d.full_date >= CURRENT_DATE - 30
+GROUP  BY t.town_name
+HAVING AVG(CASE WHEN f.response_seconds > 300 THEN 1.0 ELSE 0 END) > 0.10
+ORDER  BY share_over_5_min DESC;` },
+    { q: 'What is our worst hour of the day for response times?', a() {
+      const hs = HOURS.map(h => ({ h, ...stats(HIST.filter(e => e.hour === h)) })).sort((a, b) => a.pct - b.pct);
+      const w = hs[0], b = hs[hs.length - 1];
+      return `<b>${String(w.h).padStart(2, '0')}:00 to ${String(w.h).padStart(2, '0')}:59</b>: ${w.pct.toFixed(1)}% inside 5 minutes over ${w.n} call-outs, average ${fmt(w.avg)}. The best hour is ${String(b.h).padStart(2, '0')}:00 at ${b.pct.toFixed(1)}%. Early-morning shifts are thinner, so this is where an extra vehicle on standby would pay off.`;
+    }, sql: `SELECT d_t.hour_of_day,
+       COUNT(*) AS call_outs,
+       AVG(CASE WHEN f.response_seconds <= 300 THEN 1.0 ELSE 0 END) AS share_inside_5_min
+FROM   fact_response f
+JOIN   dim_time d_t ON d_t.time_key = f.dispatch_time_key
+GROUP  BY d_t.hour_of_day
+ORDER  BY share_inside_5_min ASC
+LIMIT  1;` },
+    { q: 'Which vehicle had the slowest average response this month?', a() {
+      const vs = VEH.map(v => ({ v, ...stats(HIST.filter(e => e.veh === v.id)) })).filter(x => x.n >= 10).sort((a, b) => b.avg - a.avg);
+      const w = vs[0], peers = VBY[w.v.town].filter(v => v.id !== w.v.id).map(v => stats(HIST.filter(e => e.veh === v.id)).avg);
+      return `<b>${w.v.id}</b> in ${T[w.v.town].name} (${w.v.officer}): average ${fmt(w.avg)} over ${w.n} call-outs, against ${fmt(peers.reduce((a, b) => a + b, 0) / peers.length)} for the other ${T[w.v.town].name} vehicles. Worth checking its patrol zone and the vehicle itself.`;
+    }, sql: `SELECT v.vehicle_code, t.town_name,
+       COUNT(*) AS call_outs,
+       AVG(f.response_seconds) AS avg_seconds
+FROM   fact_response f
+JOIN   dim_vehicle v ON v.vehicle_key = f.vehicle_key
+JOIN   dim_town t    ON t.town_key    = v.home_town_key
+GROUP  BY v.vehicle_code, t.town_name
+HAVING COUNT(*) >= 10
+ORDER  BY avg_seconds DESC
+LIMIT  1;` },
+    { q: 'How many panic-app activations did we get in the last 7 days, and how fast did we get there?', a() {
+      const l = HIST.filter(e => e.d < 7 && e.type === 'Panic app'), s = stats(l);
+      const tm = byTown(l), top = TOWNS.map(t => ({ t, n: tm[t.id].length })).sort((a, b) => b.n - a.n)[0];
+      return `<b>${s.n} panic-app activations</b>, average response ${fmt(s.avg)}, ${s.pct.toFixed(1)}% inside 5 minutes. Most came from ${top.t.name} (${top.n}). These are the call-outs clients remember, so they make the best proof for marketing the app.`;
+    }, sql: `SELECT COUNT(*) AS activations,
+       AVG(f.response_seconds) AS avg_seconds,
+       AVG(CASE WHEN f.response_seconds <= 300 THEN 1.0 ELSE 0 END) AS share_inside_5_min
+FROM   fact_response f
+JOIN   dim_alarm_type a ON a.alarm_type_key = f.alarm_type_key
+JOIN   dim_date d       ON d.date_key       = f.dispatch_date_key
+WHERE  a.source = 'Panic app'
+  AND  d.full_date >= CURRENT_DATE - 7;` },
+  ];
+  function drawAsk() {
+    document.getElementById('qs').innerHTML = QS.map((x, i) => `<button id="q-${i}" data-q="${i}" aria-pressed="${state.q === i}">${x.q}</button>`).join('');
+    document.querySelectorAll('#qs button').forEach(b => b.addEventListener('click', () => { state.q = +b.dataset.q; drawAsk(); }));
+    document.getElementById('answer').innerHTML = QS[state.q].a();
+    const sql = document.getElementById('sql');
+    sql.hidden = false; sql.textContent = QS[state.q].sql;
+  }
+
+  function render() {
+    const list = filtered(), tm = byTown(list);
+    drawStrip(list, tm); drawMap(tm); drawTable(tm); drawHeat(tm); drawFeed();
+  }
+
+  document.querySelectorAll('[data-p]').forEach(b => b.addEventListener('click', () => { state.period = b.dataset.p; document.querySelectorAll('[data-p]').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); }));
+  document.querySelectorAll('[data-h]').forEach(b => b.addEventListener('click', () => { state.hours = b.dataset.h; document.querySelectorAll('[data-h]').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); }));
+  document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => { state.view = b.dataset.v; document.querySelectorAll('[data-v]').forEach(x => x.setAttribute('aria-pressed', x === b)); render(); }));
+  document.getElementById('clear-town').addEventListener('click', () => { state.town = null; render(); });
+
+  // Live loop: vehicles arrive, sit on scene, close into history; new call-outs every few seconds
+  let nextSpawn = Date.now() + 4000;
+  setInterval(() => {
+    const t = Date.now();
+    document.getElementById('clock').textContent = now().toLocaleString('en-ZA', { weekday: 'short', hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' · control room';
+    let changed = false;
+    LIVE.forEach(e => {
+      const el = (t - e.t0) / 1000 * SPEED;
+      if (!e.arrived && el >= e.rt) { e.arrived = t; changed = true; }
+      if (e.arrived && t - e.arrived > 8000) { e.done = true; }
+    });
+    for (let i = LIVE.length - 1; i >= 0; i--) if (LIVE[i].done) { HIST.push(LIVE[i]); LIVE.splice(i, 1); changed = true; }
+    if (t >= nextSpawn && LIVE.length < 6) { spawn(); nextSpawn = t + 4000 + rnd() * 5000; changed = true; }
+    if (changed) render(); else drawFeed();
+  }, 500);
+
+  render(); drawAsk();
+})();
+</script>
+
+</body></html>
