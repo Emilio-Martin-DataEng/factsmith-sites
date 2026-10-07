@@ -1,4 +1,4 @@
-const WA = "27833004725";            // cell from the old site; confirm it's on WhatsApp
+const WA = "27833004725";            // on WhatsApp (client, 2026-10-06)
 const EMAIL = "bookings@khayalamanzi.co.za";
 const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => [...el.querySelectorAll(s)];
 
