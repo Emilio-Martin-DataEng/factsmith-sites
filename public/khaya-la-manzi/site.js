@@ -53,3 +53,16 @@ if (wx) {
     }).join("");
   }).catch(() => wx.innerHTML = "<p>Forecast unavailable right now.</p>");
 }
+
+// Layout B hero: auto-advance the slides every 5 s, loop, pause on hover/focus/touch; off for reduced motion.
+const slides = $(".kb-slides");
+if (slides && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  let paused = false;
+  ["mouseenter", "focusin", "touchstart"].forEach(ev => slides.addEventListener(ev, () => paused = true, { passive: true }));
+  ["mouseleave", "focusout"].forEach(ev => slides.addEventListener(ev, () => paused = false));
+  setInterval(() => {
+    if (paused || document.hidden) return;
+    const w = slides.clientWidth, end = slides.scrollLeft + w >= slides.scrollWidth - 2;
+    slides.scrollTo({ left: end ? 0 : slides.scrollLeft + w, behavior: "smooth" });
+  }, 5000);
+}
