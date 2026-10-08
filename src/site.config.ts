@@ -48,7 +48,7 @@ export const launchOffer = {
   detail:
     "The first five South Coast rebuilds are R4 000 — a R2 000 deposit secures your slot and locks the price. After the five, the published price is R7 500.",
   bonus:
-    "On these five, Search Console + Bing ownership setup (normally R1 000) is included free.",
+    "Every site includes Google Search Console + Bing set up in your name, and a private stats page.",
   turnaround: "Mockups this weekend. Your new site live next week.",
 } as const;
 
@@ -293,6 +293,10 @@ export const standardFeatures = [
   {
     title: "AEO — answer engine optimisation",
     text: "Real questions answered in a FAQ with FAQPage schema, so Google and voice assistants can quote the answer and name you.",
+  },
+  {
+    title: "Your stats",
+    text: "Google Search Console and Bing set up in your name, Google Analytics, and a private stats page: visitors, top pages, where they came from, and what people search on Google to find you.",
   },
   {
     title: "WhatsApp and tap-to-call",
