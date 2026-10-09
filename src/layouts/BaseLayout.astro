@@ -68,6 +68,19 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {
+      !noindex && (
+        <>
+          <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4}`} />
+          <script is:inline define:vars={{ id: site.ga4 }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag("js", new Date());
+            gtag("config", id);
+          </script>
+        </>
+      )
+    }
   </head>
   <body class="flex min-h-screen flex-col">
     <a class="skip-link" href="#main">Skip to content</a>

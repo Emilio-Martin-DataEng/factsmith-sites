@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../site.config";
+
+const updated = "9 October 2026";
+const link = "font-semibold text-sea-700 underline underline-offset-2 hover:text-sea-500";
+---
+
+<BaseLayout
+  title="Privacy"
+  description="What sites.factsmith.co.za collects when you visit or send an enquiry, why, and how to ask for it to be removed."
+>
+  <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
+    <h1 class="font-display text-4xl font-semibold text-ink-900">Privacy</h1>
+    <p class="mt-4 text-lg text-ink-700">
+      What this website collects, why, and what you can ask us to do with it. Last updated {updated}.
+    </p>
+
+    <div class="mt-10 space-y-8 text-ink-700 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-semibold [&_h2]:text-ink-900 [&_p]:mt-2 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5">
+      <div>
+        <h2>Who is responsible</h2>
+        <p>
+          {site.name} is run by {site.billingEntity}, South Africa. Questions about your information go to
+          <a class={link} href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+      </div>
+
+      <div>
+        <h2>Visit statistics</h2>
+        <p>
+          We use Google Analytics to count visits: which pages are viewed, how visitors arrived (a search, a
+          link, or directly), approximate location (country and city), and device and browser type. Google
+          Analytics sets cookies so a repeat visit is not counted as a new visitor. It does not give us your
+          name, and it does not store your IP address.
+        </p>
+        <p>
+          We use this only to see which pages are useful and how people find the site. It is not used for
+          advertising and it is not sold. Detailed visit data is kept for two months; after that only totals
+          remain. Google processes this data for us and may do so outside South Africa.
+        </p>
+      </div>
+
+      <div>
+        <h2>Enquiries</h2>
+        <p>
+          If you send the enquiry form, we receive your name, the email or phone number you give, your town if
+          you add it, and your message. The form is delivered by Formspree, a form service based in the United
+          States. If you WhatsApp or email us instead, we see what you send there.
+        </p>
+        <p>
+          We use your enquiry only to reply and, if you go ahead, to build your site. We do not add you to a
+          mailing list, and we keep it only as long as we need it for that.
+        </p>
+      </div>
+
+      <div>
+        <h2>Your choices</h2>
+        <ul>
+          <li>
+            Block or delete cookies in your browser, or install Google's
+            <a class={link} href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer"
+              >Analytics opt-out add-on</a
+            >. The site works the same without them.
+          </li>
+          <li>
+            Ask what we hold about you, or ask us to correct or delete it, at
+            <a class={link} href={`mailto:${site.email}`}>{site.email}</a>.
+          </li>
+          <li>
+            If you are not happy with our answer, you can complain to the
+            <a class={link} href="https://inforegulator.org.za" target="_blank" rel="noopener noreferrer"
+              >Information Regulator</a
+            >.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Client sites</h2>
+        <p>
+          This notice covers sites.factsmith.co.za only. Websites we build for clients belong to those
+          clients, and their own notices apply.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

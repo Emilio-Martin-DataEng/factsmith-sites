@@ -24,6 +24,8 @@ export const site = {
    * Flip to false the moment the certificate lands.
    */
   certPending: false,
+  /** GA4 measurement ID (property "FactSmith Sites", 558194708). Disclosed on /privacy. */
+  ga4: "G-G557XL2BNP",
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
   billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",
