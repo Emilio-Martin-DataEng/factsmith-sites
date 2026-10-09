@@ -23,7 +23,7 @@ export const site = {
    * https here means no preview image in a group post at all.
    * Flip to false the moment the certificate lands.
    */
-  certPending: true,
+  certPending: false,
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
   billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",
