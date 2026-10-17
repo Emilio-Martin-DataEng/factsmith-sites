@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#081317">
+<link rel="canonical" href="https://sites.factsmith.co.za/salt-cartel/tides.html">
+<meta name="description" content="High and low tide times for the next 7 days at Umtentweni and the Umzimkulu river mouth, with moon phase and spring tides, from Salt Cartel guided fishing.">
+<title>Tides: Umtentweni &amp; Umzimkulu Mouth | Salt Cartel</title>
+<link rel="stylesheet" href="sub.css">
+</head>
+<body>
+<header class="site"><div class="navwrap">
+  <nav class="navside left"><a class="navlink" href="index.html#charters">Charters</a><a class="navlink" href="index.html#rates">Rates</a><a class="navlink" href="index.html#tackle">Tackle</a><a class="navlink" href="weather.html">Conditions</a></nav>
+  <a class="wordmark" href="index.html"><img src="img/logo.jpg" alt="Salt Cartel KZN"></a>
+  <nav class="navside right"><a class="navlink" href="index.html#stay">Accommodation</a><a class="navlink" href="index.html#reel">Recent Catches</a><a class="navlink" href="index.html#enquire">Enquire</a><a class="navlink" href="index.html#contact">Contact</a></nav>
+</div></header>
+
+<main>
+<section class="phero"><div class="wrap">
+  <p class="eyebrow">Tides &middot; Umtentweni &amp; the Umzimkulu mouth</p>
+  <h1>READ THE <span class="hit">TIDE.</span></h1>
+  <p class="lede">High and low tide for the river mouth, the rocks and the estuary. Tide, moon and swell decide where the fish are.</p>
+  <div class="tiles" id="now"><p>Loading tides...</p></div>
+</div></section>
+
+<section class="section band"><div class="wrap">
+  <p class="eyebrow">Next 7 days</p><h2 class="d">Tide curve.</h2>
+  <div class="chart tall"><canvas id="c-tide" role="img" aria-label="Tide level, next 7 days"></canvas></div>
+  <p class="caption">Orange dots are high tides, white dots are low tides.</p>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <p class="eyebrow">Day by day</p><h2 class="d">High and low, every day.</h2>
+  <div class="days seven" id="tide-days"></div>
+  <p class="caption"><b>Springs and neaps:</b> tides run biggest a day or two after new and full moon (springs) and smallest around the quarter moons (neaps). Springs mean stronger current at the river mouth and more exposed rock at low tide.</p>
+  <p class="caption">The tide curve comes from a global ocean model (Open-Meteo, CC BY 4.0), not a harbour tide gauge. Times can be out by up to an hour and the real range is bigger than shown. For anything that matters, check the official <a href="https://www.sanavy.co.za/" target="_blank" rel="noopener noreferrer">SA Navy Hydrographic Office</a> tide tables for Durban or Port Shepstone.</p>
+  <div class="cta-row"><a class="btn btn-ghost" href="weather.html">Full weather and sea forecast</a><a class="btn btn-primary" href="https://wa.me/27721398245" target="_blank" rel="noopener">Book a Charter</a></div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div class="foot-col"><a class="wordmark" href="index.html"><img src="img/logo.jpg" alt="Salt Cartel KZN" style="height:64px"></a><p class="caption">Guided rock, surf, river &amp; boat fishing on the KZN South Coast.</p></div>
+    <div class="foot-col"><h5>Explore</h5><ul><li><a href="index.html#charters">Charters</a></li><li><a href="index.html#rates">Rates</a></li><li><a href="weather.html">Weather &amp; conditions</a></li><li><a href="tides.html">Tides</a></li><li><a href="index.html#enquire">Enquire</a></li></ul></div>
+    <div class="foot-col"><h5>Contact</h5><ul><li><a href="https://wa.me/27721398245" target="_blank" rel="noopener">072 139 8245</a></li><li><a href="mailto:saltcartel@hotmail.com">saltcartel@hotmail.com</a></li></ul></div>
+  </div>
+  <div class="foot-bottom"><span>&copy; 2026 Salt Cartel &middot; KZN South Coast</span><span>Concept build</span></div>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="tide.js"></script>
+<script>
+  // Same offshore marine point as weather.html: just off the Umzimkulu mouth (the model has no data on land).
+  const SEA = "https://marine-api.open-meteo.com/v1/marine?latitude=-30.72&longitude=30.5&timezone=Africa%2FJohannesburg&forecast_days=7&hourly=sea_level_height_msl";
+  const hhmm = t => t.slice(11, 16);
+  const dayName = t => ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][new Date(t.slice(0, 10) + "T12:00").getDay()];
+  const dayLong = t => new Date(t.slice(0, 10) + "T12:00").toLocaleDateString("en-ZA", { day: "numeric", month: "short" });
+  const C = { tide: "#2a9d8f", lure: "#ff5a2e", foam: "#eef1ec", dim: "#b9c6c2" };
+
+  // Moon age in days from a known new moon (6 Jan 2000 18:14 UTC); mean synodic month, good to about a day.
+  function moon(date) {
+    const age = (((date - Date.UTC(2000, 0, 6, 18, 14)) / 864e5) % 29.530588 + 29.530588) % 29.530588;
+    const name = ["New moon", "Waxing crescent", "First quarter", "Waxing gibbous", "Full moon", "Waning gibbous", "Last quarter", "Waning crescent"][Math.round(age / 3.6913) % 8];
+    const d = Math.min(age, 29.53 - age, Math.abs(age - 14.77));  // days from nearest new/full
+    return { name, springs: d < 2.5 };
+  }
+
+  const tile = (title, big, ...rows) => `<div class="tile"><div class="t">${title}</div><div class="v">${big}</div>${rows.map(x => `<div class="r">${x}</div>`).join("")}</div>`;
+
+  (async () => {
+    const now = document.getElementById("now");
+    try {
+      const m = await fetch(SEA).then(x => { if (!x.ok) throw x.status; return x.json(); });
+      const { time, sea_level_height_msl: lv } = m.hourly;
+      const ex = extrema(time, lv);
+      const stamp = new Date(Date.now() + 2 * 3600e3).toISOString().slice(0, 16);  // SAST wall time, no DST
+      const nextHigh = ex.find(e => e.high && e.at > stamp), nextLow = ex.find(e => !e.high && e.at > stamp), first = ex.find(e => e.at > stamp);
+      const mo = moon(Date.now());
+
+      now.innerHTML = [
+        tile("Tide is", first ? (first.high ? "Rising" : "Falling") : "–", first ? `${first.high ? "High" : "Low"} tide at ${hhmm(first.at)}` : ""),
+        tile("Next high", nextHigh ? hhmm(nextHigh.at) : "–", nextHigh ? dayName(nextHigh.at) : ""),
+        tile("Next low", nextLow ? hhmm(nextLow.at) : "–", nextLow ? dayName(nextLow.at) : ""),
+        tile("Moon", mo.name, mo.springs ? "Spring tides, bigger range" : "Normal range"),
+      ].join("");
+
+      const days = [...new Set(time.map(t => t.slice(0, 10)))];
+      document.getElementById("tide-days").innerHTML = days.map((day, i) => `<div class="tile">
+        <div class="t">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(day)}</div><div class="s">${dayLong(day)}</div>
+        ${ex.filter(e => e.at.startsWith(day)).map(e => `<div class="r2"><span>${e.high ? "High" : "Low"}</span><b>${hhmm(e.at)}</b><span>${e.h.toFixed(1)} m</span></div>`).join("")}
+      </div>`).join("");
+
+      const hi = new Map(ex.map(e => [e.i, e]));
+      Chart.defaults.font.family = "Manrope, sans-serif";
+      Chart.defaults.color = C.dim;
+      Chart.defaults.borderColor = "rgba(185,198,194,.14)";
+      new Chart("c-tide", { type: "line", data: { labels: time.map(x => dayName(x) + " " + hhmm(x)), datasets: [
+        { label: "Tide (m)", data: lv, borderColor: C.tide, backgroundColor: "rgba(42,157,143,.14)", fill: "start", pointRadius: 0, tension: .3, borderWidth: 2 },
+        { label: "High / low", data: lv.map((v, i) => hi.has(i) ? v : null), showLine: false, pointRadius: 5, borderColor: "transparent",
+          pointBackgroundColor: lv.map((_, i) => hi.get(i)?.high ? C.lure : C.foam) } ] },
+        options: { responsive: true, maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+          plugins: { legend: { labels: { boxWidth: 12 } } },
+          scales: { x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } }, y: { title: { display: true, text: "metres" } } } } });
+    } catch (e) {
+      console.error(e);
+      now.innerHTML = "<p>Tides unavailable right now. Try again shortly.</p>";
+    }
+  })();
+</script>
+</body>
+</html>

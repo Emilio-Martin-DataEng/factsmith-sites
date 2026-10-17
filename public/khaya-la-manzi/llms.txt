@@ -13,7 +13,10 @@
 - [Rooms](https://khayalamanzi.co.za/rooms.html): the Lodge, bachelor rooms 1 to 3, family rooms 4 and 5, poolside rooms 6 and 7, apartments
 - [Facilities](https://khayalamanzi.co.za/facilities.html): pool, braais, games room, gym
 - [Gallery](https://khayalamanzi.co.za/gallery.html)
-- [Weather, sea & tides](https://khayalamanzi.co.za/weather.html)
+- [Weather & sea](https://khayalamanzi.co.za/weather.html)
+- [Tides](https://khayalamanzi.co.za/tides.html)
+- [Attractions](https://khayalamanzi.co.za/attractions.html): beaches, rock pools, surf, fishing and days out from Mtwalume to Port Shepstone
+- [Restaurants & takeaways](https://khayalamanzi.co.za/dining.html)
 - [Contact & directions](https://khayalamanzi.co.za/contact.html)
 - [Terms & conditions](https://khayalamanzi.co.za/terms.html)
 
