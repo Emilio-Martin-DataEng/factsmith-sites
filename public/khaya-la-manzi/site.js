@@ -6,6 +6,13 @@ const $ = (s, el = document) => el.querySelector(s), $$ = (s, el = document) => 
 const menu = $(".menu"), list = $("#navlist");
 menu?.addEventListener("click", () => menu.setAttribute("aria-expanded", list.classList.toggle("open")));
 
+// Nav dropdown ("Plan your stay"): click toggles, outside click or Escape closes
+const subBtn = $(".sub-btn"), sub = $("#plan-sub");
+const closeSub = () => { sub?.classList.remove("open"); subBtn?.setAttribute("aria-expanded", "false"); };
+subBtn?.addEventListener("click", () => subBtn.setAttribute("aria-expanded", sub.classList.toggle("open")));
+document.addEventListener("click", ev => { if (!ev.target.closest(".has-sub")) closeSub(); });
+document.addEventListener("keydown", ev => { if (ev.key === "Escape") closeSub(); });
+
 // Gallery lightbox (native <dialog>)
 const lb = $("#lb");
 if (lb) {
