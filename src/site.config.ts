@@ -64,15 +64,20 @@ export const nav = [
   { label: "Contact", href: "/contact" },
 ] as const;
 
-/** Live samples. */
+/** Live samples. South Coast first (Sharon, Round 2 Q4), the rest after. */
 export const samples = [
   {
-    slug: "factsmith",
-    title: "FactSmith",
-    kind: "Our product site",
-    url: "https://www.factsmith.co.za",
+    slug: "eagles-roost",
+    title: "Eagle’s Roost B&B",
+    kind: "Live client — Umtentweni, South Coast",
+    url: "https://eaglesroost.co.za",
     blurb:
-      "Capability ceiling — a full marketing site we built for our own product. Bigger than the standard brochure package.",
+      "Heritage Port Master’s House above the Umzimkulu. WhatsApp-first booking, rooms and rates, experiences and guest recommendations on the home page. New: an hour-by-hour weather page with tides, Windy wave and storm maps and a live satellite view.",
+    hero: "/images/work/eagles-roost/hero.jpg",
+    heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
+    images: [
+      { src: "/images/work/eagles-roost/verandah.jpg", alt: "Covered verandah at first light" },
+    ],
     status: "live" as const,
   },
   {
@@ -129,17 +134,12 @@ export const samples = [
     status: "live" as const,
   },
   {
-    slug: "eagles-roost",
-    title: "Eagle’s Roost B&B",
-    kind: "Live client — Umtentweni, South Coast",
-    url: "https://eaglesroost.co.za",
+    slug: "factsmith",
+    title: "FactSmith",
+    kind: "Our product site",
+    url: "https://www.factsmith.co.za",
     blurb:
-      "Heritage Port Master’s House above the Umzimkulu. WhatsApp-first booking, rooms and rates, experiences and guest recommendations on the home page. New: an hour-by-hour weather page with tides, Windy wave and storm maps and a live satellite view.",
-    hero: "/images/work/eagles-roost/hero.jpg",
-    heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
-    images: [
-      { src: "/images/work/eagles-roost/verandah.jpg", alt: "Covered verandah at first light" },
-    ],
+      "Capability ceiling — a full marketing site we built for our own product. Bigger than the standard brochure package.",
     status: "live" as const,
   },
 ] as const;
