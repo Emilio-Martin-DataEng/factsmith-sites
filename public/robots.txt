@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /mockups/
+
+Sitemap: https://sites.factsmith.co.za/sitemap.xml

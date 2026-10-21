@@ -5,7 +5,7 @@ export const site = {
   shortName: "Sites",
   domain: "sites.factsmith.co.za",
   url: "https://sites.factsmith.co.za",
-  email: "factsmith@outlook.com",
+  email: "emilio@factsmith.co.za",
   /** Sharon Cooper is the published contact for Sites enquiries. */
   contactName: "Sharon Cooper",
   phoneDisplay: "072 500 5179",

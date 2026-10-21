@@ -24,11 +24,40 @@ const notIncluded = [
   "WordPress or a CMS so a cousin can edit pages",
   "Monthly retainers, blogs, or link-building",
 ];
+
+// Real questions from Sharon's Round 1 (cost, will it bring enquiries) plus the usual follow-ups.
+// Prices come from site.config so the answers change in the same release as the offer.
+const price = launchOffer.active
+  ? `R${site.priceZar.toLocaleString("en-ZA")} fixed for the first ${launchOffer.slots} South Coast sites, then R${site.standardPriceZar.toLocaleString("en-ZA")}`
+  : `R${site.standardPriceZar.toLocaleString("en-ZA")} fixed`;
+const faq = [
+  {
+    q: "How much does a website cost?",
+    a: `${price}. A R${site.depositZar.toLocaleString("en-ZA")} deposit starts the job and the balance is due within 7 days of hand-over. A new .co.za domain, if you need one, is at actual cost, typically R90 to R150.`,
+  },
+  {
+    q: "Will a new website bring me more enquiries?",
+    a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. Your private stats page then shows how many people visit and which Google searches find you.",
+  },
+  {
+    q: "Who owns the website?",
+    a: "You do. The domain is in your name and we hand over all source files.",
+  },
+  {
+    q: "Do I have to move my domain or hosting?",
+    a: "No. We use the domain you have. Keep your hosting if it can serve the new site, or downscale to free static hosting and stop paying for what you no longer need.",
+  },
+  {
+    q: "What is not in the fee?",
+    a: "A new domain at actual cost, ongoing hosting or renewal bills, pages beyond six (quoted separately), photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, and retainers, blogs or link-building.",
+  },
+];
 ---
 
 <BaseLayout
   title="Offer"
   description="South Coast website rebuild — R7 500, or R4 000 for the first five sites. Mockups this weekend, live next week."
+  faq={faq}
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">Published package</p>
@@ -113,6 +142,20 @@ const notIncluded = [
           {notIncluded.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">–</span><span>{item}</span></li>)}
         </ul>
       </div>
+    </div>
+
+    <div class="mt-10">
+      <h2 class="font-display text-2xl font-semibold text-ink-900">Common questions</h2>
+      <dl class="mt-5 grid gap-4 md:grid-cols-2">
+        {
+          faq.map(({ q, a }) => (
+            <div class="rounded-2xl border border-sea-100 bg-white p-5">
+              <dt class="font-display font-semibold text-ink-900">{q}</dt>
+              <dd class="mt-1 text-sm leading-relaxed text-ink-700">{a}</dd>
+            </div>
+          ))
+        }
+      </dl>
     </div>
 
     <div class="mt-10 rounded-2xl bg-sea-900 p-6 text-cream-50 sm:p-8">

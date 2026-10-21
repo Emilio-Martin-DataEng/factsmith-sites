@@ -8,9 +8,11 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** Visible Q&A on the page; emitted as FAQPage schema with identical text. */
+  faq?: { q: string; a: string }[];
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
+const { title, description = site.description, noindex = false, faq } = Astro.props;
 const pageTitle = title === site.name ? title : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
 // Social scrapers get http while the TLS cert is still being issued, otherwise
@@ -32,6 +34,16 @@ const jsonLd = {
     name: "KwaZulu-Natal South Coast",
   },
   priceRange: "R4000-R7500",
+};
+
+const faqLd = faq && {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map(({ q, a }) => ({
+    "@type": "Question",
+    name: q,
+    acceptedAnswer: { "@type": "Answer", text: a },
+  })),
 };
 ---
 
@@ -68,6 +80,7 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {faqLd && <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />}
     {
       !noindex && (
         <>
