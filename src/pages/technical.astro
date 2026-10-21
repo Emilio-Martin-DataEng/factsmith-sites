@@ -1,0 +1,116 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+
+// Everything here is what the live client sites actually run (Eagle's Roost is the reference).
+const stack = [
+  ["Astro", "Builds plain HTML pages ahead of time. No database, no WordPress, no plugins to patch, nothing for hackers to log in to."],
+  ["Tailwind CSS", "Styling compiled into one small file, so pages load fast on a phone on a weak signal."],
+  ["Static hosting", "Free static hosting (Cloudflare Pages or GitHub Pages) with HTTPS, or the host you already pay for. Your domain stays in your name."],
+  ["Git", "Every change is saved in a code history. The source files are handed over to you."],
+  ["Open-Meteo", "Free weather, sea and marine data (CC BY 4.0), fetched live in the visitor's browser, for weather and tides pages."],
+  ["Web app", "The guest app is a web app with a manifest and a service worker: it installs to the home screen and keeps the last good copy for when there is no signal. It only stores your own pages, never WhatsApp or analytics."],
+  ["Google Analytics 4", "Visitor numbers for your admin page, disclosed on the privacy page."],
+] as const;
+
+const seo = [
+  "A unique title and description on every page, written around what your customers search for",
+  "A canonical address on every page, so Google does not split your ranking between copies",
+  "A share image and text (Open Graph), so a link in WhatsApp or Facebook shows a proper preview card",
+  "sitemap.xml and robots.txt, generated on every build",
+  "schema.org business data (JSON-LD): your business type, address, phone and reviews, readable by search engines",
+  "Google Search Console and Bing Webmaster Tools verified in your name, with the sitemap submitted",
+  "Mobile-first pages, image sizes kept small, no heavy effects",
+] as const;
+
+const aeo = [
+  "We collect the real questions your customers ask (by WhatsApp, phone, at the counter)",
+  "Each one is answered in a plain sentence in an FAQ, first answer first",
+  "The FAQ carries FAQPage schema, so Google and voice assistants can quote the answer and name you",
+] as const;
+
+const geo = [
+  "An llms.txt file at the root of your site with your key facts: what you do, address, prices, capacity, hours",
+  "Plain, factual pages with numbers, for example rates and minutes from the beach, not vague marketing copy",
+  "The same facts on the site, in llms.txt and in your Google Business Profile if you have one, so ChatGPT, Gemini and Perplexity describe you correctly",
+] as const;
+
+const process = [
+  ["Free check", "We look at your current site and tell you what is losing enquiries."],
+  ["Questions and keywords", "We list what your customers search for and ask, before writing a word."],
+  ["Build", "Pages, schema, sitemap, llms.txt and FAQ go in with the first build, not later."],
+  ["Submit", "Sitemap submitted to Google and Bing in your name; pages requested for indexing."],
+  ["Check", "We run an automatic check on every site we look after: titles, sitemap, llms.txt, schema and the analytics tag. Your admin page shows the Google searches that find you."],
+] as const;
+---
+
+<BaseLayout
+  title="How it is built"
+  description="The technical side of a FactSmith site: Astro static pages, free static hosting, an offline guest app, and what we do for SEO, AEO and GEO."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">For the technical reader</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold text-ink-900">How it is built</h1>
+    <p class="mt-4 max-w-2xl text-lg text-ink-700">
+      The stack, and exactly what we do so Google, voice assistants and AI chat tools can find you
+      and describe you correctly.
+    </p>
+
+    <h2 class="mt-14 font-display text-2xl font-semibold text-ink-900">The stack</h2>
+    <dl class="mt-6 grid gap-4 sm:grid-cols-2">
+      {
+        stack.map(([name, text]) => (
+          <div class="rounded-2xl border border-sea-100 bg-white p-5">
+            <dt class="font-display font-semibold text-ink-900">{name}</dt>
+            <dd class="mt-1 text-sm leading-relaxed text-ink-700">{text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="border-y border-sea-100 bg-white">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-3">
+      {
+        [
+          ["SEO", "Search engine optimisation: rank in Google and Bing.", seo],
+          ["AEO", "Answer engine optimisation: be the answer Google and voice assistants read out.", aeo],
+          ["GEO", "Generative engine optimisation: be described correctly by ChatGPT, Gemini and Perplexity.", geo],
+        ].map(([label, lede, items]) => (
+          <div>
+            <h2 class="font-display text-2xl font-semibold text-ink-900">{label}</h2>
+            <p class="mt-2 text-sm text-ink-500">{lede}</p>
+            <ul class="mt-4 space-y-3">
+              {(items as readonly string[]).map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-ink-700">
+                  <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent-500" aria-hidden="true"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <h2 class="font-display text-2xl font-semibold text-ink-900">The process</h2>
+    <ol class="mt-6 grid gap-4 md:grid-cols-5">
+      {
+        process.map(([title, text], i) => (
+          <li class="rounded-2xl border border-sea-100 bg-white p-5">
+            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-sea-700 text-sm font-bold text-white">{i + 1}</span>
+            <h3 class="mt-3 font-display font-semibold text-ink-900">{title}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-ink-700">{text}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-12 flex flex-wrap items-center gap-4">
+      <WhatsAppButton label="Get my free check" message="Hi Sharon, please check my website: " />
+      <a href="/included" class="text-sm font-semibold text-sea-700 hover:text-accent-600">What is included →</a>
+    </div>
+  </section>
+</BaseLayout>

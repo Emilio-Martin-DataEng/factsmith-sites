@@ -57,6 +57,7 @@ export const launchOffer = {
 export const nav = [
   { label: "Work", href: "/work" },
   { label: "Included", href: "/included" },
+  { label: "Tech", href: "/technical" },
   { label: "Method", href: "/method" },
   { label: "Offer", href: "/offer" },
   { label: "South Coast", href: "/south-coast" },
@@ -279,11 +280,6 @@ export const standardFeatures = [
     example: { label: "Khaya La Manzi contact", href: "https://sites.factsmith.co.za/khaya-la-manzi/contact.html" },
   },
   {
-    title: "Live weather",
-    text: "Hour-by-hour charts for today and tomorrow, a 7-day outlook, sea temperature and tides, animated Windy wave and storm maps, and the latest satellite picture.",
-    example: { label: "Eagle’s Roost weather", href: "https://eaglesroost.co.za/weather/" },
-  },
-  {
     title: "SEO",
     text: "Fast static pages, a title and description on every page, sitemap, robots.txt, and schema.org data for your business, address and reviews.",
   },
@@ -304,6 +300,58 @@ export const standardFeatures = [
     title: "WhatsApp and tap-to-call",
     text: "A WhatsApp button and a tap-to-call number on every page, built for the phone first.",
   },
+] as const;
+
+/**
+ * Added where it fits the business (a guest house gets weather and a guest app,
+ * a fencing firm does not). Images are snips of the live Eagle's Roost site.
+ */
+export const fitFeatures = [
+  {
+    title: "Weather and tides",
+    text: "Hour-by-hour weather for today and tomorrow, a 7-day outlook, wind, swell and sea temperature, Windy wave and storm maps and the latest satellite picture. A tides page shows high and low tide, a 7-day tide curve and the moon, for beach walks, fishing and rock pools.",
+    image: "/images/work/eagles-roost/feature-weather.webp",
+    imageAlt: "Eagle's Roost weather page on a phone: temperature, wind, sea, water temperature, next tide",
+    phone: true,
+    example: { label: "Eagle’s Roost weather", href: "https://eaglesroost.co.za/weather/" },
+    extra: { label: "and tides", href: "https://eaglesroost.co.za/tides/" },
+  },
+  {
+    title: "A guest app that works without signal",
+    text: "A guest guide your visitors add to their home screen: Wi-Fi, check-in times, house rules, weather now, places to eat and one-tap WhatsApp requests. It keeps the last good copy on the phone, so it still opens with no signal.",
+    image: "/images/work/eagles-roost/feature-guide.webp",
+    imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",
+    phone: true,
+    example: { label: "Eagle’s Roost guest guide", href: "https://eaglesroost.co.za/guide/" },
+  },
+  {
+    title: "Nearby attractions, researched",
+    text: "We research what is around you (beaches, walks, the river, family days out, fishing guides) and write a page with real distances from your door, photos and a map, so guests plan their stay on your site.",
+    image: "/images/work/eagles-roost/feature-attractions.webp",
+    imageAlt: "Eagle's Roost attractions page: guided fishing, the main beach and the whale deck",
+    phone: false,
+    example: { label: "Eagle’s Roost attractions", href: "https://eaglesroost.co.za/attractions/" },
+  },
+  {
+    title: "Where to eat, researched",
+    text: "Restaurants and takeaways near you, grouped by area, each with address, phone, website and a map, and a note where you have eaten there yourself.",
+    image: "/images/work/eagles-roost/feature-dining.webp",
+    imageAlt: "Eagle's Roost restaurants page: cards per restaurant with address, phone and map",
+    phone: false,
+    example: { label: "Eagle’s Roost restaurants", href: "https://eaglesroost.co.za/dining/" },
+  },
+] as const;
+
+/** The private admin (stats) page every site gets, as built in /stats. */
+export const adminFeatures = [
+  "Sign in with your Google account; nobody else sees it",
+  "Visitors, sessions, page views and average visit length for the last 7, 28 or 90 days",
+  "Sessions per day as a chart",
+  "Top pages: which pages people actually read",
+  "Where visitors came from (source and medium, for example Google search or Facebook)",
+  "Which countries they are in",
+  "Google searches: the words people typed to find you, how often you were shown and clicked, and your average position, from Search Console",
+  "Search Console and Bing set up in your name, so the data is yours if you ever leave us",
 ] as const;
 
 export const methodSteps = [
