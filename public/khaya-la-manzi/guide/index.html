@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-ZA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#14284b"><meta name="robots" content="noindex">
+<title>Guest Guide | Khaya La Manzi</title><meta name="description" content="Guest guide for Khaya La Manzi Guest Lodge: Wi-Fi, check-in, breakfast, weather, requests, places to eat and emergency numbers.">
+<link rel="icon" href="../favicon.png" type="image/png"><link rel="apple-touch-icon" href="../img/icon-192.png">
+<script>/* Samsung Internet builds its own app package from a manifest and Play Protect blocks it: give it a plain shortcut instead */
+if (!/SamsungBrowser/.test(navigator.userAgent)) { const l = document.createElement("link"); l.rel = "manifest"; l.href = "../guide-manifest.json"; document.head.append(l); }</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="../style.css">
+<style>
+.ghead{background:var(--navy);color:#dfe5f0;padding:32px 0} .ghead h1{color:#fff} .gwrap{max-width:760px;margin:0 auto;padding:0 16px}
+.chips a{color:#fff;background:#ffffff1a;border-radius:999px;padding:6px 12px;text-decoration:none;font-size:.9rem} .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.gsec{margin:36px 0} .gcard{background:#fff;border:1px solid var(--line);border-radius:10px;padding:18px;margin-top:14px}
+.ggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px} .gbtn{display:flex;align-items:center;justify-content:center;text-align:center;padding:13px;border-radius:10px;background:var(--sand);color:var(--navy);font-weight:700;text-decoration:none;border:0;font:700 .95rem var(--sans);cursor:pointer}
+.gbtn.wa{background:var(--wa);color:#fff;margin-top:10px} .gbtn.gold{background:var(--gold);color:#fff;margin-top:14px}
+.gwx{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px} .gwx div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px} .gwx b{display:block;font:1.6rem var(--serif);color:var(--navy)}
+.glist{list-style:none;padding:0;margin:0} .glist li{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line)} .glist li:first-child{border-top:0}
+.geat li{padding:6px 0;border-top:1px solid var(--line)} .geat span{color:var(--muted)} .mono{font-family:ui-monospace,monospace;word-break:break-all}
+</style></head>
+<body>
+<header class="ghead"><div class="gwrap"><div class="eyebrow">Guest guide</div><h1>Welcome to Khaya La Manzi</h1>
+<p>Everything for your stay in one place. Save it to your home screen and it works without signal.</p>
+<nav class="chips" aria-label="Guide sections"><a href="#wifi">Wi-Fi</a><a href="#weather">Weather</a><a href="#stay">Your stay</a><a href="#requests">Requests</a><a href="#explore">Explore</a><a href="#help">Help</a></nav>
+<button id="install" class="gbtn gold" hidden>Add to home screen</button>
+<p id="samsung-hint" hidden>To keep this guide on your phone: tap the menu (three lines), then Add page to, then Home screen.</p></div></header>
+<main class="gwrap">
+<section id="wifi" class="gsec gcard"><h2>Wi-Fi</h2>
+  <div id="wifi-on" hidden><p class="caption">Network</p><p id="wifi-ssid"><b></b></p><p class="caption">Password</p><p id="wifi-pw" class="mono"></p><button id="wifi-copy" class="gbtn gold">Copy password</button></div>
+  <p id="wifi-off">Scan the QR card in your room (or open the link in your welcome WhatsApp) and the Wi-Fi password appears here.</p></section>
+<section id="weather" class="gsec"><h2>Weather now</h2><div id="wx" class="gwx"><p>Loading...</p></div>
+  <p class="caption"><a href="../weather.html">Full forecast, sea and maps</a> &middot; <a href="../tides.html">Tides</a> &middot; Forecast: Open-Meteo</p></section>
+<section id="stay" class="gsec"><h2>Your stay</h2>
+  <div class="gcard"><h3>Arrival, departure and house rules</h3><ul><li>Check-in 14:00 to 19:00 (later by arrangement). Running late? WhatsApp us and don't stress.</li><li>Check-out by 10:00. Please leave your keys at reception.</li><li>Free daily servicing, not on Sundays or public holidays. Wet or dirty towels are swapped every day.</li><li>Pool and games room close at 22:00. Children must be supervised.</li><li>No pets and no day visitors, for everyone's security. Please close the gate behind you.</li></ul><p class="caption"><a href="../terms.html">Full terms and conditions</a></p></div>
+  <details class="gcard"><summary><b>Breakfast</b></summary><ul><li>A mini buffet of cold options: a selection of cereals, seasonal fruit, yoghurts, cheese and tomato slices, avo (in season), scones or muffins, nuts, jams and honey</li><li>A hot plated breakfast: 2 eggs, sausage, fried tomato, mushrooms and 2 slices of bacon</li><li>A third protein of the day (boerewors, chicken livers, a chicken patty, fish and so on), toast, fruit juice, coffee and tea</li></ul><p class="caption">The selection may vary according to season and availability.</p></details></section>
+<section id="requests" class="gsec"><h2>Requests and extras</h2><p class="caption">Tap to send us a WhatsApp. We reply with the price and a time.</p>
+  <div class="ggrid"><a class="gbtn" href="https://wa.me/27833004725?text=Hi%20Khaya%20La%20Manzi%2C%20please%20can%20we%20order%20bottled%20water.%20How%20much%20is%20it%3F" target="_blank" rel="noopener">Bottled water</a><a class="gbtn" href="https://wa.me/27833004725?text=Hi%20Khaya%20La%20Manzi%2C%20please%20may%20we%20hire%20beach%20towels%20%28R50%20per%20guest%20per%20stay%29.%20How%20many%3A%20" target="_blank" rel="noopener">Beach towels</a><a class="gbtn" href="https://wa.me/27833004725?text=Hi%20Khaya%20La%20Manzi%2C%20is%20a%20late%20check-out%20possible%20on%20our%20last%20day%3F%20What%20does%20it%20cost%3F" target="_blank" rel="noopener">Late check-out</a><a class="gbtn" href="https://wa.me/27833004725?text=Hi%20Khaya%20La%20Manzi%2C%20may%20we%20borrow%20the%20hair%20dryer%20/%20iron%20from%20reception%20please%3F" target="_blank" rel="noopener">Hair dryer or iron</a></div>
+  <a class="gbtn wa" href="https://wa.me/27833004725?text=Hi%20Khaya%20La%20Manzi%2C%20something%20isn%27t%20right%20during%20our%20stay%3A" target="_blank" rel="noopener">Anything not right? Tell us now</a></section>
+<section id="explore" class="gsec"><h2>Your local guide</h2>
+  <div class="gcard"><p><a href="../attractions.html">Beaches and attractions</a> &middot; <a href="../dining.html">All restaurants and takeaways</a> &middot; <a href="../what-to-bring.html">What to bring</a></p></div>
+  <details class="gcard"><summary><b>Places to eat in Hibberdene</b></summary><ul class="glist geat"><li><b>Jolly Roger Fun Pub &amp; Grub</b> <span>&middot; Pub &amp; grill · pizza · fish and chips</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Jolly%20Roger%20Fun%20Pub%20%26%20Grub%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>Tipsy Mermaid Pub and Grill</b> <span>&middot; Pub &amp; grill</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Tipsy%20Mermaid%20Pub%20and%20Grill%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>Cool Spot Wosanyama</b> <span>&middot; Shisanyama · grill</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Cool%20Spot%20Wosanyama%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>Fifi&#x27;s Fresh Fish &amp; Take Aways</b> <span>&middot; Fish &amp; chips takeaway</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Fifi%27s%20Fresh%20Fish%20%26%20Take%20Aways%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>Big Jo&#x27;s</b> <span>&middot; Takeaway</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Big%20Jo%27s%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>Debonairs Pizza</b> <span>&middot; Pizza takeaway</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Debonairs%20Pizza%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>KFC</b> <span>&middot; Fast food</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=KFC%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>Oh My Word - The Coffee Shop</b> <span>&middot; Coffee shop</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=Oh%20My%20Word%20-%20The%20Coffee%20Shop%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li><li><b>The Ant Cafe</b> <span>&middot; Café</span> <a href="https://www.google.com/maps/search/?api=1&amp;query=The%20Ant%20Cafe%2C%20Hibberdene%2C%20KwaZulu-Natal" target="_blank" rel="noopener">Map</a></li></ul></details></section>
+<section id="help" class="gsec"><h2>Help and emergencies</h2><div class="gcard"><ul class="glist"><li><span>Any emergency (from a cellphone)</span><a href="tel:112">112</a></li><li><span>Police (SAPS)</span><a href="tel:10111">10111</a></li><li><span>Ambulance</span><a href="tel:10177">10177</a></li><li><span>Sea rescue (NSRI)</span><a href="tel:+27870949774">087 094 9774</a></li><li><span>Cheril</span><a href="tel:+27833004725">083 300 4725</a></li><li><span>Arthur</span><a href="tel:+27824929441">082 492 9441</a></li></ul></div></section>
+</main>
+<script>
+// Wi-Fi arrives in the link fragment (#ssid=..&pw=..), which never reaches a server or the source.
+// ponytail: localStorage on purpose, because an installed app starts from start_url and loses the hash.
+const KEY = "guide-wifi", p = new URLSearchParams(location.hash.slice(1));
+let wifi = null;
+if (p.get("pw")) { wifi = {ssid: p.get("ssid") || "", pw: p.get("pw")}; try { localStorage.setItem(KEY, JSON.stringify(wifi)); } catch {} history.replaceState(null, "", location.pathname + location.search); }
+else { try { wifi = JSON.parse(localStorage.getItem(KEY) || "null"); } catch {} }
+if (wifi) {
+  document.getElementById("wifi-on").hidden = false; document.getElementById("wifi-off").hidden = true;
+  document.querySelector("#wifi-ssid b").textContent = wifi.ssid; document.getElementById("wifi-pw").textContent = wifi.pw;
+  const b = document.getElementById("wifi-copy");
+  // In-app browsers (WhatsApp, Facebook) can block the Clipboard API: fall back to selecting the text
+  const select = () => { const r = document.createRange(); r.selectNodeContents(document.getElementById("wifi-pw")); getSelection().removeAllRanges(); getSelection().addRange(r); return document.execCommand("copy"); };
+  b.onclick = () => (navigator.clipboard ? navigator.clipboard.writeText(wifi.pw) : Promise.reject()).catch(() => { if (!select()) throw 0; })
+    .then(() => (b.textContent = "Copied"), () => (b.textContent = "Selected, long-press to copy"));
+}
+const r = Math.round, compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
+const tile = (t, big, small) => `<div><span class="eyebrow">${t}</span><b>${big}</b><span class="caption">${small}</span></div>`;
+fetch("https://api.open-meteo.com/v1/forecast?latitude=-30.5749&longitude=30.5726&timezone=Africa%2FJohannesburg&forecast_days=1&current=temperature_2m,apparent_temperature,wind_speed_10m,wind_direction_10m&daily=sunrise,sunset,uv_index_max")
+  .then(x => { if (!x.ok) throw new Error("Open-Meteo " + x.status); return x.json(); })
+  .then(({current: c, daily: d}) => { document.getElementById("wx").innerHTML = [tile("Now", r(c.temperature_2m) + "&deg;", "Feels like " + r(c.apparent_temperature) + "&deg;"),
+    tile("Wind", r(c.wind_speed_10m), "km/h from " + compass(c.wind_direction_10m)), tile("Sunset", d.sunset[0].slice(11, 16), "Sunrise " + d.sunrise[0].slice(11, 16) + " &middot; UV " + r(d.uv_index_max[0]))].join(""); })
+  .catch(err => { console.error(err); document.getElementById("wx").innerHTML = "<p>Weather unavailable right now. Try again when you have signal.</p>"; });
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("../guide-sw.js", {scope: "./"});
+addEventListener("load", () => { if (!("caches" in window)) return;
+  const own = performance.getEntriesByType("resource").map(x => x.name).filter(u => u.startsWith(location.origin));
+  caches.open("guide-v1").then(c => c.addAll([location.pathname, ...own])).catch(() => {}); });
+let ask = null;
+addEventListener("beforeinstallprompt", ev => { ev.preventDefault(); ask = ev; document.getElementById("install").hidden = false; });
+document.getElementById("install").onclick = () => ask && ask.prompt();
+if (/SamsungBrowser/.test(navigator.userAgent)) document.getElementById("samsung-hint").hidden = false;
+// The app is the guide only: other site pages open in the browser, not inside the app
+document.querySelectorAll("a[href]").forEach(a => { const u = new URL(a.href); if (u.origin === location.origin && !u.pathname.includes("/guide/")) a.target = "_blank"; });
+</script>
+</body></html>
