@@ -11,8 +11,9 @@ const accent = onDark ? "text-sea-200" : "text-sea-600";
 
 <a href="/" class={`inline-flex items-center gap-2 font-display ${className}`} aria-label="FactSmith Sites home">
   <span
-    class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sea-600 text-sm font-bold text-white"
-    aria-hidden="true">FS</span
+    class="relative inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sea-700 text-sm font-bold text-white"
+    aria-hidden="true"
+    >FS<span class="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-accent-500 ring-2 ring-cream-50"></span></span
   >
   <span class={`text-base font-semibold tracking-tight ${text}`}>
     FactSmith <span class={accent}>Sites</span>

@@ -3,6 +3,8 @@ import { site } from "../site.config";
 
 interface Props {
   label?: string;
+  /** Prefilled WhatsApp text; defaults to site.whatsappMessage. */
+  message?: string;
   variant?: "solid" | "outline" | "whatsapp";
   size?: "sm" | "md";
   class?: string;
@@ -10,12 +12,13 @@ interface Props {
 
 const {
   label = "Chat on WhatsApp",
+  message = site.whatsappMessage,
   variant = "whatsapp",
   size = "md",
   class: className = "",
 } = Astro.props;
 
-const href = `${site.whatsappLink}?text=${encodeURIComponent(site.whatsappMessage)}`;
+const href = `${site.whatsappLink}?text=${encodeURIComponent(message)}`;
 
 const base =
   "inline-flex items-center gap-2 rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sea-500 focus-visible:ring-offset-2";

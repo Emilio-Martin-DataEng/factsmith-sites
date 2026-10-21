@@ -1,24 +1,32 @@
 @import "tailwindcss";
 
 /*
-  FactSmith Sites — coastal professional.
+  FactSmith Sites — Hibiscus Coast (palette A, Sharon's Round 1 pick, 2026-10-21).
+  "sea" is the ocean ramp, "cream" is sand, "accent" is hibiscus (CTAs and price).
   Not Ask Ember. Not Three Birds sage.
 */
 @theme {
-  --color-sea-50: #f0f7f8;
-  --color-sea-100: #d7ebef;
-  --color-sea-200: #b0d7df;
-  --color-sea-300: #7bbac8;
-  --color-sea-400: #4a96a9;
-  --color-sea-500: #2f7a8f;
-  --color-sea-600: #1d6a7a;
-  --color-sea-700: #185561;
-  --color-sea-800: #164650;
-  --color-sea-900: #153b44;
+  --color-sea-50: #eef5f8;
+  --color-sea-100: #d5e6ee;
+  --color-sea-200: #aacddc;
+  --color-sea-300: #78adc4;
+  --color-sea-400: #4a8aa8;
+  --color-sea-500: #2c6e90;
+  --color-sea-600: #1f5878;
+  --color-sea-700: #1a4764;
+  --color-sea-800: #163a52;
+  --color-sea-900: #12324a;
 
-  --color-cream-50: #f7f5f0;
-  --color-cream-100: #efeae0;
-  --color-cream-200: #e2d9c8;
+  --color-cream-50: #faf6ee;
+  --color-cream-100: #f2eadb;
+  --color-cream-200: #e5d8bd;
+
+  --color-accent-50: #fdf0f4;
+  --color-accent-100: #fadbe5;
+  --color-accent-300: #ee8aa8;
+  --color-accent-500: #d14470;
+  --color-accent-600: #b02a52;
+  --color-accent-700: #8e2142;
 
   --color-ink-900: #17202a;
   --color-ink-700: #3a4553;

@@ -2,56 +2,83 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { inProcess, samples, site, launchOffer } from "../site.config";
+
+// Layout 3 "Free check first" (Sharon, Round 1). Headline is her Q4 answer.
+const price = (launchOffer.active ? site.priceZar : site.standardPriceZar).toLocaleString("en-ZA");
+const checkMessage = "Hi Sharon, please check my website: ";
 ---
 
 <BaseLayout title={site.name}>
-  <section class="relative overflow-hidden bg-gradient-to-b from-cream-50 to-sea-50">
-    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
-      <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">KZN South Coast</p>
-      <h1 class="mt-3 max-w-3xl font-display text-4xl font-semibold leading-tight text-ink-900 sm:text-5xl">
-        Your website is costing you enquiries.
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg text-ink-700">
-        FactSmith Sites rebuilds broken brochure sites for small and medium businesses on the Hibiscus
-        Coast — mobile-first, WhatsApp-first, domain in your name, hosting at R0.
-      </p>
+  <section class="bg-cream-50">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 md:grid-cols-[1.15fr_1fr]">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">KZN South Coast · Hibiscus Coast</p>
+        <h1 class="mt-3 font-display text-4xl font-semibold leading-tight text-ink-900 sm:text-5xl">
+          We stop your website from losing you enquiries.
+        </h1>
+        <p class="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-lg text-ink-700">
+          <span class="rounded-full bg-accent-600 px-4 py-1.5 font-display text-xl font-semibold text-white">
+            Fixed price R{price}
+          </span>
+          <span>and you own everything.</span>
+        </p>
+        <p class="mt-5 max-w-xl text-ink-700">
+          Mobile-first, WhatsApp-first rebuilds for small businesses on the South Coast. Domain in
+          your name, source files handed over.
+        </p>
+      </div>
 
+      <div class="rounded-2xl border-t-4 border-accent-600 bg-white p-6 shadow-sm sm:p-7">
+        <h2 class="font-display text-2xl font-semibold text-ink-900">Free website check</h2>
+        <ol class="mt-4 space-y-3 text-sm leading-relaxed text-ink-700">
+          <li class="flex gap-3">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sea-700 text-xs font-bold text-white">1</span>
+            Send us the link to your current site on WhatsApp.
+          </li>
+          <li class="flex gap-3">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sea-700 text-xs font-bold text-white">2</span>
+            {site.contactName.split(" ")[0]} tells you honestly whether a rebuild is worth it, and why.
+          </li>
+          <li class="flex gap-3">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-sea-700 text-xs font-bold text-white">3</span>
+            If it is: R{price} fixed, R{site.depositZar.toLocaleString("en-ZA")} deposit to start.
+          </li>
+        </ol>
+        <WhatsAppButton label="Get my free check" message={checkMessage} class="mt-6 w-full justify-center" />
+        <p class="mt-3 text-center text-xs text-ink-500">No site yet? Say so, we start from scratch.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-y border-sea-100 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
       {
         launchOffer.active ? (
-          <div class="mt-7 max-w-2xl rounded-2xl border-2 border-sea-600 bg-white/80 p-5 shadow-sm backdrop-blur">
-            <div class="flex flex-wrap items-center gap-3">
-              <span class="rounded-full bg-sea-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
+          <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <div>
+              <span class="rounded-full bg-accent-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-accent-700">
                 {launchOffer.headline}
               </span>
-              <p class="flex items-baseline gap-2">
+              <p class="mt-3 flex items-baseline gap-3">
+                <span class="font-display text-4xl font-semibold text-accent-600">R{site.priceZar.toLocaleString("en-ZA")}</span>
                 <span class="text-lg font-medium text-ink-500 line-through decoration-2">
                   R{site.standardPriceZar.toLocaleString("en-ZA")}
                 </span>
-                <span class="font-display text-3xl font-semibold text-sea-700">
-                  R{site.priceZar.toLocaleString("en-ZA")}
-                </span>
+              </p>
+              <p class="mt-2 max-w-xl text-sm leading-relaxed text-ink-700">
+                A R{site.depositZar.toLocaleString("en-ZA")} deposit secures one of the five slots and
+                locks the price. After that the published price is
+                R{site.standardPriceZar.toLocaleString("en-ZA")}. {launchOffer.turnaround}
               </p>
             </div>
-            <p class="mt-3 text-sm leading-relaxed text-ink-700">
-              A R{site.depositZar.toLocaleString("en-ZA")} deposit secures one of the five slots and
-              locks the price. After that the published price is
-              R{site.standardPriceZar.toLocaleString("en-ZA")}.
-            </p>
-            <p class="mt-2 text-sm font-semibold text-sea-800">{launchOffer.turnaround}</p>
+            <a href="/offer" class="shrink-0 text-sm font-semibold text-sea-700 hover:text-accent-600">
+              See what’s included →
+            </a>
           </div>
         ) : (
-          <p class="mt-5 max-w-2xl text-lg text-ink-700">
-            Fixed price <strong>R{site.standardPriceZar.toLocaleString("en-ZA")}</strong>.
-          </p>
+          <a href="/offer" class="text-sm font-semibold text-sea-700 hover:text-accent-600">See what’s included →</a>
         )
       }
-
-      <div class="mt-8 flex flex-wrap items-center gap-4">
-        <WhatsAppButton label="Chat about a rebuild" />
-        <a href="/offer" class="text-sm font-semibold text-sea-700 hover:text-sea-500">
-          See what’s included →
-        </a>
-      </div>
     </div>
   </section>
 
@@ -75,7 +102,7 @@ import { inProcess, samples, site, launchOffer } from "../site.config";
                 href={sample.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="mt-4 inline-flex text-sm font-semibold text-sea-700 hover:text-sea-500"
+                class="mt-4 inline-flex text-sm font-semibold text-accent-600 hover:text-accent-700"
               >
                 Visit live site →
               </a>
@@ -131,7 +158,7 @@ import { inProcess, samples, site, launchOffer } from "../site.config";
     </div>
   </section>
 
-  <section class="border-y border-sea-100 bg-white">
+  <section class="border-y border-sea-100 bg-cream-100">
     <div class="mx-auto grid max-w-6xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-3">
       <div>
         <h2 class="font-display text-lg font-semibold text-ink-900">Fixed price, no surprises</h2>
@@ -163,7 +190,7 @@ import { inProcess, samples, site, launchOffer } from "../site.config";
       Send the link to your current site. We’ll tell you honestly whether a rebuild is worth it.
     </p>
     <div class="mt-6 flex justify-center">
-      <WhatsAppButton />
+      <WhatsAppButton label="Get my free check" message={checkMessage} />
     </div>
   </section>
 </BaseLayout>
