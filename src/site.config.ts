@@ -72,7 +72,7 @@ export const samples = [
     kind: "Live client — Umtentweni, South Coast",
     url: "https://eaglesroost.co.za",
     blurb:
-      "Heritage Port Master’s House above the Umzimkulu. WhatsApp-first booking, rooms and rates, experiences and guest recommendations on the home page. New: an hour-by-hour weather page with tides, Windy wave and storm maps and a live satellite view.",
+      "Heritage Port Master’s House above the Umzimkulu. WhatsApp booking, rooms and rates, experiences and guest recommendations on the home page. New: an hour-by-hour weather page with tides, Windy wave and storm maps and a live satellite view.",
     hero: "/images/work/eagles-roost/hero.jpg",
     heroAlt: "Eagle’s Roost from the air, greenery and ocean behind the house",
     images: [
@@ -86,7 +86,7 @@ export const samples = [
     kind: "Live client — Anerley",
     url: "https://threebirdscentre.co.za",
     blurb:
-      "The actual brochure package: Astro build, WhatsApp-first, domain in the client’s name, R0 hosting.",
+      "The actual brochure package: fast on a phone, WhatsApp as the main button, domain in the client’s name, R0 hosting.",
     status: "live" as const,
   },
   {
@@ -95,7 +95,7 @@ export const samples = [
     kind: "Live client — Lwandile Point, Wild Coast",
     url: "https://sastahill.co.za",
     blurb:
-      "Dorm-style self-catering lodge in the Transkei. Five pages with a live weather and wind/wave page, Google map, and SEO, FAQ schema and llms.txt from day one.",
+      "Dorm-style self-catering lodge in the Transkei. Five pages with a live weather and wind/wave page, Google map, and set up to be found on Google and by AI assistants from day one.",
     hero: "/images/work/sasta-hill/hero.webp",
     heroAlt: "Wild Coast landscape and seascape at Lwandile",
     images: [
@@ -110,7 +110,7 @@ export const samples = [
     kind: "Live client — Pretoria East",
     url: "https://andantelodge.co.za",
     blurb:
-      "Guest lodge and venue. Rebuilt around a hero and booking CTA, suites, venues and a clear contact footer, where the old site had no visible address, phone or rates.",
+      "Guest lodge and venue. Rebuilt around a big photo and a booking button, suites, venues and a clear contact footer, where the old site had no visible address, phone or rates.",
     hero: "/images/work/andante/hero.jpg",
     heroAlt: "Bell Luxury Suite bedroom at Andante Lodge",
     images: [
@@ -124,7 +124,7 @@ export const samples = [
     kind: "Live client — online shop, ZA and export",
     url: "https://mydofishinglures.co.za",
     blurb:
-      "WooCommerce shop for hand-made fishing lures. Baitswimmers by weight and rigging, dropper packs, and separate South African and international pricing.",
+      "Online shop for hand-made fishing lures. Baitswimmers by weight and rigging, dropper packs, and separate South African and international pricing.",
     hero: "/images/work/mydo/hero.jpg",
     heroAlt: "Mydo silver bullet baitswimmer lure",
     images: [
