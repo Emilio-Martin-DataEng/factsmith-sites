@@ -25,6 +25,8 @@
   <p class="lede">Weather, wind, swell, sea temperature, air pressure and tides, hour by hour. Read the water before you wet a line.</p>
   </div>
   <div class="tiles" id="now"><p>Loading forecast...</p></div>
+  <p class="eyebrow" style="margin-top:28px">Fishing forecast &middot; next 5 days</p>
+  <fs-conditions class="fsc" place="salt-cartel" lat="-30.6996" lon="30.457" sea-lat="-30.72" sea-lon="30.5" coast-bearing="120" modes="fishing,boat" default-mode="fishing"></fs-conditions>
 </div></section>
 
 <svg class="tideline to-reef" viewBox="0 0 1200 28" preserveAspectRatio="none" aria-hidden="true"><path d="M0,14 C150,28 350,0 600,10 C850,20 1050,2 1200,14 L1200,28 L0,28 Z"/></svg>
@@ -89,6 +91,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="tide.js"></script>
+<script type="module" src="/widgets/fs-conditions/1.0/fs-conditions.js"></script>
 <script>
   // Two Open-Meteo calls (forecast + marine), 7 days hourly; the page slices 48 h for the charts and 120 h for tides.
   // Land point for weather; marine point just offshore of the Umzimkulu mouth (the model has no data on land).

@@ -69,6 +69,7 @@ h3.d{font-family:var(--font-display);font-weight:400;font-size:1.3rem;margin:32p
 .tile .s{font-size:.72rem;color:var(--foam-dim);margin-bottom:6px;}
 .tile .r2{display:flex;justify-content:space-between;gap:8px;font-size:.85rem;color:var(--foam-dim);margin-top:4px;}
 .tile .r2 b{color:var(--foam);}
+.fsc{display:block;margin-top:16px;--fs-bg:var(--abyss);--fs-surface:var(--reef);--fs-text:var(--foam);--fs-muted:var(--foam-dim);--fs-grid:var(--reef-line);--fs-good:var(--chartreuse);--fs-fair:#f2b84b;--fs-poor:var(--lure-dim);--fs-danger:var(--lure);--fs-wind:#7fc8e8;--fs-swell:var(--tide);--fs-tide:var(--tide);--fs-pressure:var(--foam-dim);--fs-sst:var(--lure);--fs-moon:var(--foam);--fs-font:var(--font-body);--fs-radius:14px;}
 .charts{display:grid;gap:0 24px;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));}
 .chart{position:relative;height:280px;background:var(--reef);border:1px solid var(--reef-line);border-radius:14px;padding:12px;}
 .chart.tall{height:340px;margin-top:24px;}

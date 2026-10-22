@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>fs-conditions demo</title>
+<style>
+  body { margin: 0; padding: 16px; font: 15px/1.5 system-ui, sans-serif; background: #e9eef2; color: #16222c; }
+  body.dark { background: #0b141b; color: #e6edf2; }
+  .dev { background: #fff3c4; color: #5a4300; border: 1px solid #d9b84a; padding: 8px 12px; border-radius: 8px; margin-bottom: 16px; }
+  h2 { margin: 24px 0 8px; font-size: 16px; }
+  .bar { margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
+  .wrap { max-width: 1100px; }
+</style>
+</head>
+<body>
+<div class="dev"><b>Dev page.</b> fs-conditions 1.0 test bench. Not linked from anywhere, not for clients. Open it from <code>python -m http.server -d public</code>.</div>
+<div class="bar">Theme: <button id="light">Light</button> <button id="dark">Dark</button></div>
+<div class="wrap">
+  <h2>Umtentweni, all modes</h2>
+  <fs-conditions place="demo-umtentweni" lat="-30.6996" lon="30.457" sea-lat="-30.72" sea-lon="30.5" coast-bearing="115" modes="fishing,surf,kite,boat,bogus" default-mode="fishing"></fs-conditions>
+  <h2>Forced low safety thresholds (config), shows warnings</h2>
+  <fs-conditions lat="-30.6996" lon="30.457" sea-lat="-30.72" sea-lon="30.5" coast-bearing="115" config="demo-config.json" modes="fishing,surf,kite,boat"></fs-conditions>
+</div>
+<script type="module" src="./fs-conditions.js"></script>
+<script>
+  const T = {
+    light: { "--fs-bg": "#ffffff", "--fs-surface": "#f2f5f7", "--fs-text": "#16222c", "--fs-muted": "#5b6873", "--fs-grid": "#d3dbe1" },
+    dark: { "--fs-bg": "#101c25", "--fs-surface": "#182833", "--fs-text": "#e6edf2", "--fs-muted": "#9aabb8", "--fs-grid": "#2c3f4d",
+            "--fs-good": "#46c28b", "--fs-fair": "#e8c34a", "--fs-poor": "#e08a3c", "--fs-danger": "#ff5a5f",
+            "--fs-wind": "#7fa6e6", "--fs-swell": "#3fc0cf", "--fs-tide": "#5b97d8", "--fs-pressure": "#b494dc", "--fs-sst": "#f08a72", "--fs-moon": "#d9cc8a" },
+  };
+  const all = [...new Set(Object.values(T).flatMap(Object.keys))];
+  const set = n => {
+    all.forEach(k => document.documentElement.style.removeProperty(k));
+    Object.entries(T[n]).forEach(([k, v]) => document.documentElement.style.setProperty(k, v));
+    document.body.classList.toggle("dark", n === "dark");
+  };
+  document.getElementById("light").onclick = () => set("light");
+  document.getElementById("dark").onclick = () => set("dark");
+</script>
+</body>
+</html>
