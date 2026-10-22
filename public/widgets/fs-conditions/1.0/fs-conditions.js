@@ -9,6 +9,7 @@ const LANE_ORDER = ["tide", "swell", "period", "wind", "gust", "sea", "pressure"
 const LANE_NAME = { tide: "Tide", swell: "Swell", period: "Period", wind: "Wind", gust: "Gusts", sea: "Sea", pressure: "Pressure", sst: "Sea temp" };
 const LANE_COL = { tide: "tide", swell: "swell", period: "swell", wind: "wind", gust: "wind", sea: "swell", pressure: "pressure", sst: "sst" };
 const LV = { warn: "safety-warn", danger: "safety-danger" };
+const INT = { wind: [12, 25, 38], swell: [1, 2, 3] };  // intensity band edges: wind km/h (Beaufort 3 / 5 / 7), swell and sea m
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const POINTS = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
 
@@ -38,6 +39,7 @@ const CSS = `
 *{box-sizing:border-box}
 .root{--c-bg:var(--fs-bg,#ffffff);--c-surface:var(--fs-surface,#f2f5f7);--c-text:var(--fs-text,#16222c);--c-muted:var(--fs-muted,#5b6873);--c-grid:var(--fs-grid,#d3dbe1);
 --c-good:var(--fs-good,#3aa675);--c-fair:var(--fs-fair,#e2b93b);--c-poor:var(--fs-poor,#d9822b);--c-danger:var(--fs-danger,#c0262d);
+--c-i1:var(--fs-int-1,#5aa9e6);--c-i2:var(--fs-int-2,#3aa675);--c-i3:var(--fs-int-3,#e2b93b);--c-i4:var(--fs-int-4,#d9534f);
 --c-wind:var(--fs-wind,#4f7cc4);--c-swell:var(--fs-swell,#1f9aa8);--c-tide:var(--fs-tide,#2f6fb0);--c-pressure:var(--fs-pressure,#8a63b8);--c-sst:var(--fs-sst,#d6684f);--c-moon:var(--fs-moon,#9a8f5a);
 --font:var(--fs-font,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif);--radius:var(--fs-radius,10px);
 position:relative;font:13px/1.4 var(--font);color:var(--c-text);background:var(--c-bg);border-radius:var(--radius);padding:10px}
@@ -298,7 +300,7 @@ class FsConditions extends HTMLElement {
 
     const af = this.shadowRoot.activeElement?.closest?.(".cell")?.dataset.w;
     const firstLive = Math.max(0, wins.findIndex(w => !w.past)), fw = this.#focusW ?? firstLive;
-    let s = `<defs><pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="7" style="fill:var(--c-danger);opacity:.45"/></pattern>
+    let s = `<defs>${lanes.map(l => l.defs).join("")}<pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="3" height="7" style="fill:var(--c-danger);opacity:.45"/></pattern>
       <clipPath id="cp"><rect x="0" y="0" width="${nowX}" height="${H}"/></clipPath><clipPath id="cf"><rect x="${nowX}" y="0" width="${W - nowX}" height="${H}"/></clipPath></defs>`;
 
     for (let k = 0; k < days; k++) s += `<text class="t" x="${x(k * 24) + 6}" y="15" style="font-weight:600">${dayName(d.time[k * 24])} ${d.time[k * 24].slice(8, 10)}</text><line x1="${x(k * 24)}" x2="${x(k * 24)}" y1="${HEAD - 6}" y2="${H}" style="stroke:var(--c-grid)"/>`;
@@ -409,10 +411,17 @@ class FsConditions extends HTMLElement {
     const ln = (vals, y, st, w = 1.6, dash) => { const p = d3.line().defined(nn).x((v, i) => X(i)).y(y)(vals); return p ? `<path d="${p}" style="fill:none;stroke:${st};stroke-width:${w}"${dash ? ' stroke-dasharray="4 3"' : ""}/>` : ""; };
     const ar = (vals, y, base, st, op) => { const p = d3.area().defined(nn).x((v, i) => X(i)).y0(base).y1(y)(vals); return p ? `<path d="${p}" style="fill:${st};opacity:${op}"/>` : ""; };
     const samples = fn => { let s = ""; for (let i = 0; i < n; i += step) s += fn(i); return s; };
-    const arrow = (cx, cy, len, deg, st, w, ring) => `<g transform="translate(${cx} ${cy}) rotate(${deg})" style="color:${st}"><path d="M0 ${len / 2}V${-len / 2}M${-len * .3} ${-len / 2 + len * .35}L0 ${-len / 2}L${len * .3} ${-len / 2 + len * .35}" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>${ring ? `<circle cx="0" cy="${len / 2}" r="${ring.r}" fill="none" stroke="currentColor" stroke-width="${ring.w}"/>` : ""}</g>`;
+    // tiny direction triangle sitting on the line, pointing the way the wind or swell travels
+    const tri = (cx, cy, deg, st) => `<path d="M0 -4.5L3.2 3.2L0 1.6L-3.2 3.2Z" transform="translate(${cx} ${cy}) rotate(${deg})" style="fill:${st};stroke:var(--c-bg);stroke-width:.9;paint-order:stroke"/>`;
+    // intensity bands: a vertical gradient with hard stops at the band edges, so the line and area change colour with height
+    const icol = (v, t) => `var(--c-i${v == null ? 1 : 1 + t.filter(b => v >= b).length})`;
+    const heat = (gid, y, t) => {
+      const o = t.map(b => clamp((B - y(b)) / B, 0, 1)), st = (k, at) => `<stop offset="${at}" style="stop-color:var(--c-i${k})"/>`;
+      return `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="0" y1="${B}" x2="0" y2="0">${st(1, 0)}${o.map((at, k) => st(k + 1, at) + st(k + 2, at)).join("")}${st(t.length + 1, 1)}</linearGradient>`;
+    };
     const rng = (vals, f, unit) => vals.some(nn) ? `${fmt(Math.min(...vals.filter(nn)), f)}-${fmt(Math.max(...vals.filter(nn)), f)} ${unit}` : "-";
-    const wcls = i => windClass(relAngle(d.windDir[i], bearing)), wcol = i => { const cl = wcls(i), t = m.windColour && cl ? m.windColour[cl] : null; return `var(--c-${t || "wind"})`; };
-    const out = (sub, g, tip) => ({ id, name: LANE_NAME[id], sub, c, g, tip });
+    const wcls = i => windClass(relAngle(d.windDir[i], bearing));
+    const out = (sub, g, tip, defs = "") => ({ id, name: LANE_NAME[id], sub, c, g, tip, defs });
     const B = LANE - 5;
     switch (id) {
       case "tide": {
@@ -428,10 +437,9 @@ class FsConditions extends HTMLElement {
         return out(rng(d.tide, 1, "m"), g, i => `Tide ${fmt(d.tide[i], 2)} m`);
       }
       case "swell": {
-        const y = d3.scaleLinear(dom(0, Math.max(1.5, ext(d.swell)[1])), [B, 44]);
-        const g = ar(d.swell, y, B, c, .15) + ln(d.swell, y, c, 1.2) + samples(i => d.swell[i] == null || d.swellDir[i] == null ? "" :
-          arrow(X(i), 21, clamp(10 + d.swell[i] * 8, 10, 34), d.swellDir[i] + 180, c, 2, { r: clamp(2 + ((d.swellPeriod[i] ?? 6) - 6) * .5, 2, 6), w: (d.swellPeriod[i] ?? 0) >= 12 ? 2.6 : 1.2 }));
-        return out(rng(d.swell, 1, "m"), g, i => { const a = relAngle(d.swellDir[i], bearing); return `Swell ${fmt(d.swell[i], 1)} m, ${fmt(d.swellPeriod[i])} s from ${compass(d.swellDir[i])}${a == null ? "" : a <= 45 ? " (head-on)" : a <= 90 ? " (angled)" : " (side-on)"}`; });
+        const y = d3.scaleLinear(dom(0, Math.max(1.5, ext(d.swell)[1]) * 1.1), [B, 10]), hc = "url(#h-swell)";
+        const g = ar(d.swell, y, B, hc, .2) + ln(d.swell, y, hc, 2) + samples(i => d.swell[i] == null || d.swellDir[i] == null ? "" : tri(X(i), y(d.swell[i]), d.swellDir[i] + 180, icol(d.swell[i], INT.swell)));
+        return out(rng(d.swell, 1, "m"), g, i => { const a = relAngle(d.swellDir[i], bearing); return `Swell ${fmt(d.swell[i], 1)} m, ${fmt(d.swellPeriod[i])} s from ${compass(d.swellDir[i])}${a == null ? "" : a <= 45 ? " (head-on)" : a <= 90 ? " (angled)" : " (side-on)"}`; }, heat("h-swell", y, INT.swell));
       }
       case "period": {
         const y = d3.scaleLinear(dom(4, Math.max(14, ext(d.swellPeriod)[1])), [B, 8]);
@@ -439,29 +447,24 @@ class FsConditions extends HTMLElement {
       }
       case "wind": {
         const ws = d.wind.map(spd), gs = d.gust.map(spd), band = key === "kite" ? [spd(12 * 1.852), spd(30 * 1.852)] : null;  // kite range 12-30 kn
-        const y = d3.scaleLinear(dom(0, ext([...ws, ...gs, ...(band || [])])[1] * 1.1), [B, 30]);
-        const g = (band ? `<rect x="0" y="${y(band[1])}" width="${W}" height="${y(band[0]) - y(band[1])}" style="fill:var(--c-good);opacity:.15"/>` : "") + ar(ws, y, B, c, .12) + ln(gs, y, c, 1.2, 1) + ln(ws, y, c) +
-          samples(i => d.wind[i] == null || d.windDir[i] == null ? "" : arrow(X(i), 15, clamp(8 + d.wind[i] * .25, 8, 22), d.windDir[i] + 180, wcol(i), 2));
-        return out(rng(ws, 0, ul), g, i => { const cl = wcls(i); return `Wind ${fmt(ws[i])} ${ul} ${compass(d.windDir[i])}${cl ? " (" + cl + ")" : ""}, gust ${fmt(gs[i])}`; });
+        const kt = INT.wind.map(spd), y = d3.scaleLinear(dom(0, ext([...ws, ...gs, ...(band || [])])[1] * 1.1), [B, 10]), hc = "url(#h-wind)";
+        // surf and kite colour the triangle by on/off/cross-shore; fishing and boat by intensity
+        const tc = i => { const cl = wcls(i), t = m.windColour && cl ? m.windColour[cl] : null; return t ? `var(--c-${t})` : icol(d.wind[i], INT.wind); };
+        const g = (band ? `<rect x="0" y="${y(band[1])}" width="${W}" height="${y(band[0]) - y(band[1])}" style="fill:var(--c-good);opacity:.12"/>` : "") + ar(ws, y, B, hc, .18) + ln(gs, y, hc, 1.2, 1) + ln(ws, y, hc, 2) +
+          samples(i => ws[i] == null || d.windDir[i] == null ? "" : tri(X(i), y(ws[i]), d.windDir[i] + 180, tc(i)));
+        return out(rng(ws, 0, ul), g, i => { const cl = wcls(i); return `Wind ${fmt(ws[i])} ${ul} ${compass(d.windDir[i])}${cl ? " (" + cl + ")" : ""}, gust ${fmt(gs[i])}`; }, heat("h-wind", y, kt));
       }
       case "gust": {
-        const gs = d.gust.map(spd), y = d3.scaleLinear(dom(0, ext(gs)[1] * 1.1), [B, 8]);
-        return out(rng(gs, 0, ul), ar(gs, y, B, c, .15) + ln(gs, y, c), i => `Gust ${fmt(gs[i])} ${ul}${d.wind[i] > 0 && d.gust[i] != null ? ", x" + fmt(d.gust[i] / d.wind[i], 1) + " the wind" : ""}`);
+        const gs = d.gust.map(spd), y = d3.scaleLinear(dom(0, ext(gs)[1] * 1.1), [B, 8]), hc = "url(#h-gust)";
+        return out(rng(gs, 0, ul), ar(gs, y, B, hc, .18) + ln(gs, y, hc, 2), i => `Gust ${fmt(gs[i])} ${ul}${d.wind[i] > 0 && d.gust[i] != null ? ", x" + fmt(d.gust[i] / d.wind[i], 1) + " the wind" : ""}`, heat("h-gust", y, INT.wind.map(spd)));
       }
       case "sea": {
-        const y = d3.scaleLinear(dom(0, Math.max(1, ext(d.wave)[1]) * 1.1), [B, 8]);
-        return out(rng(d.wave, 1, "m"), ar(d.wave, y, B, c, .18) + ln(d.wave, y, c), i => `Sea ${fmt(d.wave[i], 1)} m${d.wavePeriod[i] == null ? "" : ", " + fmt(d.wavePeriod[i]) + " s"}`);
+        const y = d3.scaleLinear(dom(0, Math.max(1, ext(d.wave)[1]) * 1.1), [B, 8]), hc = "url(#h-sea)";
+        return out(rng(d.wave, 1, "m"), ar(d.wave, y, B, hc, .2) + ln(d.wave, y, hc, 2), i => `Sea ${fmt(d.wave[i], 1)} m${d.wavePeriod[i] == null ? "" : ", " + fmt(d.wavePeriod[i]) + " s"}`, heat("h-sea", y, INT.swell));
       }
       case "pressure": {
-        const [lo, hi] = ext(d.pressure), y = d3.scaleLinear(dom(lo - 1, hi + 1), [B, 28]);
-        let g = ln(d.pressure, y, c);
-        for (let a = 0; a < n; a += 4) {  // one trend glyph per window
-          const p0 = d.pressure[a], p1 = d.pressure[Math.min(a + 3, n - 1)];
-          if (p0 == null || p1 == null) continue;
-          const dp = p1 - p0, gid = dp < -4 ? "press-fast" : dp < -1 ? "press-down" : dp <= 1 ? "press-steady" : "press-up";
-          g += ico(gid, 14, `x="${x(a + 2) - 7}" y="3" style="color:${gid === "press-fast" ? "var(--c-danger)" : c}"`);
-        }
-        return out(rng(d.pressure, 0, "hPa"), g, i => `Pressure ${fmt(d.pressure[i])} hPa${i >= 3 && d.pressure[i - 3] != null ? ", " + (d.pressure[i] - d.pressure[i - 3] >= 0 ? "+" : "") + fmt(d.pressure[i] - d.pressure[i - 3], 1) + " in 3 h" : ""}`);
+        const [lo, hi] = ext(d.pressure), y = d3.scaleLinear(dom(lo - 1, hi + 1), [B, 8]);
+        return out(rng(d.pressure, 0, "hPa"), ln(d.pressure, y, c), i => `Pressure ${fmt(d.pressure[i])} hPa${i >= 3 && d.pressure[i - 3] != null ? ", " + (d.pressure[i] - d.pressure[i - 3] >= 0 ? "+" : "") + fmt(d.pressure[i] - d.pressure[i - 3], 1) + " in 3 h" : ""}`);
       }
       default: {  // sst
         const [lo, hi] = ext(d.sst), y = d3.scaleLinear(dom(lo - .5, hi + .5), [B, 10]);

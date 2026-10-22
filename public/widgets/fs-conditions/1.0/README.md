@@ -44,7 +44,7 @@ Any attribute can be set here in camelCase (`lat`, `lon`, `seaLat`, `seaLon`, `e
 
 Set on the element or any ancestor. Every token has a default.
 
-Colours: `--fs-bg --fs-surface --fs-text --fs-muted --fs-grid --fs-good --fs-fair --fs-poor --fs-danger --fs-wind --fs-swell --fs-tide --fs-pressure --fs-sst --fs-moon`. Type and shape: `--fs-font --fs-radius`.
+Colours: `--fs-bg --fs-surface --fs-text --fs-muted --fs-grid --fs-good --fs-fair --fs-poor --fs-danger --fs-wind --fs-swell --fs-tide --fs-pressure --fs-sst --fs-moon`. Intensity bands for wind, gust, swell and sea, from light to strong: `--fs-int-1 --fs-int-2 --fs-int-3 --fs-int-4`. The band edges are wind 12 / 25 / 38 km/h and sea or swell 1 / 2 / 3 m (`INT` in fs-conditions.js). Type and shape: `--fs-font --fs-radius`.
 
 `--fs-good/fair/poor` fill the score cells (45 and 70 are the cut-offs) and the wind arrow classes. `--fs-danger` is only for safety: hatch, outline, banner. Colours are applied with `var()`, so changing a token restyles the widget live.
 
