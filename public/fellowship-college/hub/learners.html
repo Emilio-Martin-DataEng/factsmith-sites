@@ -27,7 +27,7 @@
 <section class="section"><div class="wrap">
   <div class="grid2" style="margin-top:0">
     <div class="panel"><div class="kicker">Countdown</div><h3>Next exams</h3>
-      <div class="big" id="countdown" data-date="" data-label="Grade 8-11 exams">Date TBC</div>
+      <div class="big" id="countdown">Date TBC</div>
       <p class="muted" id="countdown-label" style="margin:0">Grade 8-11 exams</p></div>
     <div class="panel"><div class="kicker">Study</div><h3>Useful links</h3>
       <a class="dl" href="https://www.ieb.co.za/" style="margin-top:0"><b>IEB</b><span>Exams and past papers</span></a>
@@ -50,8 +50,8 @@
   <h2>Clubs and activities</h2>
   <div class="grid2">
     <div class="panel" style="background:var(--night);color:#fff;border:0"><div class="kicker" style="color:#8fb5e6">Surf crew</div><h3>Worth paddling out today?</h3><p style="color:#b7c6da">Lots of Fellowship learners surf. Our forecast rates every school day at 7am and 3pm, with wind, swell and tides.</p><a class="btn btn-w" href="weather.html#surf">Check the surf</a></div>
-    <div class="panel"><h3>More activities</h3><p class="muted" style="margin:0">Sport, outings and projects run through the term. List from the school <span class="tbc">TBC</span>.</p></div>
-  </div>
+    <div id="activities" style="display:grid;gap:16px"></div>
+      </div>
 </div></section>
 
 <section class="section" style="padding-top:0"><div class="wrap">
@@ -69,10 +69,6 @@
   <div><a href="tel:+27215530374">021 553 0374</a><br><a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></div>
   <div><a href="https://www.facebook.com/FCMelkbos/">Facebook</a><br>Concept by FactSmith Sites</div>
 </div></footer>
-<script>
-  // Set data-date (YYYY-MM-DD) on #countdown once the school confirms it; empty shows "Date TBC".
-  const el = document.getElementById("countdown"), d = el.dataset.date;
-  if (d) { const days = Math.ceil((new Date(d + "T08:00") - Date.now()) / 864e5); el.textContent = days > 0 ? days + " days" : "Under way"; }
-</script>
+<script src="data.js"></script>
 </body>
 </html>

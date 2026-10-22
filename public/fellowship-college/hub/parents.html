@@ -28,19 +28,8 @@
   <div class="kicker">Calendar</div>
   <h2>Dates for 2027</h2>
   <div class="grid2">
-    <div class="panel"><h3>School terms</h3><table>
-      <tr><td>Term 1</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>Term 2</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>Term 3</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>Term 4</td><td><span class="tbc">TBC</span></td></tr>
-    </table></div>
-    <div class="panel"><h3>Exams and events</h3><table>
-      <tr><td>Grade 12 IEB prelims</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>Grade 12 IEB finals</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>Grade 8-11 exams</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>Celebration evening</td><td><span class="tbc">TBC</span></td></tr>
-      <tr><td>School photos</td><td><span class="tbc">TBC</span></td></tr>
-    </table></div>
+    <div class="panel"><h3>School terms</h3><table><tbody id="terms"></tbody></table></div>
+    <div class="panel"><h3>Exams and events</h3><table><tbody id="exams"></tbody></table></div>
   </div>
 </div></section>
 
@@ -48,8 +37,7 @@
   <div class="kicker">Notices</div>
   <h2>Latest from the principal</h2>
   <p class="muted">Each "Parent info" letter gets a dated entry here, newest first.</p>
-  <div class="notice"><time>Example</time><h3 style="margin:4px 0 6px;font-size:1.1rem">Start of term reminder</h3><p class="muted" style="margin:0">Notice text from the school goes here.</p></div>
-  <div class="notice"><time>Example</time><h3 style="margin:4px 0 6px;font-size:1.1rem">School portraits: website and password details</h3><p class="muted" style="margin:0">Notice text from the school goes here.</p></div>
+  <div id="notices"></div>
 </div></section>
 
 <section class="section" style="background:var(--card)"><div class="wrap">
@@ -71,7 +59,7 @@
 
 <section class="section"><div class="wrap">
   <div class="grid2" style="margin-top:0">
-    <div class="panel"><div class="kicker">Fees</div><h3>Fees and payment</h3><p class="muted">Annual fees, payment options and due dates. <span class="tbc">TBC</span></p><p class="muted" style="margin:0">Questions about your account: <a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></p></div>
+    <div class="panel"><div class="kicker">Fees</div><h3>Fees and payment</h3><table><tbody id="fees"></tbody></table><p class="muted" style="margin:0">Questions about your account: <a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></p></div>
     <div class="panel"><div class="kicker">Stay in touch</div><h3>Photos and news</h3><p class="muted">School portrait ordering link <span class="tbc">TBC</span>. Day-to-day photos and news go on Facebook.</p><a class="btn btn-d" href="https://www.facebook.com/FCMelkbos/">Fellowship College on Facebook</a></div>
   </div>
 </div></section>
@@ -82,5 +70,6 @@
   <div><a href="tel:+27215530374">021 553 0374</a><br><a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></div>
   <div><a href="https://www.facebook.com/FCMelkbos/">Facebook</a><br>Concept by FactSmith Sites</div>
 </div></footer>
+<script src="data.js"></script>
 </body>
 </html>
