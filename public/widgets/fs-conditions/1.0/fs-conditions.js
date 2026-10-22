@@ -10,6 +10,7 @@ const LANE_NAME = { tide: "Tide", swell: "Swell", period: "Period", wind: "Wind"
 const LANE_COL = { tide: "tide", swell: "swell", period: "swell", wind: "wind", gust: "wind", sea: "swell", pressure: "pressure", sst: "sst" };
 const LV = { warn: "safety-warn", danger: "safety-danger" };
 const INT = { wind: [12, 25, 38], swell: [1, 2, 3] };  // intensity band edges: wind km/h (Beaufort 3 / 5 / 7), swell and sea m
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const POINTS = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
 
@@ -40,6 +41,7 @@ const CSS = `
 .root{--c-bg:var(--fs-bg,#ffffff);--c-surface:var(--fs-surface,#f2f5f7);--c-text:var(--fs-text,#16222c);--c-muted:var(--fs-muted,#5b6873);--c-grid:var(--fs-grid,#d3dbe1);
 --c-good:var(--fs-good,#3aa675);--c-fair:var(--fs-fair,#e2b93b);--c-poor:var(--fs-poor,#d9822b);--c-danger:var(--fs-danger,#c0262d);
 --c-i1:var(--fs-int-1,#5aa9e6);--c-i2:var(--fs-int-2,#3aa675);--c-i3:var(--fs-int-3,#e2b93b);--c-i4:var(--fs-int-4,#d9534f);
+--c-low1:var(--fs-low-1,#7fb3e6);--c-low2:var(--fs-low-2,#3d7fd1);--c-high1:var(--fs-high-1,#f0a35e);--c-high2:var(--fs-high-2,#e0503c);
 --c-wind:var(--fs-wind,#4f7cc4);--c-swell:var(--fs-swell,#1f9aa8);--c-tide:var(--fs-tide,#2f6fb0);--c-pressure:var(--fs-pressure,#8a63b8);--c-sst:var(--fs-sst,#d6684f);--c-moon:var(--fs-moon,#9a8f5a);
 --font:var(--fs-font,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif);--radius:var(--fs-radius,10px);
 position:relative;font:13px/1.4 var(--font);color:var(--c-text);background:var(--c-bg);border-radius:var(--radius);padding:10px}
@@ -62,6 +64,8 @@ button[aria-selected=true],button[aria-pressed=true]{background:var(--c-text);co
 .labels{border-right:1px solid var(--c-grid);background:var(--c-bg);z-index:1}
 .lb{padding:2px 6px;display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--c-grid);overflow:hidden;font-size:11px;line-height:1.25}
 .lb b{font-size:12px;display:flex;align-items:center;gap:4px}.lb span{color:var(--c-muted)}
+.lb{position:relative}.lb.ln{justify-content:flex-start;padding-top:3px}.lb .u{font-size:9px;line-height:1.2}
+.ax{position:absolute;right:0;top:0;pointer-events:none}.ax text{font-size:9px;fill:var(--c-muted)}.ax line{stroke:var(--c-muted)}
 .scroll{overflow-x:auto;overflow-y:hidden;position:relative;min-width:0}
 .phone .scroll{scroll-snap-type:x mandatory}
 .inner{position:relative}
@@ -123,8 +127,8 @@ const SHELL = `<style>${CSS}</style>
 </div>`;
 
 class FsConditions extends HTMLElement {
-  static observedAttributes = ["lat", "lon", "sea-lat", "sea-lon", "coast-bearing", "modes", "default-mode", "place", "endpoint", "config"];
-  #r = {}; #o = null; #d = null; #raw = null; #offline = false;
+  static observedAttributes = ["lat", "lon", "sea-lat", "sea-lon", "coast-bearing", "modes", "default-mode", "place", "endpoint", "config", "climate"];
+  #r = {}; #o = null; #d = null; #raw = null; #clim = null; #offline = false;
   #mode = null; #units = "kmh"; #showAll = false; #k = 1; #phone = false; #lastW = 0;
   #res = {}; #w = {}; #x = null; #view = null; #focusW = null;
   #gen = 0; #started = false; #timer = 0; #raf = 0; #ro;
@@ -217,7 +221,7 @@ class FsConditions extends HTMLElement {
   async #start() {
     const g = ++this.#gen, a = n => this.getAttribute(n), num = n => { const v = a(n); return v == null || v === "" || isNaN(+v) ? undefined : +v; };
     let o = { lat: num("lat"), lon: num("lon"), seaLat: num("sea-lat"), seaLon: num("sea-lon"), coastBearing: num("coast-bearing"),
-      modes: a("modes"), defaultMode: a("default-mode"), place: a("place"), endpoint: a("endpoint") };
+      modes: a("modes"), defaultMode: a("default-mode"), place: a("place"), endpoint: a("endpoint"), climate: a("climate") };
     const cu = a("config");
     if (cu) try { const r = await fetch(cu); if (!r.ok) throw new Error("HTTP " + r.status); o = { ...o, ...await r.json() }; } catch (e) { console.warn("fs-conditions: config not loaded:", e.message); }
     if (g !== this.#gen) return;
@@ -232,7 +236,12 @@ class FsConditions extends HTMLElement {
     const u = ls.get("fs-conditions:units");
     this.#units = u === "kn" || u === "kmh" ? u : MODES[this.#mode].defaultUnits;
     this.#r.tl.innerHTML = o.modes.map(k => `<button type="button" role="tab" data-m="${k}">${ico("mode-" + k, 16)}${MODES[k].label}</button>`).join("");
-    await this.#load();
+    // local normals are optional: any failure leaves the lanes as they were
+    this.#clim = null;
+    const cp = o.climate ? fetch(o.climate).then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); }).catch(e => { console.warn("fs-conditions: climate not loaded:", e.message); return null; }) : null;
+    const ld = this.#load();
+    if (cp) { const c = await cp; if (g === this.#gen && c?.months) { this.#clim = c; if (this.#d) this.#render(); } }
+    await ld;
   }
 
   async #load() {
@@ -354,7 +363,8 @@ class FsConditions extends HTMLElement {
 
     r.labels.innerHTML = `<div style="height:${HEAD}px;border-bottom:1px solid var(--c-grid)"></div>
       <div class="lb" style="height:${SCORE}px"><b>Score</b><span>per 4 h</span></div>` +
-      lanes.map(l => `<div class="lb" style="height:${LANE}px"><b><i style="width:8px;height:8px;border-radius:50%;background:${l.c};display:inline-block"></i>${l.name}</b><span>${l.sub}</span></div>`).join("") +
+      lanes.map(l => `<div class="lb ln" style="height:${LANE}px"><b><i style="width:8px;height:8px;border-radius:50%;background:${l.c};display:inline-block"></i>${l.name}</b><span class="u">${l.unit}</span><svg class="ax" width="40" height="${LANE}" aria-hidden="true">${l.ticks.map(k =>
+        `<line x1="36" x2="40" y1="${k.y}" y2="${k.y}"/>${k.s ? `<text x="33" y="${k.y}" dy=".35em" text-anchor="end">${k.t}</text>` : ""}`).join("")}</svg></div>`).join("") +
       `<div class="lb" style="height:${RIB}px;border-bottom:0"><b>Day</b><span>moon, sun, best</span></div>`;
 
     this.#chrome(res, wins, nowH, ul);
@@ -387,7 +397,8 @@ class FsConditions extends HTMLElement {
 
     const t = new Date(this.#raw.fetchedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     r.foot.innerHTML = `<span>Updated ${t}${this.#offline ? ` &middot; ${ico("ui-offline", 12)} offline${hrs ? `, ${hrs} h old` : ""}` : ""}</span>
-      <span>Weather: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Tide is modelled, not for navigation.</span>`;
+      <span>Weather: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a> (CC BY 4.0). Tide is modelled, not for navigation.</span>
+      <span>Conditions by <a href="https://www.factsmith.co.za/?utm_source=fs-conditions&amp;utm_medium=widget&amp;utm_campaign=${encodeURIComponent(this.#o.place)}" target="_blank" rel="noopener"><b>FactSmith</b></a></span>`;
 
     r.table.innerHTML = `<caption>${m.label} forecast in 4-hour windows</caption><thead><tr><th>Window</th><th>Score</th><th>Rating</th><th>Warning</th></tr></thead><tbody>${
       wins.map((w, k) => `<tr><td>${dayName(w.start)} ${pad(k * 4 % 24)}:00-${pad(k * 4 % 24 + 4)}:00</td><td>${w.score}</td><td>${rating(w.score)}</td><td>${w.flag ? esc(w.flag.text) : ""}</td></tr>`).join("")}</tbody>`;
@@ -405,45 +416,68 @@ class FsConditions extends HTMLElement {
       ${f ? `<div class="fl" title="${esc(f.text)}">${ico(LV[f.level], 14)} ${esc(f.text)}</div>` : ""}</div>`;
   }
 
-  // ---- lanes: { name, sub, c, g (svg, lane-local), tip(i) } ----
+  // ---- lanes: { name, unit, ticks [{ y, t }], c, g (svg, lane-local), tip(i), defs } ----
   #lane(id, E) {
     const { d, x, n, step, spd, u, ul, W, key, m, bearing, ctx } = E, X = i => x(i + .5), c = `var(--c-${LANE_COL[id]})`;
     const ln = (vals, y, st, w = 1.6, dash) => { const p = d3.line().defined(nn).x((v, i) => X(i)).y(y)(vals); return p ? `<path d="${p}" style="fill:none;stroke:${st};stroke-width:${w}"${dash ? ' stroke-dasharray="4 3"' : ""}/>` : ""; };
     const ar = (vals, y, base, st, op) => { const p = d3.area().defined(nn).x((v, i) => X(i)).y0(base).y1(y)(vals); return p ? `<path d="${p}" style="fill:${st};opacity:${op}"/>` : ""; };
     const samples = fn => { let s = ""; for (let i = 0; i < n; i += step) s += fn(i); return s; };
     // tiny direction triangle sitting on the line, pointing the way the wind or swell travels
-    const tri = (cx, cy, deg, st) => `<path d="M0 -4.5L3.2 3.2L0 1.6L-3.2 3.2Z" transform="translate(${cx} ${cy}) rotate(${deg})" style="fill:${st};stroke:var(--c-bg);stroke-width:.9;paint-order:stroke"/>`;
+    const tri = (cx, cy, deg, st) => `<path d="M0 -5.85L4.16 4.16L0 2.08L-4.16 4.16Z" transform="translate(${cx} ${cy}) rotate(${deg})" style="fill:${st};stroke:var(--c-bg);stroke-width:.9;paint-order:stroke"/>`;
     // intensity bands: a vertical gradient with hard stops at the band edges, so the line and area change colour with height
     const icol = (v, t) => `var(--c-i${v == null ? 1 : 1 + t.filter(b => v >= b).length})`;
-    const heat = (gid, y, t) => {
-      const o = t.map(b => clamp((B - y(b)) / B, 0, 1)), st = (k, at) => `<stop offset="${at}" style="stop-color:var(--c-i${k})"/>`;
-      return `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="0" y1="${B}" x2="0" y2="0">${st(1, 0)}${o.map((at, k) => st(k + 1, at) + st(k + 2, at)).join("")}${st(t.length + 1, 1)}</linearGradient>`;
+    // cs = the colour of each band, low to high (default: the intensity ramp)
+    const heat = (gid, y, t, cs = Array.from({ length: t.length + 1 }, (_, k) => `var(--c-i${k + 1})`)) => {
+      const o = t.map(b => clamp((B - y(b)) / B, 0, 1)), st = (k, at) => `<stop offset="${at}" style="stop-color:${cs[k]}"/>`;
+      return `<linearGradient id="${gid}" gradientUnits="userSpaceOnUse" x1="0" y1="${B}" x2="0" y2="0">${st(0, 0)}${o.map((at, k) => st(k, at) + st(k + 1, at)).join("")}${st(t.length, 1)}</linearGradient>`;
     };
-    const rng = (vals, f, unit) => vals.some(nn) ? `${fmt(Math.min(...vals.filter(nn)), f)}-${fmt(Math.max(...vals.filter(nn)), f)} ${unit}` : "-";
     const wcls = i => windClass(relAngle(d.windDir[i], bearing));
-    const out = (sub, g, tip, defs = "") => ({ id, name: LANE_NAME[id], sub, c, g, tip, defs });
+    // y axis: ticks for the pinned label column plus faint gridlines behind the lines
+    const unit = { tide: "m", swell: "m", period: "s", wind: ul, gust: ul, sea: "m", pressure: "hPa", sst: "\xb0C" }[id];
+    const out = (y, g, tip, defs = "") => {
+      let tv = y.ticks(3); tv = tv.filter((_, i) => i % (tv.length > 4 ? 2 : 1) === 0).slice(0, 3);  // d3 may return up to 6; keep 3 so the labels never touch
+      const dp = d3.precisionFixed(d3.tickStep(...y.domain(), 3)), ticks = tv.map(v => ({ y: y(v), t: v.toFixed(dp) })); let pv = 1e9;
+      for (const k of ticks) if (k.s = k.y >= 16 && pv - k.y >= 9) pv = k.y;  // label only if clear of the lane name above and the label below (the short tide lane drops its middle one)
+      return { id, name: LANE_NAME[id], unit, ticks, c, tip, defs, g: ticks.map(k => `<line x1="0" x2="${W}" y1="${k.y}" y2="${k.y}" style="stroke:var(--c-grid);opacity:.6"/>`).join("") + g };
+    };
     const B = LANE - 5;
+    // local normals (tide, pressure, sst, period): hs[i] = stats of hour i's calendar month; null without a climate file
+    const cst = this.#clim?.months?.[id], hs = cst ? d.time.map(t => cst[+t.slice(5, 7)]) : null, nm = hs?.[n >> 1];
+    const bv = hs ? hs.filter(nn).flatMap(s => [s.p10, s.p90]) : [];  // keeps the usual range inside the lane's y domain
+    // shaded p10-p90 band with a tiny label, plus a z-coloured line stroke and its gradient.
+    // ponytail: the line colour uses one month's mean and sd (the middle hour's); across a month edge the band and tooltip follow each hour but the colour does not
+    const clm = y => {
+      if (!nm) return { band: "", st: c, defs: "" };
+      const p = d3.area().defined(nn).x((s, i) => X(i)).y0(s => y(s.p10)).y1(s => y(s.p90))(hs), s0 = hs.find(nn), z = nm.sd > 0;
+      return { st: z ? `url(#h-${id})` : c, defs: z ? heat(`h-${id}`, y, [-2, -1, 1, 2].map(k => nm.mean + k * nm.sd), ["var(--c-low2)", "var(--c-low1)", c, "var(--c-high1)", "var(--c-high2)"]) : "",
+        band: `<path d="${p}" style="fill:var(--c-muted);opacity:.12"/><text class="t" x="3" y="${y(s0.p90) + 8}" style="font-size:8px">usual</text>` };
+    };
+    const vs = (i, v, f, un) => {  // tooltip tail: how far v is from this month's normal
+      const s = hs?.[i]; if (!s || v == null || !s.sd) return "";
+      const dv = v - s.mean;
+      return Math.abs(dv) < s.sd ? ", near normal" : `, ${fmt(Math.abs(dv), f)} ${un} ${dv < 0 ? "below" : "above"} the ${MON[+d.time[i].slice(5, 7) - 1]} normal (${fmt(s.mean, f)})`;
+    };
     switch (id) {
       case "tide": {
-        const [lo, hi] = ext(d.tide), y = d3.scaleLinear(dom(lo, hi), [LANE - 18, 18]), flow = i => d.tide[i - 1] == null || d.tide[i + 1] == null || !ctx.maxFlow ? .3 : Math.min(1, Math.abs(d.tide[i + 1] - d.tide[i - 1]) / (.7 * ctx.maxFlow));
-        let g = `<g shape-rendering="crispEdges">`;
+        const [lo, hi] = ext([...d.tide, ...bv]), y = d3.scaleLinear(dom(lo, hi), [LANE - 18, 18]), k = clm(y), flow = i => d.tide[i - 1] == null || d.tide[i + 1] == null || !ctx.maxFlow ? .3 : Math.min(1, Math.abs(d.tide[i + 1] - d.tide[i - 1]) / (.7 * ctx.maxFlow));
+        let g = k.band + `<g shape-rendering="crispEdges">`;
         for (let i = 1; i < n - 1; i++) if (d.tide[i] != null && d.tide[i + 1] != null) g += `<path d="M${X(i)} ${y(d.tide[i])}L${X(i + 1)} ${y(d.tide[i + 1])}V${B}H${X(i)}Z" style="fill:var(--c-tide);opacity:${(.08 + .5 * flow(i)).toFixed(2)}"/>`;
-        g += `</g>` + ln(d.tide, y, c, 1.8);
+        g += `</g>` + ln(d.tide, y, k.st, 1.8);
         const t0 = Date.parse(d.time[0] + ":00Z");
         for (const e of extrema(d.time, d.tide)) {
           const ex = x((Date.parse(e.at + ":00Z") - t0) / 3600e3 + .5), ey = y(e.h);
           g += ico(e.high ? "tide-high" : "tide-low", 12, `x="${ex - 6}" y="${e.high ? ey - 15 : ey + 3}" style="color:var(--c-tide)"`) + `<text class="t" x="${ex + 8}" y="${e.high ? ey - 6 : ey + 12}">${e.at.slice(11, 16)}</text>`;
         }
-        return out(rng(d.tide, 1, "m"), g, i => `Tide ${fmt(d.tide[i], 2)} m`);
+        return out(y, g, i => `Tide ${fmt(d.tide[i], 2)} m${vs(i, d.tide[i], 2, "m")}`, k.defs);
       }
       case "swell": {
         const y = d3.scaleLinear(dom(0, Math.max(1.5, ext(d.swell)[1]) * 1.1), [B, 10]), hc = "url(#h-swell)";
         const g = ar(d.swell, y, B, hc, .2) + ln(d.swell, y, hc, 2) + samples(i => d.swell[i] == null || d.swellDir[i] == null ? "" : tri(X(i), y(d.swell[i]), d.swellDir[i] + 180, icol(d.swell[i], INT.swell)));
-        return out(rng(d.swell, 1, "m"), g, i => { const a = relAngle(d.swellDir[i], bearing); return `Swell ${fmt(d.swell[i], 1)} m, ${fmt(d.swellPeriod[i])} s from ${compass(d.swellDir[i])}${a == null ? "" : a <= 45 ? " (head-on)" : a <= 90 ? " (angled)" : " (side-on)"}`; }, heat("h-swell", y, INT.swell));
+        return out(y, g, i => { const a = relAngle(d.swellDir[i], bearing); return `Swell ${fmt(d.swell[i], 1)} m, ${fmt(d.swellPeriod[i])} s from ${compass(d.swellDir[i])}${a == null ? "" : a <= 45 ? " (head-on)" : a <= 90 ? " (angled)" : " (side-on)"}`; }, heat("h-swell", y, INT.swell));
       }
       case "period": {
-        const y = d3.scaleLinear(dom(4, Math.max(14, ext(d.swellPeriod)[1])), [B, 8]);
-        return out(rng(d.swellPeriod, 0, "s"), ar(d.swellPeriod, y, B, c, .12) + `<line x1="0" x2="${W}" y1="${y(12)}" y2="${y(12)}" style="stroke:var(--c-muted);stroke-dasharray:2 4"/><text class="t" x="3" y="${y(12) - 2}">12 s</text>` + ln(d.swellPeriod, y, c), i => `Period ${fmt(d.swellPeriod[i])} s`);
+        const y = d3.scaleLinear(dom(4, Math.max(14, ext([...d.swellPeriod, ...bv])[1])), [B, 8]), k = clm(y);
+        return out(y, k.band + ar(d.swellPeriod, y, B, c, .12) + `<line x1="0" x2="${W}" y1="${y(12)}" y2="${y(12)}" style="stroke:var(--c-muted);stroke-dasharray:2 4"/><text class="t" x="${nm ? 32 : 3}" y="${y(12) - 2}">12 s</text>` + ln(d.swellPeriod, y, k.st), i => `Period ${fmt(d.swellPeriod[i])} s${vs(i, d.swellPeriod[i], 1, "s")}`, k.defs);
       }
       case "wind": {
         const ws = d.wind.map(spd), gs = d.gust.map(spd), band = key === "kite" ? [spd(12 * 1.852), spd(30 * 1.852)] : null;  // kite range 12-30 kn
@@ -452,23 +486,23 @@ class FsConditions extends HTMLElement {
         const tc = i => { const cl = wcls(i), t = m.windColour && cl ? m.windColour[cl] : null; return t ? `var(--c-${t})` : icol(d.wind[i], INT.wind); };
         const g = (band ? `<rect x="0" y="${y(band[1])}" width="${W}" height="${y(band[0]) - y(band[1])}" style="fill:var(--c-good);opacity:.12"/>` : "") + ar(ws, y, B, hc, .18) + ln(gs, y, hc, 1.2, 1) + ln(ws, y, hc, 2) +
           samples(i => ws[i] == null || d.windDir[i] == null ? "" : tri(X(i), y(ws[i]), d.windDir[i] + 180, tc(i)));
-        return out(rng(ws, 0, ul), g, i => { const cl = wcls(i); return `Wind ${fmt(ws[i])} ${ul} ${compass(d.windDir[i])}${cl ? " (" + cl + ")" : ""}, gust ${fmt(gs[i])}`; }, heat("h-wind", y, kt));
+        return out(y, g, i => { const cl = wcls(i); return `Wind ${fmt(ws[i])} ${ul} ${compass(d.windDir[i])}${cl ? " (" + cl + ")" : ""}, gust ${fmt(gs[i])}`; }, heat("h-wind", y, kt));
       }
       case "gust": {
         const gs = d.gust.map(spd), y = d3.scaleLinear(dom(0, ext(gs)[1] * 1.1), [B, 8]), hc = "url(#h-gust)";
-        return out(rng(gs, 0, ul), ar(gs, y, B, hc, .18) + ln(gs, y, hc, 2), i => `Gust ${fmt(gs[i])} ${ul}${d.wind[i] > 0 && d.gust[i] != null ? ", x" + fmt(d.gust[i] / d.wind[i], 1) + " the wind" : ""}`, heat("h-gust", y, INT.wind.map(spd)));
+        return out(y, ar(gs, y, B, hc, .18) + ln(gs, y, hc, 2), i => `Gust ${fmt(gs[i])} ${ul}${d.wind[i] > 0 && d.gust[i] != null ? ", x" + fmt(d.gust[i] / d.wind[i], 1) + " the wind" : ""}`, heat("h-gust", y, INT.wind.map(spd)));
       }
       case "sea": {
         const y = d3.scaleLinear(dom(0, Math.max(1, ext(d.wave)[1]) * 1.1), [B, 8]), hc = "url(#h-sea)";
-        return out(rng(d.wave, 1, "m"), ar(d.wave, y, B, hc, .2) + ln(d.wave, y, hc, 2), i => `Sea ${fmt(d.wave[i], 1)} m${d.wavePeriod[i] == null ? "" : ", " + fmt(d.wavePeriod[i]) + " s"}`, heat("h-sea", y, INT.swell));
+        return out(y, ar(d.wave, y, B, hc, .2) + ln(d.wave, y, hc, 2), i => `Sea ${fmt(d.wave[i], 1)} m${d.wavePeriod[i] == null ? "" : ", " + fmt(d.wavePeriod[i]) + " s"}`, heat("h-sea", y, INT.swell));
       }
       case "pressure": {
-        const [lo, hi] = ext(d.pressure), y = d3.scaleLinear(dom(lo - 1, hi + 1), [B, 8]);
-        return out(rng(d.pressure, 0, "hPa"), ln(d.pressure, y, c), i => `Pressure ${fmt(d.pressure[i])} hPa${i >= 3 && d.pressure[i - 3] != null ? ", " + (d.pressure[i] - d.pressure[i - 3] >= 0 ? "+" : "") + fmt(d.pressure[i] - d.pressure[i - 3], 1) + " in 3 h" : ""}`);
+        const [lo, hi] = ext([...d.pressure, ...bv]), y = d3.scaleLinear(dom(lo - 1, hi + 1), [B, 8]), k = clm(y);
+        return out(y, k.band + ln(d.pressure, y, k.st), i => `Pressure ${fmt(d.pressure[i])} hPa${i >= 3 && d.pressure[i - 3] != null ? ", " + (d.pressure[i] - d.pressure[i - 3] >= 0 ? "+" : "") + fmt(d.pressure[i] - d.pressure[i - 3], 1) + " in 3 h" : ""}${vs(i, d.pressure[i], 0, "hPa")}`, k.defs);
       }
       default: {  // sst
-        const [lo, hi] = ext(d.sst), y = d3.scaleLinear(dom(lo - .5, hi + .5), [B, 10]);
-        return out(rng(d.sst, 1, "\u00b0C"), ar(d.sst, y, B, c, .12) + ln(d.sst, y, c), i => `Sea temp ${fmt(d.sst[i], 1)} \u00b0C`);
+        const [lo, hi] = ext([...d.sst, ...bv]), y = d3.scaleLinear(dom(lo - .5, hi + .5), [B, 10]), k = clm(y);
+        return out(y, k.band + ar(d.sst, y, B, c, .12) + ln(d.sst, y, k.st), i => `Sea temp ${fmt(d.sst[i], 1)} \u00b0C${vs(i, d.sst[i], 1, "\u00b0C")}`, k.defs);
       }
     }
   }

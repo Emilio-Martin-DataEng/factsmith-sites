@@ -1,6 +1,6 @@
 // Self-check for engine.js: node test.mjs (exits non-zero on the first failure)
 import assert from "node:assert/strict";
-import { MODES, normalise, scoreHours, windows, bestWindow, rating, extrema, moon, ramp, rise, band, relAngle, windClass, kn, tighten, explain } from "./engine.js";
+import { MODES, normalise, scoreHours, windows, bestWindow, rating, extrema, moon, ramp, rise, band, relAngle, windClass, kn, tighten, explain, monthlyStats } from "./engine.js";
 
 let n = 0;
 const test = (name, f) => { f(); n++; console.log("ok", n, name); };
@@ -115,6 +115,15 @@ test("normalise aligns marine by time key, not position", () => {
   assert.equal(d.wave.length, 24); assert.equal(d.wave[0], null); assert.equal(d.wave[2], null); assert.equal(d.wave[3], 3);
   assert.equal(d.wave[19], 19); assert.equal(d.wave[20], null); assert.equal(d.wave[23], null);
   assert.equal(d.wind[0], 10); assert.equal(d.swell[5], null); assert.equal(d.gust[5], null); assert.equal(normalise(f, null).wave[3], null);
+});
+
+test("monthlyStats: per calendar month, nulls ignored", () => {
+  const T = ["2025-10-01T00:00", "2025-10-01T01:00", "2026-10-01T00:00", "2026-10-01T01:00", "2026-10-01T02:00", "2026-01-05T00:00", "2026-01-05T01:00"];
+  const s = monthlyStats(T, [1, 2, 3, 4, null, 10, null]);
+  assert.deepEqual(Object.keys(s).sort(), ["1", "10"]);
+  assert.equal(s["10"].n, 4); near(s["10"].mean, 2.5); near(s["10"].sd, Math.sqrt(1.25)); near(s["10"].p10, 1.3); near(s["10"].p90, 3.7);
+  assert.equal(s["1"].n, 1); assert.equal(s["1"].sd, 0); assert.equal(s["1"].p10, 10); assert.equal(s["1"].p90, 10);
+  assert.deepEqual(monthlyStats([], []), {}); assert.deepEqual(monthlyStats(T.slice(0, 1), [null]), {});
 });
 
 test("site safety overrides can only tighten", () => {

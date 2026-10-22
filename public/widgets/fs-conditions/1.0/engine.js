@@ -221,6 +221,19 @@ export function explain(modeKey, parts, i, weights = {}) {
   return { rows, sentence: s.charAt(0).toUpperCase() + s.slice(1) + "." };
 }
 
+// ---- local climate: per calendar month stats of an hourly series ----
+// times = Open-Meteo local strings, values aligned (nulls ignored). Returns { "1": { mean, sd, p10, p90, n }, ... }; months with no data are absent. sd is population sd, percentiles interpolate linearly.
+export function monthlyStats(times, values) {
+  const by = {};
+  times.forEach((t, i) => { if (values[i] != null) (by[+t.slice(5, 7)] ??= []).push(values[i]); });
+  return Object.fromEntries(Object.entries(by).map(([k, a]) => {
+    a.sort((p, q) => p - q);
+    const n = a.length, mean = a.reduce((p, c) => p + c, 0) / n;
+    const pct = f => { const p = f * (n - 1), lo = Math.floor(p); return a[lo] + (a[Math.min(lo + 1, n - 1)] - a[lo]) * (p - lo); };
+    return [k, { mean, sd: Math.sqrt(a.reduce((p, c) => p + (c - mean) ** 2, 0) / n), p10: pct(.1), p90: pct(.9), n }];
+  }));
+}
+
 // ---- windows ----
 export const rating = s => s >= 70 ? "Good" : s >= 45 ? "Fair" : "Poor";
 const SLOTS = ["EA", "MO", "LA", "AF", "EV", "LP"];  // 00-04 ... 20-24
