@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b1f38">
+<title>Weather &amp; Surf, Melkbosstrand | Fellowship College</title>
+<meta name="description" content="Melkbosstrand weather for the school week: what to wear each day, surf before and after school, wind, tides and the 7-day outlook. Concept C by FactSmith Sites.">
+<link rel="stylesheet" href="hub.css">
+</head>
+<body>
+<div class="concept">Concept C "Parent hub" by FactSmith Sites. Not the live site. <a href="../">See all three</a></div>
+<header><div class="wrap nav">
+  <a class="brand" href="index.html"><img src="../images/logo.jpg" alt="Fellowship College logo">Fellowship College</a>
+  <nav class="links"><a href="index.html#school">The school</a><a href="admissions.html">Admissions</a><a href="parents.html">Parents</a><a href="learners.html">Learners</a><a href="weather.html" aria-current="page">Weather &amp; surf</a><a href="#contact">Contact</a></nav>
+  <a class="cta" href="admissions.html">Apply</a>
+</div></header>
+
+<main>
+<section class="page-head"><div class="wrap">
+  <div class="kicker" style="color:#8fb5e6">Weather &amp; surf</div>
+  <h1>Melkbosstrand this week.</h1>
+  <p>What to wear for each school day, and whether the surf is worth it before or after school. Updated every hour.</p>
+  <div class="wx-now" id="now"><p>Loading forecast...</p></div>
+</div></section>
+
+<section class="section" id="wear"><div class="wrap">
+  <div class="kicker">School week</div>
+  <h2>What to wear</h2>
+  <p class="muted">A rule of thumb from the forecast at 07:00 and the day's high. Check the sky before you leave.</p>
+  <div class="scroller" id="wear-days"></div>
+</div></section>
+
+<section class="section" id="surf" style="padding-top:0"><div class="wrap">
+  <div class="kicker">Surf check</div>
+  <h2>Before and after school</h2>
+  <p class="muted">Melkbos faces west, so east and south-east winds blow offshore and clean up the waves. Each school day is rated at 07:00 and 15:00.</p>
+  <div class="scroller" id="surf-days"></div>
+  <p class="caption">Good = waves 0.8 to 2.5 m, swell period 10 s or more, and wind offshore or under 15 km/h. Fair = surfable but messy or small. This is a forecast model, not a surf report. Check conditions yourself and never surf alone.</p>
+</div></section>
+
+<section class="section" style="background:var(--card)"><div class="wrap">
+  <div class="kicker">Next 48 hours</div>
+  <h2>Today and tomorrow</h2>
+  <div class="charts">
+    <div><h3>Surf</h3><div class="chart"><canvas id="c-surf" role="img" aria-label="Wave and swell height and swell period, next 48 hours"></canvas></div></div>
+    <div><h3>Wind</h3><div class="chart"><canvas id="c-wind" role="img" aria-label="Wind speed and gusts, next 48 hours"></canvas></div></div>
+    <div><h3>Weather</h3><div class="chart"><canvas id="c-air" role="img" aria-label="Air temperature and chance of rain, next 48 hours"></canvas></div></div>
+    <div><h3>Tide</h3><div class="chart"><canvas id="c-tide" role="img" aria-label="Tide level, next 5 days"></canvas></div></div>
+  </div>
+  <p class="caption">The tide curve comes from a global ocean model, not a harbour gauge. Times can be out by up to an hour.</p>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="kicker">Live map</div>
+  <h2>See the swell coming</h2>
+  <iframe class="map" title="Windy wave forecast map for Melkbosstrand" loading="lazy"
+    src="https://embed.windy.com/embed.html?type=map&amp;location=coordinates&amp;metricRain=mm&amp;metricTemp=%C2%B0C&amp;metricWind=km/h&amp;zoom=7&amp;overlay=waves&amp;product=ecmwfWaves&amp;level=surface&amp;lat=-33.9&amp;lon=18.1&amp;marker=true&amp;detailLat=-33.726&amp;detailLon=18.44"></iframe>
+</div></section>
+
+<section class="section" style="padding-top:0"><div class="wrap">
+  <div class="kicker">The week ahead</div>
+  <h2>7-day outlook</h2>
+  <div class="scroller" id="week"></div>
+  <p class="caption">Forecast: Open-Meteo (CC BY 4.0).</p>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <div><b style="color:#fff">Fellowship College</b><br>01 Newark Street, Melkbosstrand 7441</div>
+  <div><a href="tel:+27215530374">021 553 0374</a><br><a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></div>
+  <div><a href="https://www.facebook.com/FCMelkbos/">Facebook</a><br>Concept by FactSmith Sites</div>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  // Adapted from jbay-surf-view/weather.html: same two Open-Meteo calls, pointed at Melkbosstrand.
+  const WX = "https://api.open-meteo.com/v1/forecast?latitude=-33.726&longitude=18.440&timezone=Africa%2FJohannesburg&forecast_days=7"
+    + "&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m"
+    + "&hourly=temperature_2m,apparent_temperature,precipitation_probability,weather_code,wind_speed_10m,wind_gusts_10m,wind_direction_10m"
+    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant,sunrise,sunset";
+  const SEA = "https://marine-api.open-meteo.com/v1/marine?latitude=-33.73&longitude=18.42&timezone=Africa%2FJohannesburg&forecast_days=7"
+    + "&hourly=wave_height,swell_wave_height,swell_wave_period,swell_wave_direction,sea_surface_temperature,sea_level_height_msl"
+    + "&daily=wave_height_max,swell_wave_period_max";
+
+  const WMO = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",
+    61:"Light rain",63:"Rain",65:"Heavy rain",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+  const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  const compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
+  // Melkbos is a west-facing beach: E/SE is offshore, SW-NW onshore.
+  const windTag = d => d >= 45 && d <= 150 ? ["off","Offshore"] : d >= 200 && d <= 315 ? ["on","Onshore"] : ["cross","Cross-shore"];
+  const r = Math.round;
+  const n = (v, f) => v == null ? "–" : f(v);
+  const hhmm = t => t.slice(11, 16);
+  const dow = d => new Date(d + "T12:00").getDay();
+  const dayName = t => DAYS[dow(t.slice(0, 10))];
+
+  // ponytail: fixed-threshold surf rating, ask the school's surfers to tune the numbers (or the offshore window) once they've used it.
+  function surfRating(wave, period, windDir, wind) {
+    if (wave == null) return ["fair", "No data"];
+    const clean = wind < 15 || windTag(windDir)[0] === "off";
+    if (wave >= 0.8 && wave <= 2.5 && period >= 10 && clean) return ["good", "Good"];
+    if (wave < 0.5 || (wind >= 30 && windTag(windDir)[0] === "on")) return ["poor", wave < 0.5 ? "Flat" : "Blown out"];
+    return ["fair", "Fair"];
+  }
+  // Same idea for clothes: simple thresholds, labelled as a guide on the page.
+  function wearList(morning, max, rain, gust) {
+    const out = [];
+    out.push(morning < 12 ? "Jersey and blazer" : morning < 16 ? "Jersey for the morning" : "Summer uniform is fine");
+    if (rain >= 50) out.push("Raincoat or umbrella");
+    if (gust >= 40) out.push("Windy: secure bags and hats");
+    if (max >= 28) out.push("Water bottle and sunscreen");
+    return out;
+  }
+  { // self-checks
+    console.assert(surfRating(1.2, 12, 100, 25)[0] === "good" && surfRating(0.3, 8, 270, 10)[1] === "Flat" && surfRating(1.5, 9, 270, 35)[1] === "Blown out", "surfRating");
+    console.assert(wearList(9, 18, 70, 20).join() === "Jersey and blazer,Raincoat or umbrella", "wearList");
+  }
+
+  // High/low tide from the hourly sea level, refined with a parabola (copied from the JBay page).
+  function extrema(times, v) {
+    const out = [];
+    for (let i = 1; i < v.length - 1; i++) {
+      const [a, b, c] = [v[i - 1], v[i], v[i + 1]];
+      if (a == null || b == null || c == null) continue;
+      const high = b > a && b >= c, low = b < a && b <= c;
+      if (!high && !low) continue;
+      const den = a - 2 * b + c, off = den ? 0.5 * (a - c) / den : 0;
+      const at = new Date(new Date(times[i] + ":00Z").getTime() + off * 3600e3).toISOString().slice(0, 16);
+      out.push({ i, high, at, h: b - 0.25 * (a - c) * off });
+    }
+    return out;
+  }
+
+  const C = { night: "#0b1f38", blue: "#2f6db5", red: "#c8202f", muted: "#5b6475", pale: "#d6e3f3", good: "#17663b", amber: "#c99a1a" };
+  const TAGC = { off: C.good, on: C.red, cross: C.amber };
+
+  function drawCharts(w, m) {
+    Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+    Chart.defaults.color = C.muted;
+    const H = 48, labels = w.hourly.time.slice(0, H).map(x => dayName(x) + " " + hhmm(x));
+    const s = (o, k, len = H) => o.hourly[k].slice(0, len);
+    const opts = (y, y2) => ({ responsive: true, maintainAspectRatio: false, interaction: { mode: "index", intersect: false },
+      plugins: { legend: { labels: { boxWidth: 12 } } },
+      scales: { x: { ticks: { maxTicksLimit: 8, maxRotation: 0 } }, y: { title: { display: true, text: y }, beginAtZero: true },
+        ...(y2 && { y2: { position: "right", title: { display: true, text: y2 }, grid: { drawOnChartArea: false }, beginAtZero: true } }) } });
+    const line = (label, d, color, more) => ({ type: "line", label, data: d, borderColor: color, backgroundColor: color, pointRadius: 0, tension: .3, borderWidth: 2, ...more });
+    const loose = o => (o.scales.y.beginAtZero = false, o);
+
+    new Chart("c-surf", { type: "bar", data: { labels, datasets: [
+      { label: "Waves (m)", data: s(m, "wave_height"), backgroundColor: C.pale, order: 2 },
+      line("Swell (m)", s(m, "swell_wave_height"), C.night),
+      line("Swell period (s)", s(m, "swell_wave_period"), C.red, { yAxisID: "y2" }) ] }, options: opts("metres", "seconds") });
+    new Chart("c-wind", { type: "bar", data: { labels, datasets: [
+      { label: "Wind (km/h)", data: s(w, "wind_speed_10m"), backgroundColor: s(w, "wind_direction_10m").map(d => TAGC[windTag(d)[0]]), order: 2 },
+      line("Gusts (km/h)", s(w, "wind_gusts_10m"), C.night, { borderDash: [4, 3] }) ] },
+      options: (o => (o.plugins.subtitle = { display: true, text: "Green offshore, amber cross-shore, red onshore" }, o))(opts("km/h")) });
+    new Chart("c-air", { type: "bar", data: { labels, datasets: [
+      { label: "Rain chance (%)", data: s(w, "precipitation_probability"), backgroundColor: C.pale, yAxisID: "y2" },
+      line("Air (°C)", s(w, "temperature_2m"), C.red),
+      line("Feels like (°C)", s(w, "apparent_temperature"), C.muted, { borderDash: [4, 3] }) ] },
+      options: (o => (o.scales.y2.max = 100, loose(o)))(opts("°C", "%")) });
+    const TH = 120, tt = m.hourly.time.slice(0, TH), lv = s(m, "sea_level_height_msl", TH), ex = new Map(extrema(tt, lv).map(e => [e.i, e]));
+    new Chart("c-tide", { type: "line", data: { labels: tt.map(x => dayName(x) + " " + hhmm(x)), datasets: [
+      line("Tide (m)", lv, C.blue, { fill: "start", backgroundColor: "rgba(47,109,181,.12)" }),
+      { type: "line", label: "High / low", data: lv.map((v, i) => ex.has(i) ? v : null), showLine: false, pointRadius: 5,
+        pointBackgroundColor: lv.map((_, i) => ex.get(i)?.high ? C.red : C.good), borderColor: "transparent" } ] },
+      options: loose(opts("metres")) });
+  }
+
+  (async () => {
+    const now = document.getElementById("now");
+    try {
+      const [w, m] = await Promise.all([WX, SEA].map(u => fetch(u).then(x => { if (!x.ok) throw x.status; return x.json(); })));
+      const H = w.hourly, M = m.hourly, cur = w.current, D = w.daily;
+      const at = (date, hh) => H.time.indexOf(`${date}T${hh}:00`);
+      const ni = Math.max(0, H.time.findIndex(x => x > cur.time) - 1);
+      const [cls, tag] = windTag(cur.wind_direction_10m);
+      const next = extrema(M.time, M.sea_level_height_msl).find(e => e.at > cur.time);
+
+      now.innerHTML = `
+        <article class="wx"><div class="day">Now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div><div class="row">${WMO[cur.weather_code] ?? "Mixed"}</div><div class="row">Feels like ${r(cur.apparent_temperature)}&deg;</div></article>
+        <article class="wx"><div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div><div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row">Gusts ${r(cur.wind_gusts_10m)} km/h</div></article>
+        <article class="wx"><div class="day">Waves</div><div class="temp">${n(M.wave_height[ni], v => v.toFixed(1))} <span>m</span></div><div class="row">Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}</div></article>
+        <article class="wx"><div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div><div class="row">Water temperature</div></article>
+        <article class="wx"><div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div><div class="row">${next ? (next.high ? "High tide" : "Low tide") : ""}</div></article>`;
+
+      const school = D.time.map((d, i) => ({ d, i })).filter(x => dow(x.d) >= 1 && dow(x.d) <= 5);
+      document.getElementById("wear-days").innerHTML = school.map(({ d, i }) => {
+        const k = at(d, "07"), morning = H.temperature_2m[k];
+        return `<article class="wx"><div class="day">${dayName(d)} ${d.slice(8)}</div>
+          <div class="temp">${r(morning)}&deg; <span>at 7am, high ${r(D.temperature_2m_max[i])}&deg;</span></div>
+          <div class="row">${WMO[D.weather_code[i]] ?? "Mixed"}, ${D.precipitation_probability_max[i]}% rain</div>
+          <ul>${wearList(morning, D.temperature_2m_max[i], D.precipitation_probability_max[i], D.wind_gusts_10m_max[i]).map(x => `<li>${x}</li>`).join("")}</ul></article>`;
+      }).join("") || '<p class="muted">No school days in the forecast window.</p>';
+
+      document.getElementById("surf-days").innerHTML = school.map(({ d }) => {
+        const slot = hh => { const k = at(d, hh), [c, t] = surfRating(M.wave_height[k], M.swell_wave_period[k], H.wind_direction_10m[k], H.wind_speed_10m[k]);
+          return `<div class="row"><b>${hh}:00</b> <span class="tag ${c}">${t}</span><br>${n(M.wave_height[k], v => v.toFixed(1))} m @ ${n(M.swell_wave_period[k], r)} s, wind ${r(H.wind_speed_10m[k])} km/h ${compass(H.wind_direction_10m[k])}</div>`; };
+        return `<article class="wx"><div class="day">${dayName(d)} ${d.slice(8)}</div>${slot("07")}${slot("15")}</article>`;
+      }).join("") || '<p class="muted">No school days in the forecast window.</p>';
+
+      document.getElementById("week").innerHTML = D.time.map((d, i) => { const [c, t] = windTag(D.wind_direction_10m_dominant[i]);
+        return `<article class="wx"><div class="day">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(d)}</div>
+          <div class="temp">${r(D.temperature_2m_max[i])}&deg; <span>/ ${r(D.temperature_2m_min[i])}&deg;</span></div>
+          <div class="row">${WMO[D.weather_code[i]] ?? "Mixed"}</div><div class="row">${D.precipitation_probability_max[i]}% rain</div>
+          <div class="row">${r(D.wind_speed_10m_max[i])} km/h ${compass(D.wind_direction_10m_dominant[i])} <span class="tag ${c}">${t}</span></div>
+          <div class="row">Waves up to ${n(m.daily.wave_height_max[i], v => v.toFixed(1))} m</div></article>`; }).join("");
+
+      drawCharts(w, m);
+    } catch (e) {
+      console.error(e);
+      now.innerHTML = "<p>Forecast unavailable right now. Try again shortly.</p>";
+    }
+  })();
+</script>
+</body>
+</html>

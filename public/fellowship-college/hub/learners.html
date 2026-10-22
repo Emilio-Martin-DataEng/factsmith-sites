@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0b1f38">
+<title>Learners | Fellowship College, Melkbosstrand</title>
+<meta name="description" content="For Fellowship College learners: exam countdown, study links, Grade 9 subject choices, career guidance, clubs and the surf crew. Concept C by FactSmith Sites.">
+<link rel="stylesheet" href="hub.css">
+</head>
+<body>
+<div class="concept">Concept C "Parent hub" by FactSmith Sites. Not the live site. <a href="../">See all three</a></div>
+<header><div class="wrap nav">
+  <a class="brand" href="index.html"><img src="../images/logo.jpg" alt="Fellowship College logo">Fellowship College</a>
+  <nav class="links"><a href="index.html#school">The school</a><a href="admissions.html">Admissions</a><a href="parents.html">Parents</a><a href="learners.html" aria-current="page">Learners</a><a href="weather.html">Weather &amp; surf</a><a href="#contact">Contact</a></nav>
+  <a class="cta" href="admissions.html">Apply</a>
+</div></header>
+
+<main>
+<section class="page-head"><div class="wrap">
+  <div class="kicker" style="color:#8fb5e6">Learners</div>
+  <h1>Your page.</h1>
+  <p>Exams, study links, choices about your future, and what's happening outside the classroom.</p>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="grid2" style="margin-top:0">
+    <div class="panel"><div class="kicker">Countdown</div><h3>Next exams</h3>
+      <div class="big" id="countdown" data-date="" data-label="Grade 8-11 exams">Date TBC</div>
+      <p class="muted" id="countdown-label" style="margin:0">Grade 8-11 exams</p></div>
+    <div class="panel"><div class="kicker">Study</div><h3>Useful links</h3>
+      <a class="dl" href="https://www.ieb.co.za/" style="margin-top:0"><b>IEB</b><span>Exams and past papers</span></a>
+      <a class="dl" href="#"><b>Hatfield online school</b><span>Portal link TBC</span></a>
+      <a class="dl" href="#"><b>Module progress</b><span>Ask your teacher</span></a></div>
+  </div>
+</div></section>
+
+<section class="section" style="background:var(--card)"><div class="wrap">
+  <div class="kicker">Your future</div>
+  <h2>Subject choices and careers</h2>
+  <div class="grid2">
+    <div class="panel" style="background:var(--bg)"><h3>Grade 9: choosing subjects for Grade 10</h3><p class="muted" style="margin:0">The subjects you pick in Grade 9 shape what you can study after school. Check what your dream course needs (for example, Mathematics rather than Maths Literacy) before you choose. Subject list and deadline <span class="tbc">TBC</span>.</p></div>
+    <div class="panel" style="background:var(--bg)"><h3>Grade 11 and 12: what's next</h3><p class="muted" style="margin:0">Career guidance evenings, university and college application dates, and bursary deadlines will be listed here. Dates <span class="tbc">TBC</span>.</p></div>
+  </div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <div class="kicker">Outside the classroom</div>
+  <h2>Clubs and activities</h2>
+  <div class="grid2">
+    <div class="panel" style="background:var(--night);color:#fff;border:0"><div class="kicker" style="color:#8fb5e6">Surf crew</div><h3>Worth paddling out today?</h3><p style="color:#b7c6da">Lots of Fellowship learners surf. Our forecast rates every school day at 7am and 3pm, with wind, swell and tides.</p><a class="btn btn-w" href="weather.html#surf">Check the surf</a></div>
+    <div class="panel"><h3>More activities</h3><p class="muted" style="margin:0">Sport, outings and projects run through the term. List from the school <span class="tbc">TBC</span>.</p></div>
+  </div>
+</div></section>
+
+<section class="section" style="padding-top:0"><div class="wrap">
+  <div class="kicker">Gallery</div>
+  <h2>School life</h2>
+  <div class="photo-row">
+    <img src="../images/group.jpg" alt="Fellowship College learners and staff in school uniform with red ties">
+    <img src="../images/formal.jpg" alt="Three learners smiling with photo-booth props at a school function">
+  </div>
+</div></section>
+</main>
+
+<footer id="contact"><div class="wrap">
+  <div><b style="color:#fff">Fellowship College</b><br>01 Newark Street, Melkbosstrand 7441</div>
+  <div><a href="tel:+27215530374">021 553 0374</a><br><a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></div>
+  <div><a href="https://www.facebook.com/FCMelkbos/">Facebook</a><br>Concept by FactSmith Sites</div>
+</div></footer>
+<script>
+  // Set data-date (YYYY-MM-DD) on #countdown once the school confirms it; empty shows "Date TBC".
+  const el = document.getElementById("countdown"), d = el.dataset.date;
+  if (d) { const days = Math.ceil((new Date(d + "T08:00") - Date.now()) / 864e5); el.textContent = days > 0 ? days + " days" : "Under way"; }
+</script>
+</body>
+</html>
