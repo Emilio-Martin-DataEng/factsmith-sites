@@ -1,5 +1,18 @@
 // FactSmith Sites — studio brochure. Vault: FactSmith-Sites/01-Client-Brief/Offer Spec.md
 
+// Prices and the launch offer are set here, once. Every page, the FAQ, the JSON-LD,
+// the share text and llms.txt read from these, so a change goes out in one release.
+const LAUNCH_PRICE = 4000;
+const STANDARD_PRICE = 7500;
+const DEPOSIT = 2000;
+const LAUNCH_ACTIVE = true;
+const LAUNCH_SLOTS = 5;
+/** The price a visitor pays today. */
+const CURRENT_PRICE = LAUNCH_ACTIVE ? LAUNCH_PRICE : STANDARD_PRICE;
+/** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
+export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+const slotsWord = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][LAUNCH_SLOTS];
+
 export const site = {
   name: "FactSmith Sites",
   shortName: "Sites",
@@ -13,8 +26,15 @@ export const site = {
   whatsappLink: "https://wa.me/27725005179",
   whatsappMessage:
     "Hi Sharon — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
-  description:
-    "Websites for South Coast small businesses whose current site is costing them enquiries. R7 500 brochure rebuilds — R4 000 for the first five. Keep your domain if you have one; keep or downscale hosting.",
+  description: LAUNCH_ACTIVE
+    ? `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds — ${zar(LAUNCH_PRICE)} for the first ${slotsWord}. Keep your domain if you have one; keep or downscale hosting.`
+    : `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds. Keep your domain if you have one; keep or downscale hosting.`,
+  /** schema.org priceRange. */
+  priceRange: LAUNCH_ACTIVE ? `R${LAUNCH_PRICE}-R${STANDARD_PRICE}` : `R${STANDARD_PRICE}`,
+  /** Alt text for the share image. */
+  ogImageAlt: LAUNCH_ACTIVE
+    ? `FactSmith Sites — website rebuilds, first ${LAUNCH_SLOTS} sites ${zar(LAUNCH_PRICE)}`
+    : `FactSmith Sites — website rebuilds from ${zar(STANDARD_PRICE)}`,
   ogImage: "/images/og-card.png",
   /**
    * GitHub Pages has not issued the TLS certificate for this subdomain yet.
@@ -30,10 +50,10 @@ export const site = {
   threeBirdsUrl: "https://threebirdscentre.co.za",
   billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",
   /** Launch-special price. Reverts to standardPriceZar once the 5 slots are gone. */
-  priceZar: 4000,
+  priceZar: LAUNCH_PRICE,
   /** Normal published price after the launch five. */
-  standardPriceZar: 7500,
-  depositZar: 2000,
+  standardPriceZar: STANDARD_PRICE,
+  depositZar: DEPOSIT,
 } as const;
 
 /**
@@ -43,12 +63,13 @@ export const site = {
  * site.standardPriceZar automatically.
  */
 export const launchOffer = {
-  active: true,
-  slots: 5,
-  headline: "First 5 sites only",
-  lede: "R4 000 instead of R7 500.",
-  detail:
-    "The first five South Coast rebuilds are R4 000 — a R2 000 deposit secures your slot and locks the price. After the five, the published price is R7 500.",
+  active: LAUNCH_ACTIVE,
+  slots: LAUNCH_SLOTS,
+  /** The slot count in words, for running text. */
+  slotsWord,
+  headline: `First ${LAUNCH_SLOTS} sites only`,
+  lede: `${zar(LAUNCH_PRICE)} instead of ${zar(STANDARD_PRICE)}.`,
+  detail: `The first ${slotsWord} South Coast rebuilds are ${zar(LAUNCH_PRICE)} — a ${zar(DEPOSIT)} deposit secures your slot and locks the price. After the ${slotsWord}, the published price is ${zar(STANDARD_PRICE)}.`,
   bonus:
     "Every site includes Google Search Console + Bing set up in your name, and a private stats page.",
   turnaround: "Mockups this weekend. Your new site live next week.",
@@ -261,7 +282,7 @@ export const freeAuditPack = {
     "One mobile screenshot of the worst fail",
     "One homepage sample (HTML mock) using their real name/photos where legal",
   ],
-  nextStep: "If they like the sample: R4 000 pack (deposit + domain form).",
+  nextStep: `If they like the sample: ${zar(CURRENT_PRICE)} pack (deposit + domain form).`,
 } as const;
 
 /**
@@ -365,7 +386,7 @@ export const methodSteps = [
   },
   {
     title: "Pack + deposit",
-    text: "Invoice, domain form, content questions, hosting note, and scope. R2 000 starts the job.",
+    text: `Invoice, domain form, content questions, hosting note, and scope. ${zar(DEPOSIT)} starts the job.`,
   },
   {
     title: "Domain and hosting — your call",
