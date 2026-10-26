@@ -40,6 +40,13 @@
   <p class="caption">Good = waves 0.8 to 2.5 m, swell period 10 s or more, and wind offshore or under 15 km/h. Fair = surfable but messy or small. This is a forecast model, not a surf report. Check conditions yourself and never surf alone.</p>
 </div></section>
 
+<section class="section" id="conditions" style="padding-top:0"><div class="wrap">
+  <div class="kicker">Conditions forecast</div>
+  <h2>Five days in four-hour windows</h2>
+  <p class="muted">Each window is scored 0 to 100 for surf and kite from swell, wind, tide and pressure. The score is a guide, not a safety call: warnings are shown separately, and nobody should surf or kite alone.</p>
+  <fs-conditions place="fellowship-hub" lat="-33.726" lon="18.440" sea-lat="-33.73" sea-lon="18.42" coast-bearing="270" modes="surf,kite" default-mode="surf"></fs-conditions>
+</div></section>
+
 <section class="section" style="background:var(--card)"><div class="wrap">
   <div class="kicker">Next 48 hours</div>
   <h2>Today and tomorrow</h2>
@@ -74,6 +81,7 @@
 </div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script type="module" src="https://widgets.factsmith.co.za/fs-conditions/1.1/fs-conditions.js"></script>
 <script>
   // Adapted from jbay-surf-view/weather.html: same two Open-Meteo calls, pointed at Melkbosstrand.
   const WX = "https://api.open-meteo.com/v1/forecast?latitude=-33.726&longitude=18.440&timezone=Africa%2FJohannesburg&forecast_days=7"
