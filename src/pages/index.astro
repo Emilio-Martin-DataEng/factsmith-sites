@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import LineIcon from "../components/LineIcon.astro";
-import { faq, inProcess, methodSteps, phoneApp, samples, site, tiers, zar } from "../site.config";
+import { faq, inProcess, logoService, methodSteps, phoneApp, samples, site, tiers, zar } from "../site.config";
 
 // Four of the common questions, in the order they are asked: cost, enquiries, ownership, domain.
 const homeFaq = [faq[0], faq[4], faq[5], faq[6]];
@@ -271,6 +271,19 @@ const homeSteps = [
           loading="lazy"
           class="dash-b relative mt-4 w-full rounded-2xl border border-sea-100 bg-white shadow-xl md:absolute md:right-0 md:bottom-0 md:mt-0 md:w-[78%]"
         />
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6">
+    <div class="grid items-center gap-6 rounded-3xl border border-sea-100 bg-cream-100 p-6 sm:p-8 md:grid-cols-3">
+      <div class="md:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-wide text-sea-600">Extra</p>
+        <h2 class="mt-2 font-display text-2xl font-semibold text-ink-900">{logoService.name}</h2>
+        <p class="mt-3 text-ink-700">{logoService.lede} {logoService.pricing}</p>
+      </div>
+      <div class="md:text-right">
+        <a href="/offer/#logo" class="inline-flex rounded-full bg-sea-900 px-5 py-2.5 text-sm font-semibold text-white">See the offer →</a>
       </div>
     </div>
   </section>

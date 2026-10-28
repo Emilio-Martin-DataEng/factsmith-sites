@@ -403,6 +403,16 @@ export const towns = [
 ] as const;
 
 /**
+ * Logo and brand identity: quoted per job, cheaper when ordered with a website (Emilio, 2026-10-28). No stand-alone
+ * price on the site. Proof is the Khaya La Manzi sunset logo; no image yet. Company profiles and brand strategy are not sold.
+ */
+export const logoService = {
+  name: "Logo and brand identity",
+  lede: "A logo made for your business, so your website, WhatsApp profile and printed material look like one business. We did the sunset logo for Khaya La Manzi.",
+  pricing: "Quoted for your business, and cheaper when ordered together with a website.",
+};
+
+/**
  * The phone app: an installable web app (PWA) on the client's own site at /guide/, no app store.
  * Live at Eagle's Roost (2026-10-20) and Khaya La Manzi (confirmed by Emilio, 2026-10-28). Included from Brochure up; R1 500 one-off on Starter (Emilio, 2026-10-28).
  * Hard rules (Offer Spec): no secrets in the app, no review gating.
@@ -485,6 +495,6 @@ export const faq = [
   },
   {
     q: "What is not in the fee?",
-    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, logo design or writing from scratch, shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.",
+    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, writing from scratch, a logo (quoted, cheaper with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.",
   },
 ];
