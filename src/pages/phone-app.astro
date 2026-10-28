@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookButton from "../components/BookButton.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { phoneApp } from "../site.config";
+---
+
+<BaseLayout
+  title="Phone app"
+  description="An installable phone app on your own website: opens from a QR code, works with no signal, and puts your key information one tap away. For any business with content people need on their phone."
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="grid items-center gap-10 md:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">{phoneApp.status}</p>
+        <h1 class="mt-2 font-display text-4xl font-semibold text-ink-900">{phoneApp.name}</h1>
+        <p class="mt-4 max-w-xl text-lg text-ink-700">{phoneApp.lede}</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <BookButton label="Book a consult about the app" />
+          <WhatsAppButton variant="outline" />
+        </div>
+        <p class="mt-4 text-sm">
+          <a href={phoneApp.example.href} target="_blank" rel="noopener noreferrer" class="font-semibold text-accent-600 hover:text-accent-700">
+            See it working: {phoneApp.example.label} →
+          </a>
+        </p>
+      </div>
+      <figure class="flex justify-center">
+        <img src={phoneApp.image} alt={phoneApp.imageAlt} class="w-64 rounded-[2rem] border-8 border-ink-900 shadow-lg" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="border-y border-sea-100 bg-white">
+    <div class="mx-auto grid max-w-6xl gap-8 px-4 py-14 sm:px-6 md:grid-cols-2">
+      <div class="rounded-2xl border border-sea-100 bg-cream-50 p-6">
+        <h2 class="font-display text-xl font-semibold text-ink-900">For your visitors</h2>
+        <ul class="mt-4 space-y-3 text-sm text-ink-700">
+          {phoneApp.forVisitors.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-sea-100 bg-cream-50 p-6">
+        <h2 class="font-display text-xl font-semibold text-ink-900">For you</h2>
+        <ul class="mt-4 space-y-3 text-sm text-ink-700">
+          {phoneApp.forYou.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <h2 class="font-display text-3xl font-semibold text-ink-900">Where it fits</h2>
+    <p class="mt-3 max-w-2xl text-ink-700">
+      It started with guest houses, but the test is the content: if your visitors need it on their
+      phone, in the moment, it can be an app. It lives on your own website, so you keep it.
+    </p>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+      {
+        phoneApp.fits.map(([title, text]) => (
+          <li class="rounded-2xl border border-sea-100 bg-white p-5 shadow-sm">
+            <h3 class="font-display font-semibold text-ink-900">{title}</h3>
+            <p class="mt-1 text-sm text-ink-700">{text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="border-t border-sea-100 bg-cream-100">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <h2 class="font-display text-2xl font-semibold text-ink-900">Ground rules</h2>
+      <ul class="mt-4 max-w-3xl space-y-3 text-sm text-ink-700">
+        {phoneApp.rules.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">-</span><span>{item}</span></li>)}
+      </ul>
+      <p class="mt-6 max-w-3xl text-sm text-ink-700">
+        Price on request while the pilot is tested. It is an add-on to any tier, quoted after a short consult.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

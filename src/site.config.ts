@@ -103,6 +103,7 @@ export const nav = [
   { label: "Included", href: "/included/" },
   { label: "Tech", href: "/technical/" },
   { label: "Method", href: "/method/" },
+  { label: "Phone app", href: "/phone-app/" },
   { label: "Offer", href: "/offer/" },
   { label: "South Coast", href: "/south-coast/" },
   { label: "Contact", href: "/contact/" },
@@ -382,3 +383,43 @@ export const towns = [
   "Southbroom",
   "Port Edward",
 ] as const;
+
+/**
+ * The phone app: an installable web app (PWA) on the client's own site at /guide/, no app store.
+ * In pilot at Eagle's Roost (2026-10-20). Price is not set: "on request" until the pilot is tested.
+ * Hard rules (Offer Spec): no secrets in the app, no review gating.
+ */
+export const phoneApp = {
+  name: "Phone app for your visitors",
+  lede: "An installable guide on your own website. Visitors scan a QR code or tap a link, add it to their home screen, and it still opens with no signal.",
+  status: "In pilot at Eagle’s Roost. Price on request.",
+  example: { label: "Eagle’s Roost guest guide", href: "https://eaglesroost.co.za/guide/" },
+  image: "/images/work/eagles-roost/feature-guide.webp",
+  imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",
+  forVisitors: [
+    "Opens from a QR card or a link in your welcome message, no app store",
+    "Keeps the last good copy on the phone, so it works without signal",
+    "Key information one tap away: Wi-Fi, opening or check-in times, rules, contacts",
+    "Live weather and local recommendations where they are relevant",
+    "Requests and orders go straight to your WhatsApp",
+  ],
+  forYou: [
+    "Fewer repeat questions by phone and message",
+    "A way to offer extras: orders, upgrades, bookings by WhatsApp",
+    "Problems reach you while the visitor is still with you",
+    "A one-tap Google review link for every visitor, never filtered by rating",
+  ],
+  /** Where it fits. The test is relevant content: information people need on their phone, on the spot. */
+  fits: [
+    ["Guest houses, lodges and self-catering", "Wi-Fi, check-in, house rules, what to do nearby. The pilot."],
+    ["Restaurants, venues and events", "Menu, hours, map, how to book, what to expect on the day."],
+    ["Tour and activity operators", "Itinerary, what to bring, safety information, meeting point."],
+    ["Estates, body corporates and offices", "Rules, contacts, how to report a problem, visitor information."],
+    ["Anyone else with useful content", "If visitors need it on their phone, in the moment, ask us."],
+  ],
+  rules: [
+    "No passwords or codes stored in the app: the Wi-Fi password travels only in the link or QR code",
+    "No review gating: every visitor gets the same review link",
+    "Built for your content first. If your content is not useful on a phone, we say so",
+  ],
+} as const;
