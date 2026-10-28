@@ -1,0 +1,18 @@
+---
+import { site } from "../site.config";
+
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label = site.bookLabel, class: className = "" } = Astro.props;
+---
+
+<a
+  href={site.bookUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-track="book_call"
+  class={`inline-flex items-center rounded-full bg-accent-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-sea-500 focus-visible:ring-offset-2 ${className}`}
+>{label}</a>

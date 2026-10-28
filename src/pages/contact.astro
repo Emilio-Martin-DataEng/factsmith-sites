@@ -1,28 +1,28 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import ContactForm from "../components/ContactForm.astro";
 import { site } from "../site.config";
 
-// The form only works when the Formspree endpoint is set at build time (see .env.example). Until then it is hidden.
-const formReady = (import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? "").length > 0;
 ---
 
 <BaseLayout
   title="Contact"
-  description="WhatsApp FactSmith Sites about a website for your business. Sharon on the South Coast, Emilio everywhere else."
+  description="Book a consult or WhatsApp FactSmith Sites. Sharon on the South Coast, Emilio everywhere else."
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <h1 class="font-display text-4xl font-semibold text-ink-900">Contact</h1>
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      WhatsApp is the fastest path. Send a link to your current site and the town you’re in.
+      Book a consult to talk it through, or WhatsApp a link to your current site and the town you’re in.
     </p>
 
-    <div class="mt-10 grid gap-10 lg:grid-cols-2">
+    <div class="mt-10 max-w-2xl">
       <div>
         <div class="flex flex-wrap gap-3">
-          <WhatsAppButton label={`South Coast: Sharon ${site.phoneDisplay}`} />
+          <BookButton />
+          <WhatsAppButton variant="outline" label={`South Coast: Sharon ${site.phoneDisplay}`} />
           <WhatsAppButton
+            variant="outline"
             label={`Elsewhere: Emilio ${site.emilio.phoneDisplay}`}
             href={site.emilio.whatsappLink}
             message={site.emilio.whatsappMessage}
@@ -45,16 +45,6 @@ const formReady = (import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? "").length > 0;
           </li>
         </ul>
       </div>
-      {
-        formReady ? (
-          <div>
-            <h2 class="font-display text-lg font-semibold text-ink-900">Or send a short message</h2>
-            <div class="mt-4">
-              <ContactForm />
-            </div>
-          </div>
-        ) : null
-      }
     </div>
   </section>
 </BaseLayout>

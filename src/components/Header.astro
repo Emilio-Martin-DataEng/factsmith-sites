@@ -1,7 +1,7 @@
 ---
 import { nav, site } from "../site.config";
 import BrandMark from "./BrandMark.astro";
-import WhatsAppButton from "./WhatsAppButton.astro";
+import BookButton from "./BookButton.astro";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -31,7 +31,7 @@ const currentPath = Astro.url.pathname;
     </nav>
 
     <div class="flex items-center gap-3">
-      <WhatsAppButton label="WhatsApp" size="sm" class="hidden sm:inline-flex" />
+      <BookButton class="hidden !px-4 !py-2 sm:inline-flex" />
       <button
         id="menu-toggle"
         type="button"
@@ -63,12 +63,13 @@ const currentPath = Astro.url.pathname;
       ))
     }
     <a
-      href={`${site.whatsappLink}?text=${encodeURIComponent(site.whatsappMessage)}`}
+      href={site.bookUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-1 rounded-full bg-whatsapp px-3 py-2 text-center text-sm font-semibold text-white"
+      data-track="book_call"
+      class="mt-1 rounded-full bg-accent-600 px-3 py-2 text-center text-sm font-semibold text-white"
     >
-      Chat on WhatsApp
+      {site.bookLabel}
     </a>
   </nav>
 </header>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import InProcessCard from "../components/InProcessCard.astro";
 import { inProcess, samples, site, zar } from "../site.config";
@@ -7,7 +8,7 @@ import { inProcess, samples, site, zar } from "../site.config";
 
 <BaseLayout
   title="Work"
-  description="Live sites and projects in process: Sasta Hill Lodge, Andante Lodge, Mydo Fishing Lures, Eagle’s Roost, Khaya La Manzi, Henton Timber Homes, JBay Surf View, Secure Electric Fencing, Pollution Control Services."
+  description="Live sites and projects in process: Eagle’s Roost, Three Birds, Khaya La Manzi, Mydo Fishing Lures, Henton Timber Homes and JBay Surf View."
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <h1 class="font-display text-4xl font-semibold text-ink-900">Work</h1>
@@ -29,6 +30,11 @@ import { inProcess, samples, site, zar } from "../site.config";
               <span class="rounded-full bg-sea-50 px-3 py-1 text-xs font-medium text-sea-700">Live</span>
             </div>
             <p class="mt-4 max-w-3xl text-ink-700">{sample.blurb}</p>
+            {sample.url ? (
+              <a href={sample.url} target="_blank" rel="noopener noreferrer" class="mt-5 block overflow-hidden rounded-xl border border-sea-100 bg-sea-50" aria-label={`Open ${sample.title}`}>
+                <img src={sample.snip} alt={`Screenshot of ${sample.title}`} width="1200" height="750" class="aspect-[16/10] w-full object-cover object-top" loading="lazy" />
+              </a>
+            ) : null}
             {"hero" in sample ? (
               <div class="mt-5 grid gap-2 sm:grid-cols-3">
                 {[{ src: sample.hero, alt: sample.heroAlt }, ...sample.images].map((img) => (
@@ -69,6 +75,7 @@ import { inProcess, samples, site, zar } from "../site.config";
             blurb={job.blurb}
             hero={job.hero}
             heroAlt={job.heroAlt}
+            snip={job.snip}
             images={job.images}
             currentUrl={"currentUrl" in job ? job.currentUrl : undefined}
             previewUrl={"previewUrl" in job ? job.previewUrl : undefined}
@@ -84,8 +91,9 @@ import { inProcess, samples, site, zar } from "../site.config";
         Websites from {zar(site.startingPriceZar)}, Brochure at {zar(site.brochurePriceZar)}. Larger
         sites (like Henton) are a Business or Custom job.
       </p>
-      <div class="mt-5">
-        <WhatsAppButton />
+      <div class="mt-5 flex flex-wrap gap-3">
+        <BookButton />
+        <WhatsAppButton variant="outline" />
       </div>
     </div>
   </section>

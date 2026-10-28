@@ -16,6 +16,8 @@ interface Props {
   blurb: string;
   hero: string;
   heroAlt: string;
+  /** Screenshot of the page itself; shown first when present. */
+  snip?: string;
   images: readonly Image[];
   currentUrl?: string;
   previewUrl?: string;
@@ -29,6 +31,7 @@ const {
   blurb,
   hero,
   heroAlt,
+  snip,
   images,
   currentUrl,
   previewUrl,
@@ -38,7 +41,12 @@ const {
 
 <article class="overflow-hidden rounded-2xl border border-sea-100 bg-white shadow-sm">
   <div class="relative aspect-[16/9] bg-sea-100">
-    <img src={hero} alt={heroAlt} class="h-full w-full object-cover" loading="lazy" />
+    <img
+      src={snip ?? hero}
+      alt={snip ? `Screenshot of ${title}` : heroAlt}
+      class="h-full w-full object-cover object-top"
+      loading="lazy"
+    />
     <span
       class="absolute left-3 top-3 rounded-full bg-cream-50/95 px-3 py-1 text-xs font-semibold text-sea-800"
     >

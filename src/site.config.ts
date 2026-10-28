@@ -15,6 +15,9 @@ export const site = {
   domain: "sites.factsmith.co.za",
   url: "https://sites.factsmith.co.za",
   email: "emilio@factsmith.co.za",
+  /** Every "Book a consult" button goes here (same Cal.com link as www.factsmith.co.za). */
+  bookUrl: "https://cal.com/emilio-martin-zmfawz/30min",
+  bookLabel: "Book a consult",
   /** Sharon Cooper answers South Coast enquiries; Emilio answers the rest of the country and abroad. */
   contactName: "Sharon Cooper",
   phoneDisplay: "072 500 5179",
@@ -109,6 +112,7 @@ export const nav = [
 export const samples = [
   {
     slug: "eagles-roost",
+    snip: "/images/work/snips/eagles-roost.webp",
     title: "Eagle’s Roost B&B",
     kind: "Live client, Umtentweni, South Coast",
     url: "https://eaglesroost.co.za",
@@ -123,6 +127,7 @@ export const samples = [
   },
   {
     slug: "three-birds",
+    snip: "/images/work/snips/three-birds.webp",
     title: "Three Birds Online Learning Centre",
     kind: "Live client, Anerley",
     url: "https://threebirdscentre.co.za",
@@ -131,36 +136,8 @@ export const samples = [
     status: "live" as const,
   },
   {
-    slug: "sasta-hill",
-    title: "Sasta Hill Lodge",
-    kind: "Live client, Lwandile Point, Wild Coast",
-    url: "https://sastahill.co.za",
-    blurb:
-      "Dorm-style self-catering lodge in the Transkei. Five pages with a live weather and wind/wave page, Google map, and set up to be found on Google and by AI assistants from day one.",
-    hero: "/images/work/sasta-hill/hero.webp",
-    heroAlt: "Wild Coast landscape and seascape at Lwandile",
-    images: [
-      { src: "/images/work/sasta-hill/homestead.webp", alt: "Wild Coast homestead at Lwandile" },
-      { src: "/images/work/sasta-hill/hike.webp", alt: "Hiking to Lwandile with a local fishing guide" },
-    ],
-    status: "live" as const,
-  },
-  {
-    slug: "andante-lodge",
-    title: "Andante Lodge",
-    kind: "Live client, Pretoria East",
-    url: "https://andantelodge.co.za",
-    blurb:
-      "Guest lodge and venue. Rebuilt around a big photo and a booking button, suites, venues and a clear contact footer, where the old site had no visible address, phone or rates.",
-    hero: "/images/work/andante/hero.jpg",
-    heroAlt: "Bell Luxury Suite bedroom at Andante Lodge",
-    images: [
-      { src: "/images/work/andante/garden-suite.webp", alt: "Garden Suite at Andante Lodge" },
-    ],
-    status: "live" as const,
-  },
-  {
     slug: "mydo",
+    snip: "/images/work/snips/mydo.webp",
     title: "Mydo Fishing Lures",
     kind: "Live client, online shop, ZA and export",
     url: "https://mydofishinglures.co.za",
@@ -175,7 +152,24 @@ export const samples = [
     status: "live" as const,
   },
   {
+    slug: "khaya-la-manzi",
+    snip: "/images/work/snips/khaya-la-manzi.webp",
+    title: "Khaya La Manzi Guest Lodge",
+    kind: "Live client, Hibberdene",
+    url: "https://khayalamanzi.co.za",
+    blurb:
+      "Overhaul of a table-layout site that wasn't mobile and had no tap-to-call. Ten pages with a page per sea-facing apartment, NightsBridge booking buttons, WhatsApp on every unit, an hour-by-hour weather page with sea temperature, tides, Windy maps and satellite, and a new sunset logo.",
+    hero: "/images/work/khaya/deck.jpg",
+    heroAlt: "Breakfast table on a Khaya La Manzi deck above the palms and the Indian Ocean",
+    images: [
+      { src: "/images/work/khaya/lodge.jpg", alt: "Khaya La Manzi lodge building at dusk" },
+      { src: "/images/work/khaya/dolphin.jpg", alt: "Sea-facing bedroom in the Dolphin apartment" },
+    ],
+    status: "live" as const,
+  },
+  {
     slug: "factsmith",
+    snip: "/images/work/snips/factsmith.webp",
     title: "FactSmith",
     kind: "Our product site",
     url: "https://www.factsmith.co.za",
@@ -191,23 +185,8 @@ export const samples = [
  */
 export const inProcess = [
   {
-    slug: "khaya-la-manzi",
-    title: "Khaya La Manzi Guest Lodge",
-    kind: "Hibberdene · South Coast",
-    package: "In process · preview live",
-    blurb:
-      "Overhaul of a table-layout site that wasn't mobile and had no tap-to-call. Ten pages with a page per sea-facing apartment, NightsBridge booking buttons, WhatsApp on every unit, an hour-by-hour weather page with sea temperature, tides, Windy maps and satellite, and a new sunset logo. Approved; photo shoot next.",
-    previewUrl: "https://sites.factsmith.co.za/khaya-la-manzi/",
-    hero: "/images/work/khaya/deck.jpg",
-    heroAlt: "Breakfast table on a Khaya La Manzi deck above the palms and the Indian Ocean",
-    images: [
-      { src: "/images/work/khaya/lodge.jpg", alt: "Khaya La Manzi lodge building at dusk" },
-      { src: "/images/work/khaya/dolphin.jpg", alt: "Sea-facing bedroom in the Dolphin apartment" },
-    ],
-    currentUrl: "https://khayalamanzi.co.za",
-  },
-  {
     slug: "henton",
+    snip: "/images/work/snips/henton.webp",
     title: "Henton Timber Homes",
     kind: "Melkbosstrand · timber construction",
     package: "In process · preview live",
@@ -238,6 +217,7 @@ export const inProcess = [
   },
   {
     slug: "jbay-surf-view",
+    snip: "/images/work/snips/jbay-surf-view.webp",
     title: "JBay Surf View",
     kind: "Jeffreys Bay · three self-catering surf flats",
     package: "Concept · preview live",
@@ -252,58 +232,7 @@ export const inProcess = [
     ],
     currentUrl: "https://jbaysurfview.com",
   },
-  {
-    slug: "secure-electric-fencing-jbay",
-    title: "Secure Electric Fencing JBay",
-    kind: "Jeffreys Bay · electric fencing",
-    package: "Concept · preview live",
-    blurb:
-      "Full six-page concept site for the Jeffreys Bay branch, which today has no site of its own. Built around what the strongest competitor sites share: services by job, fast repairs, a compliance certificate page, areas, FAQ and quote form. Not yet approved.",
-    previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-jbay/",
-    hero: "/images/work/secure-electric-fencing/hero-sign.jpg",
-    heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
-    images: [{ src: "/images/work/secure-electric-fencing/warning.jpg", alt: "Warning electric fence sign on a post (stock photo)" }],
-  },
-  {
-    slug: "secure-electric-fencing-vaal",
-    title: "Secure Electric Fencing Vaal",
-    kind: "Vanderbijlpark · fencing, gates, security",
-    package: "Concept · preview live",
-    blurb:
-      "Full six-page rebuild of a one-page company-profile site. Leads with trading since 2000 and one team for fence, gates, garage doors, alarms and CCTV, plus certificate, areas and FAQ pages. Not yet approved.",
-    previewUrl: "https://sites.factsmith.co.za/secure-electric-fencing-vaal/",
-    hero: "/images/work/secure-electric-fencing/hero-sign.jpg",
-    heroAlt: "Danger electric fence sign on a razor-wire fence (stock photo)",
-    images: [{ src: "/images/work/secure-electric-fencing/warning.jpg", alt: "Warning electric fence sign on a post (stock photo)" }],
-  },
-  {
-    slug: "pollution-control-services",
-    title: "Pollution Control Services",
-    kind: "Jeffreys Bay · 24/7 industrial cleaning and hazmat response",
-    package: "Concept · preview live",
-    blurb:
-      "Full concept site for a 175-staff industrial cleaner: services by job, fleet, compliance, areas and case studies, with a Fleet Live demo page that maps the trucks. Not yet approved.",
-    previewUrl: "https://sites.factsmith.co.za/pollution-control-services/",
-    hero: "/images/work/pollution-control-services/hero.jpg",
-    heroAlt: "Pollution Control Services super sucker truck on site",
-    images: [
-      { src: "/images/work/pollution-control-services/jetting-unit.jpg", alt: "High-pressure jetting unit" },
-      { src: "/images/work/pollution-control-services/fleet-line.jpg", alt: "Pollution Control Services fleet lined up" },
-    ],
-  },
 ] as const;
-
-/** Free opener for prospects, lighter than the Henton Timber Homes deep audit. */
-export const freeAuditPack = {
-  name: "Free website check + homepage sample",
-  notHenton: "Not a 10-page condition report or 7-screen redesign. That stays for after they reply.",
-  deliverables: [
-    "Half-page findings note (3 to 5 concrete fails)",
-    "One mobile screenshot of the worst fail",
-    "One homepage sample (HTML mock) using their real name/photos where legal",
-  ],
-  nextStep: `If they like the sample: the tier price from ${zar(STARTER_PRICE)} (deposit + domain form).`,
-} as const;
 
 /**
  * Standard on every FactSmith site, from the first build, not add-ons.
@@ -327,7 +256,7 @@ export const standardFeatures = [
   {
     title: "GEO: generative engine optimisation",
     text: "An llms.txt file with your key facts, and plain factual pages, so ChatGPT, Gemini and Perplexity can describe you correctly.",
-    example: { label: "Sasta Hill llms.txt", href: "https://sastahill.co.za/llms.txt" },
+    example: { label: "Eagle’s Roost llms.txt", href: "https://eaglesroost.co.za/llms.txt" },
   },
   {
     title: "AEO: answer engine optimisation",
@@ -406,8 +335,8 @@ export const methodSteps = [
     text: "Your site breaks on a phone, has no WhatsApp button, or you cannot change it yourself.",
   },
   {
-    title: "Short opener",
-    text: "We send a four-line message and one screenshot of the fail, not a ten-page report.",
+    title: "Book a consult",
+    text: "A short call to agree what the site needs and which tier fits. No report, no pitch deck.",
   },
   {
     title: "Pack + deposit",

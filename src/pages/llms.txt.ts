@@ -15,10 +15,11 @@ Key facts:
 - Domain and hosting: you keep your domain, or a new .co.za is registered in your name at actual cost (typically R90 to R150). Keep your hosting if it can serve the site, or move to free static hosting.
 - Page library, free where it fits the business: weather and tides pages (every tier), researched nearby attractions and restaurants pages (Brochure and up). The offline guest app is a separate add-on, price on request.
 - Not in the tier price: a new domain (actual cost), ongoing hosting or renewal bills, more custom pages than the tier allows, photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, retainers, blogs, link-building, and third-party or API costs.
+- Book a consult: ${site.bookUrl}
 - Contact: South Coast enquiries WhatsApp +27 72 500 5179 (${site.contactName}); everywhere else WhatsApp +27 82 413 0438 (${site.emilio.name}), ${site.email}
 
 ## Pages
-- [Home](${site.url}/): the free website check and the tiers
+- [Home](${site.url}/): the tiers and how to book a consult
 - [Offer](${site.url}/offer/): the tiers, what is and is not included, common questions
 - [Included](${site.url}/included/): everything that comes with a site, and the admin page
 - [How it is built](${site.url}/technical/): stack, SEO, AEO and GEO actions, process
@@ -30,8 +31,7 @@ Key facts:
 ## Live client sites
 - [Eagle's Roost B&B, Umtentweni](https://eaglesroost.co.za)
 - [Three Birds Online Learning Centre, Anerley](${site.threeBirdsUrl})
-- [Sasta Hill Lodge, Wild Coast](https://sastahill.co.za)
-- [Andante Lodge, Pretoria East](https://andantelodge.co.za)
+- [Khaya La Manzi Guest Lodge, Hibberdene](https://khayalamanzi.co.za)
 - [Mydo Fishing Lures](https://mydofishinglures.co.za)
 
 Prices and offers on this site are the source of truth; last reviewed 28 October 2026.

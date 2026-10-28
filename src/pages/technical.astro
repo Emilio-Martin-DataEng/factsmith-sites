@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import WhatsAppButton from "../components/WhatsAppButton.astro";
+import BookButton from "../components/BookButton.astro";
 
 // Everything here is what the live client sites actually run (Eagle's Roost is the reference).
 const stack = [
@@ -36,7 +36,7 @@ const geo = [
 ] as const;
 
 const process = [
-  ["Free check", "We look at your current site and tell you what is losing enquiries."],
+  ["Consult", "We look at your current site together and agree what is losing enquiries."],
   ["Questions and keywords", "We list what your customers search for and ask, before writing a word."],
   ["Build", "Pages, schema, sitemap, llms.txt and FAQ go in with the first build, not later."],
   ["Submit", "Sitemap submitted to Google and Bing in your name; pages requested for indexing."],
@@ -109,7 +109,7 @@ const process = [
     </ol>
 
     <div class="mt-12 flex flex-wrap items-center gap-4">
-      <WhatsAppButton label="Get my free check" message="Hi Sharon, please check my website: " />
+      <BookButton />
       <a href="/included/" class="text-sm font-semibold text-sea-700 hover:text-accent-600">What is included →</a>
     </div>
   </section>

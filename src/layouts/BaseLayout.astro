@@ -90,6 +90,10 @@ const faqLd = faq && {
             function gtag() { dataLayer.push(arguments); }
             gtag("js", new Date());
             gtag("config", id);
+            document.addEventListener("click", (e) => {
+              const el = e.target.closest("[data-track]");
+              if (el) gtag("event", el.dataset.track);
+            });
           </script>
         </>
       )

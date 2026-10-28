@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { site, tiers, zar } from "../site.config";
 
@@ -141,8 +142,10 @@ const faq = [
       </p>
       <p class="mt-4 text-xs text-sea-300">Invoices from {site.billingEntity}.</p>
       <div class="mt-6 flex flex-wrap gap-3">
-        <WhatsAppButton label="South Coast: message Sharon" />
+        <BookButton />
+        <WhatsAppButton variant="outline" label="South Coast: message Sharon" />
         <WhatsAppButton
+          variant="outline"
           label="Elsewhere: message Emilio"
           href={site.emilio.whatsappLink}
           message={site.emilio.whatsappMessage}
