@@ -38,7 +38,11 @@ const homeSteps = [
 ];
 ---
 
-<BaseLayout title={site.name} faq={homeFaq}>
+<BaseLayout
+  title={site.name}
+  description={`Websites for small and medium South African businesses from ${zar(site.startingPriceZar)}. Fixed prices, WhatsApp first, your domain and files stay yours.`}
+  faq={homeFaq}
+>
   <section class="bg-cream-50">
     <div class="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-5 lg:items-start">
       <div class="lg:col-span-3">
