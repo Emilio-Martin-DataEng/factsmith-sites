@@ -85,14 +85,20 @@ const faqLd = faq && {
       !noindex && (
         <>
           <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4}`} />
-          <script is:inline define:vars={{ id: site.ga4 }}>
+          <script is:inline define:vars={{ id: site.ga4, sharon: site.phoneTel.replace(/\D/g, ""), emilio: site.emilio.phoneTel.replace(/\D/g, "") }}>
             window.dataLayer = window.dataLayer || [];
             function gtag() { dataLayer.push(arguments); }
             gtag("js", new Date());
             gtag("config", id);
+            // Enquiry clicks: book_call (data-track), WhatsApp and call links, named by who they reach.
+            const who = (digits) => (digits.includes(sharon) ? "sharon" : digits.includes(emilio) ? "emilio" : "other");
             document.addEventListener("click", (e) => {
-              const el = e.target.closest("[data-track]");
-              if (el) gtag("event", el.dataset.track);
+              const el = e.target.closest("[data-track], a[href]");
+              if (!el) return;
+              if (el.dataset.track) return gtag("event", el.dataset.track);
+              const href = el.getAttribute("href") || "";
+              if (href.startsWith("https://wa.me/")) gtag("event", "whatsapp_click", { contact: who(href.slice(14).split("?")[0]) });
+              else if (href.startsWith("tel:")) gtag("event", "call_click", { contact: who(href.replace(/\D/g, "")) });
             });
           </script>
         </>
