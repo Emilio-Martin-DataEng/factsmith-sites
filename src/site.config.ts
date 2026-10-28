@@ -34,11 +34,11 @@ export const site = {
     whatsappLink: "https://wa.me/27824130438",
     whatsappMessage: "Hi Emilio, I saw FactSmith Sites. I need a website for my business.",
   },
-  description: `Websites for small businesses across South Africa, from ${zar(STARTER_PRICE)}. Fixed prices, WhatsApp as the main button, your domain and source files stay yours. Outside South Africa? Ask for a quote.`,
+  description: `Websites for small and medium businesses across South Africa, from ${zar(STARTER_PRICE)}. Fixed prices, WhatsApp as the main button, your domain and site files stay yours, with no lock-in. Outside South Africa? Ask for a quote.`,
   /** schema.org priceRange. */
   priceRange: `${zar(STARTER_PRICE)}-${zar(BUSINESS_PRICE)}+`,
   /** Alt text for the share image. */
-  ogImageAlt: `FactSmith Sites, websites for small businesses from ${zar(STARTER_PRICE)}`,
+  ogImageAlt: `FactSmith Sites, websites for small and medium businesses from ${zar(STARTER_PRICE)}`,
   ogImage: "/images/og-card.png",
   /**
    * GitHub Pages has not issued the TLS certificate for this subdomain yet.
@@ -73,7 +73,7 @@ export const tiers = [
     app: `Phone app ${zar(APP_STARTER_PRICE)} one-off`,
     admin: `Admin dashboard ${zar(ADMIN_PRICE)} one-off`,
     library: "Template library pages where they fit, for example weather and tides",
-    forWho: "A small business that needs a clear, fast site and a WhatsApp button",
+    forWho: "A small or medium business that needs a clear, fast site and a WhatsApp button",
   },
   {
     slug: "brochure",
@@ -268,7 +268,7 @@ export const standardFeatures = [
   },
   {
     title: "GEO: generative engine optimisation",
-    text: "An llms.txt file with your key facts, and plain factual pages, so ChatGPT, Gemini and Perplexity can describe you correctly.",
+    text: "An llms.txt file with your key facts, and factual pages, so ChatGPT, Gemini and Perplexity can describe you correctly.",
     example: { label: "Eagle’s Roost llms.txt", href: "https://eaglesroost.co.za/llms.txt" },
   },
   {
@@ -431,6 +431,23 @@ export const wpCare = {
 };
 
 /**
+ * Growth care plan: monthly SEO, AEO and GEO upkeep for static or WordPress sites (Emilio, 2026-10-28). Separate from
+ * the WordPress care plan. Price not set yet: quoted per site. No ranking promises.
+ */
+export const growthCare = {
+  name: "Growth care plan",
+  priceLabel: "Quoted per site",
+  text: "A monthly check that keeps your site findable in Google and in AI assistants. It works on our static sites and on WordPress, and it is separate from the WordPress care plan.",
+  monthly: [
+    "Search check: your Google Search Console numbers, broken links, titles and sitemap reviewed, with a short fix list that we action",
+    "Answer refresh: a few real customer questions added or updated in your FAQ, with FAQ schema, so search and voice assistants can quote you",
+    "AI check: your llms.txt and key facts kept current, and a look at how ChatGPT, Gemini and Perplexity describe you",
+    "Short report: a WhatsApp or email summary each month of searches, clicks and what we changed",
+  ],
+  limit: "We improve the foundations and report honestly. We cannot promise rankings or a place in an AI answer.",
+};
+
+/**
  * The phone app: an installable web app (PWA) on the client's own site at /guide/, no app store.
  * Live at Eagle's Roost (2026-10-20) and Khaya La Manzi (confirmed by Emilio, 2026-10-28). Included from Brochure up; R1 500 one-off on Starter (Emilio, 2026-10-28).
  * Hard rules (Offer Spec): no secrets in the app, no review gating.
@@ -497,7 +514,7 @@ export const faq = [
   },
   {
     q: "Who owns the website?",
-    a: "You do. The domain is in your name and we hand over all source files.",
+    a: "You do. The domain is in your name, and you receive a complete copy of your site files at hand-over. You are not locked in to us: there is no exit fee, and the site is ordinary web code that any developer can take over, so if we were ever unable to carry on, your website would not be stuck.",
   },
   {
     q: "Do I have to move my domain or hosting?",

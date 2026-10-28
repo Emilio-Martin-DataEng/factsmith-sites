@@ -4,10 +4,10 @@ import BookButton from "../components/BookButton.astro";
 
 // Everything here is what the live client sites actually run (Eagle's Roost is the reference).
 const stack = [
-  ["Astro", "Builds plain HTML pages ahead of time. No database, no plugins to patch, nothing for hackers to log in to. If you need to edit pages yourself or sell online, we build WordPress and WooCommerce sites instead, quoted as Custom work."],
+  ["Astro", "Builds static HTML pages ahead of time. No database, no plugins to patch, nothing for hackers to log in to. If you need to edit pages yourself or sell online, we build WordPress and WooCommerce sites instead, quoted as Custom work."],
   ["Tailwind CSS", "Styling compiled into one small file, so pages load fast on a phone on a weak signal."],
   ["Static hosting", "Free static hosting (Cloudflare Pages or GitHub Pages) with HTTPS, or the host you already pay for. Your domain stays in your name."],
-  ["Git", "Every change is saved in a code history. The source files are handed over to you."],
+  ["Git", "Every change is saved in a code history. A full copy of your files goes to you at hand-over, so any developer can pick the site up."],
   ["Open-Meteo", "Free weather, sea and marine data (CC BY 4.0), fetched live in the visitor's browser, for weather and tides pages."],
   ["Web app", "The guest app is a web app with a manifest and a service worker: it installs to the home screen and keeps the last good copy for when there is no signal. It only stores your own pages, never WhatsApp or analytics."],
   ["Google Analytics 4", "Visitor numbers for your admin dashboard, disclosed on the privacy page."],
@@ -25,13 +25,13 @@ const seo = [
 
 const aeo = [
   "We collect the real questions your customers ask (by WhatsApp, phone, at the counter)",
-  "Each one is answered in a plain sentence in an FAQ, first answer first",
+  "Each one is answered in a short sentence in an FAQ, first answer first",
   "The FAQ carries FAQPage schema, so Google and voice assistants can quote the answer and name you",
 ] as const;
 
 const geo = [
   "An llms.txt file at the root of your site with your key facts: what you do, address, prices, capacity, hours",
-  "Plain, factual pages with numbers, for example rates and minutes from the beach, not vague marketing copy",
+  "Factual pages with numbers, for example rates and minutes from the beach, not vague marketing copy",
   "The same facts on the site, in llms.txt and in your Google Business Profile if you have one, so ChatGPT, Gemini and Perplexity describe you correctly",
 ] as const;
 
