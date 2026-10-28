@@ -547,4 +547,8 @@ export const faq = [
     q: "Is there a discount for South Coast businesses?",
     a: southCoastOffer.text,
   },
+  {
+    q: "What is FactSmith Sites, and is it the same as FactSmith?",
+    a: "No, they are separate. FactSmith Sites is a web studio in South Africa, based on the KwaZulu-Natal South Coast, that builds fast, mobile-first, WhatsApp-first websites for small and medium businesses across South Africa. FactSmith the product is business intelligence software that answers plain-language questions over a company's own data, at www.factsmith.co.za.",
+  },
 ];
