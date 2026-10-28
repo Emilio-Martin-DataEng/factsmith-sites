@@ -277,7 +277,7 @@ export const standardFeatures = [
   },
   {
     title: "Your analytics",
-    text: `Google Search Console and Bing set up in your name, and Google Analytics, so the numbers belong to you. The admin dashboard that shows them in one place is included on Business and an add-on on Starter and Brochure (${zar(ADMIN_PRICE)} one-off).`,
+    text: `Google Search Console and Bing set up in your name, and Google Analytics, so the numbers belong to you. The admin dashboard that shows them in one place is included on Business and Custom, and an add-on on Starter and Brochure (${zar(ADMIN_PRICE)} one-off).`,
   },
   {
     title: "WhatsApp and tap-to-call",
@@ -333,18 +333,19 @@ export const libraryPages = [
 /**
  * The admin dashboard: one private page per client site. Included on Business and Custom, a one-off add-on on
  * Starter and Brochure (ADMIN_PRICE). Scope per Emilio, 2026-10-28: site stats, project completion, task
- * reminders and one page of links. All four exist on the owner admin hub (factsmith-website, /admin/sites/<id>/,
- * Eagle's Roost is the sample). Still to build before selling it: a per-client view with its own Access rule, and
- * email reminders. See the vault Offer Spec v2, sections 11 and 11a.
+ * reminders and one page of links. Sellable from 2026-10-28 (Emilio). Each client gets their own page on the hub,
+ * /client/<id>/ (factsmith-website), behind a Cloudflare Access rule for that client only; setup steps are in the
+ * vault Site Process Flow, section 9a. Reminders are kept by us in the repo; there are no email reminders.
  */
 export const adminFeatures = [
-  "Sign in with your Google account; nobody else sees it",
+  "Your own private page: you sign in with your Google account, and only you and we can open it",
   "Site stats: visitors, sessions, page views and average visit length for the last 7, 28 or 90 days, with sessions per day as a chart",
   "Top pages, where visitors came from and which countries they are in",
   "Google searches: the words people typed to find you, how often you were shown and clicked, and your average position, from Search Console",
   "Project completion: a checklist of what is done on your site, ticked from automatic checks of the live pages (titles, sitemap, schema and the analytics tag)",
   "Task reminders: what is still to do on your site, so nothing waits unseen",
   "One page of links to the tools behind your site: GitHub, Cloudflare, xneelo (domain and hosting), Search Console and Bing, so you do not sign in to each one to find a number",
+  "Set up and kept current for you: we give your Google account access to your numbers and keep the reminders and links up to date, so there is nothing for you to edit",
 ] as const;
 
 export const methodSteps = [
@@ -460,7 +461,7 @@ export const faq = [
   },
   {
     q: "What is the admin dashboard?",
-    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the tools behind your site such as GitHub, Cloudflare and xneelo. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} add-on on Starter and Brochure.`,
+    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the tools behind your site such as GitHub, Cloudflare and xneelo. You sign in with Google and only you and we can open it. We set it up and keep the reminders and links current. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} add-on on Starter and Brochure.`,
   },
   {
     q: "Will a new website bring me more enquiries?",
