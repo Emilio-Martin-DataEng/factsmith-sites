@@ -1,4 +1,4 @@
-// FactSmith Sites — studio brochure. Vault: FactSmith-Sites/01-Client-Brief/Offer Spec.md
+// FactSmith Sites, studio brochure. Vault: FactSmith-Sites/01-Client-Brief/Offer Spec.md
 
 // Prices and the launch offer are set here, once. Every page, the FAQ, the JSON-LD,
 // the share text and llms.txt read from these, so a change goes out in one release.
@@ -25,20 +25,20 @@ export const site = {
   phoneTel: "+27725005179",
   whatsappLink: "https://wa.me/27725005179",
   whatsappMessage:
-    "Hi Sharon — I saw FactSmith Sites. We need a website rebuild on the South Coast.",
+    "Hi Sharon, I saw FactSmith Sites. We need a website rebuild on the South Coast.",
   description: LAUNCH_ACTIVE
-    ? `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds — ${zar(LAUNCH_PRICE)} for the first ${slotsWord}. Keep your domain if you have one; keep or downscale hosting.`
+    ? `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds, ${zar(LAUNCH_PRICE)} for the first ${slotsWord}. Keep your domain if you have one; keep or downscale hosting.`
     : `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds. Keep your domain if you have one; keep or downscale hosting.`,
   /** schema.org priceRange. */
   priceRange: LAUNCH_ACTIVE ? `R${LAUNCH_PRICE}-R${STANDARD_PRICE}` : `R${STANDARD_PRICE}`,
   /** Alt text for the share image. */
   ogImageAlt: LAUNCH_ACTIVE
-    ? `FactSmith Sites — website rebuilds, first ${LAUNCH_SLOTS} sites ${zar(LAUNCH_PRICE)}`
-    : `FactSmith Sites — website rebuilds from ${zar(STANDARD_PRICE)}`,
+    ? `FactSmith Sites: website rebuilds, first ${LAUNCH_SLOTS} sites ${zar(LAUNCH_PRICE)}`
+    : `FactSmith Sites: website rebuilds from ${zar(STANDARD_PRICE)}`,
   ogImage: "/images/og-card.png",
   /**
    * GitHub Pages has not issued the TLS certificate for this subdomain yet.
-   * While true, og:image / og:url are emitted over http — WhatsApp and Facebook
+   * While true, og:image / og:url are emitted over http, WhatsApp and Facebook
    * refuse to fetch a link-preview card from a host with an invalid cert, so
    * https here means no preview image in a group post at all.
    * Flip to false the moment the certificate lands.
@@ -57,7 +57,7 @@ export const site = {
 } as const;
 
 /**
- * Launch special — the first 5 South Coast sites at R4 000 instead of R7 500.
+ * Launch special, the first 5 South Coast sites at R4 000 instead of R7 500.
  * A deposit secures the slot and locks the price.
  * Set active: false once five deposits are in; the pages then fall back to
  * site.standardPriceZar automatically.
@@ -69,20 +69,20 @@ export const launchOffer = {
   slotsWord,
   headline: `First ${LAUNCH_SLOTS} sites only`,
   lede: `${zar(LAUNCH_PRICE)} instead of ${zar(STANDARD_PRICE)}.`,
-  detail: `The first ${slotsWord} South Coast rebuilds are ${zar(LAUNCH_PRICE)} — a ${zar(DEPOSIT)} deposit secures your slot and locks the price. After the ${slotsWord}, the published price is ${zar(STANDARD_PRICE)}.`,
+  detail: `The first ${slotsWord} South Coast rebuilds are ${zar(LAUNCH_PRICE)}, a ${zar(DEPOSIT)} deposit secures your slot and locks the price. After the ${slotsWord}, the published price is ${zar(STANDARD_PRICE)}.`,
   bonus:
     "Every site includes Google Search Console + Bing set up in your name, and a private stats page.",
   turnaround: "Mockups this weekend. Your new site live next week.",
 } as const;
 
 export const nav = [
-  { label: "Work", href: "/work" },
-  { label: "Included", href: "/included" },
-  { label: "Tech", href: "/technical" },
-  { label: "Method", href: "/method" },
-  { label: "Offer", href: "/offer" },
-  { label: "South Coast", href: "/south-coast" },
-  { label: "Contact", href: "/contact" },
+  { label: "Work", href: "/work/" },
+  { label: "Included", href: "/included/" },
+  { label: "Tech", href: "/technical/" },
+  { label: "Method", href: "/method/" },
+  { label: "Offer", href: "/offer/" },
+  { label: "South Coast", href: "/south-coast/" },
+  { label: "Contact", href: "/contact/" },
 ] as const;
 
 /** Live samples. South Coast first (Sharon, Round 2 Q4), the rest after. */
@@ -90,7 +90,7 @@ export const samples = [
   {
     slug: "eagles-roost",
     title: "Eagle’s Roost B&B",
-    kind: "Live client — Umtentweni, South Coast",
+    kind: "Live client, Umtentweni, South Coast",
     url: "https://eaglesroost.co.za",
     blurb:
       "Heritage Port Master’s House above the Umzimkulu. WhatsApp booking, rooms and rates, experiences and guest recommendations on the home page. New: an hour-by-hour weather page with tides, Windy wave and storm maps and a live satellite view.",
@@ -104,7 +104,7 @@ export const samples = [
   {
     slug: "three-birds",
     title: "Three Birds Online Learning Centre",
-    kind: "Live client — Anerley",
+    kind: "Live client, Anerley",
     url: "https://threebirdscentre.co.za",
     blurb:
       "The actual brochure package: fast on a phone, WhatsApp as the main button, domain in the client’s name, R0 hosting.",
@@ -113,7 +113,7 @@ export const samples = [
   {
     slug: "sasta-hill",
     title: "Sasta Hill Lodge",
-    kind: "Live client — Lwandile Point, Wild Coast",
+    kind: "Live client, Lwandile Point, Wild Coast",
     url: "https://sastahill.co.za",
     blurb:
       "Dorm-style self-catering lodge in the Transkei. Five pages with a live weather and wind/wave page, Google map, and set up to be found on Google and by AI assistants from day one.",
@@ -128,7 +128,7 @@ export const samples = [
   {
     slug: "andante-lodge",
     title: "Andante Lodge",
-    kind: "Live client — Pretoria East",
+    kind: "Live client, Pretoria East",
     url: "https://andantelodge.co.za",
     blurb:
       "Guest lodge and venue. Rebuilt around a big photo and a booking button, suites, venues and a clear contact footer, where the old site had no visible address, phone or rates.",
@@ -142,7 +142,7 @@ export const samples = [
   {
     slug: "mydo",
     title: "Mydo Fishing Lures",
-    kind: "Live client — online shop, ZA and export",
+    kind: "Live client, online shop, ZA and export",
     url: "https://mydofishinglures.co.za",
     blurb:
       "Online shop for hand-made fishing lures. Baitswimmers by weight and rigging, dropper packs, and separate South African and international pricing.",
@@ -160,14 +160,14 @@ export const samples = [
     kind: "Our product site",
     url: "https://www.factsmith.co.za",
     blurb:
-      "Capability ceiling — a full marketing site we built for our own product. Bigger than the standard brochure package.",
+      "Capability ceiling, a full marketing site we built for our own product. Bigger than the standard brochure package.",
     status: "live" as const,
   },
 ] as const;
 
 /**
  * Approved and in process. Visuals from real project photography and
- * agreed mockups — not stock. Henton is Cape Town / larger than the brochure bar.
+ * agreed mockups, not stock. Henton is Cape Town / larger than the brochure bar.
  */
 export const inProcess = [
   {
@@ -195,7 +195,7 @@ export const inProcess = [
       "Full rebuild of a static mirror of a dead WordPress install. Real project photography, ITFB award, enquiry path. Work-in-progress preview is live for Horton / Tamryn review.",
     previewUrl: "https://sites.factsmith.co.za/henton-homes/",
     hero: "/images/work/henton/elephant-hide.jpg",
-    heroAlt: "Elephant Hide Lodge — a Henton timber structure",
+    heroAlt: "Elephant Hide Lodge: a Henton timber structure",
     mockupPdf: {
       href: "/mockups/henton-timber-homes-proposed-website.pdf",
       label: "Download the 7-screen proposal (PDF)",
@@ -273,12 +273,12 @@ export const inProcess = [
   },
 ] as const;
 
-/** Free opener for prospects — lighter than the Henton Timber Homes deep audit. */
+/** Free opener for prospects, lighter than the Henton Timber Homes deep audit. */
 export const freeAuditPack = {
   name: "Free website check + homepage sample",
   notHenton: "Not a 10-page condition report or 7-screen redesign. That stays for after they reply.",
   deliverables: [
-    "Half-page findings note (3–5 concrete fails)",
+    "Half-page findings note (3 to 5 concrete fails)",
     "One mobile screenshot of the worst fail",
     "One homepage sample (HTML mock) using their real name/photos where legal",
   ],
@@ -286,7 +286,7 @@ export const freeAuditPack = {
 } as const;
 
 /**
- * Standard on every FactSmith site, from the first build — not add-ons.
+ * Standard on every FactSmith site, from the first build, not add-ons.
  * Shown on /included. `example` links to a live page that shows it.
  */
 export const standardFeatures = [
@@ -305,12 +305,12 @@ export const standardFeatures = [
     text: "Fast static pages, a title and description on every page, sitemap, robots.txt, and schema.org data for your business, address and reviews.",
   },
   {
-    title: "GEO — generative engine optimisation",
+    title: "GEO: generative engine optimisation",
     text: "An llms.txt file with your key facts, and plain factual pages, so ChatGPT, Gemini and Perplexity can describe you correctly.",
     example: { label: "Sasta Hill llms.txt", href: "https://sastahill.co.za/llms.txt" },
   },
   {
-    title: "AEO — answer engine optimisation",
+    title: "AEO: answer engine optimisation",
     text: "Real questions answered in a FAQ with FAQPage schema, so Google and voice assistants can quote the answer and name you.",
   },
   {
@@ -382,23 +382,23 @@ export const methodSteps = [
   },
   {
     title: "Short opener",
-    text: "We send a four-line message and one screenshot of the fail — not a ten-page report.",
+    text: "We send a four-line message and one screenshot of the fail, not a ten-page report.",
   },
   {
     title: "Pack + deposit",
     text: `Invoice, domain form, content questions, hosting note, and scope. ${zar(DEPOSIT)} starts the job.`,
   },
   {
-    title: "Domain and hosting — your call",
+    title: "Domain and hosting, your call",
     text: "Already have a domain? We use it. Need one? Registered in your name at cost. Hosting: keep what you pay for, or downscale to free static.",
   },
   {
     title: "Build from a sample",
-    text: "Mobile-first site. WhatsApp as the main button. Contact form included. Map with a Google Earth fly-to, live weather, SEO, GEO and AEO are built in from the first build — not add-ons.",
+    text: "Mobile-first site. WhatsApp as the main button. Contact form included. Map with a Google Earth fly-to, live weather, SEO, GEO and AEO are built in from the first build, not add-ons.",
   },
   {
     title: "Photos: placeholders first, then yours",
-    text: "We build with your old photos or stock, each in a named slot (dolphin-1, home-hero). After your shoot, each new photo is saved under its slot name and replaces the placeholder — no layout changes.",
+    text: "We build with your old photos or stock, each in a named slot (dolphin-1, home-hero). After your shoot, each new photo is saved under its slot name and replaces the placeholder, no layout changes.",
     link: {
       label: "Example: Khaya La Manzi photo slots",
       href: "https://sites.factsmith.co.za/khaya-la-manzi/photos.html",

@@ -4,21 +4,21 @@ import WhatsAppButton from "../components/WhatsAppButton.astro";
 import { site, launchOffer, zar } from "../site.config";
 
 const included = [
-  "4–6 page static brochure (Home, About, Services/Rooms, Contact)",
+  "4 to 6 page static brochure (Home, About, Services/Rooms, Contact)",
   "Mobile-first custom design from an agreed homepage sample",
   "Two focused revision rounds after the first private preview",
   "Contact form + WhatsApp as the primary button",
   "Hosting setup on the path you choose (keep current or free static)",
   "Email path as agreed (keep yours or free forwarding)",
-  "Map, fly-to, live weather, SEO, GEO and AEO built in — see Included",
+  "Map, fly-to, live weather, SEO, GEO and AEO built in, see Included",
   "Google Search Console + Bing set up in your name, Google Analytics, and a private stats page",
   "Hand-over of all source files",
 ];
 
 const notIncluded = [
-  "New domain — only if you need one, at actual registrar cost",
+  "New domain, only if you need one, at actual registrar cost",
   "Ongoing hosting or domain renewal bills",
-  "Extra top-level pages beyond six — quoted separately",
+  "Extra top-level pages beyond six, quoted separately",
   "Photography, logo design, or writing from scratch",
   "Booking engines, payments, shops, or memberships",
   "WordPress or a CMS so a cousin can edit pages",
@@ -56,7 +56,7 @@ const faq = [
 
 <BaseLayout
   title="Offer"
-  description={`South Coast website rebuild — ${launchOffer.active ? `${zar(site.standardPriceZar)}, or ${zar(site.priceZar)} for the first ${launchOffer.slotsWord} sites` : zar(site.standardPriceZar)}. Mockups this weekend, live next week.`}
+  description={`South Coast website rebuild, ${launchOffer.active ? `${zar(site.standardPriceZar)}, or ${zar(site.priceZar)} for the first ${launchOffer.slotsWord} sites` : zar(site.standardPriceZar)}. Mockups this weekend, live next week.`}
   faq={faq}
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
@@ -83,7 +83,7 @@ const faq = [
     }
 
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      Fixed price for the site. Deposit R{site.depositZar.toLocaleString("en-ZA")} to start —
+      Fixed price for the site. Deposit R{site.depositZar.toLocaleString("en-ZA")} to start,
       balance within 7 days of hand-over.
     </p>
 
@@ -116,7 +116,7 @@ const faq = [
         <h2 class="font-display text-base font-semibold text-ink-900">Already have a domain?</h2>
         <p class="mt-2 text-sm text-ink-700">
           We use it. <strong>No registration fee.</strong> Need a new `.co.za`? Registered in your
-          name at actual cost (typically R90–R150) — not inside the site fee.
+          name at actual cost (typically R90 to R150), not inside the site fee.
         </p>
       </div>
       <div class="rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
@@ -139,7 +139,7 @@ const faq = [
       <div class="rounded-2xl border border-sea-100 bg-cream-100 p-6">
         <h2 class="font-display text-xl font-semibold text-ink-900">Not in this fee</h2>
         <ul class="mt-4 space-y-3 text-sm text-ink-700">
-          {notIncluded.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">–</span><span>{item}</span></li>)}
+          {notIncluded.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">-</span><span>{item}</span></li>)}
         </ul>
       </div>
     </div>
