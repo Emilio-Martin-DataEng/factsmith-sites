@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { phoneApp, site, tiers, zar } from "../site.config";
+import { faq, site, tiers, zar } from "../site.config";
 
 const everyTier = [
   "Mobile-first custom design from an agreed homepage sample",
@@ -28,40 +28,6 @@ const quoted = [
   "Third-party and API costs",
 ];
 
-const faq = [
-  {
-    q: "How much does a website cost?",
-    a: `Starter is from ${zar(tiers[0].price)} (3 custom pages), Brochure is ${zar(tiers[1].price)} (4 to 6 pages), Business is from ${zar(tiers[2].price)} (about 10 pages), and Custom work is quoted. A ${zar(site.depositZar)} deposit starts a Starter or Brochure job and the balance is due within 7 days of hand-over. A new .co.za domain, if you need one, is at actual cost, typically R90 to R150.`,
-  },
-  {
-    q: "What are library pages?",
-    a: "Reusable pages we have already built and tested, such as weather and tides, nearby attractions and where to eat. If a page fits your business we add it at no page-building charge. Starter gets the template pages; Brochure and up also get the researched ones.",
-  },
-  {
-    q: "What is the phone app?",
-    a: `An installable app version of your website content that opens from a QR code and works with no signal. It is included on Brochure, Business and Custom, and a one-off ${zar(phoneApp.starterPriceZar)} on Starter. Customisation beyond your own content is quoted.`,
-  },
-  {
-    q: "Will a new website bring me more enquiries?",
-    a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. Your private stats page then shows how many people visit and which Google searches find you.",
-  },
-  {
-    q: "Who owns the website?",
-    a: "You do. The domain is in your name and we hand over all source files.",
-  },
-  {
-    q: "Do I have to move my domain or hosting?",
-    a: "No. We use the domain you have. Keep your hosting if it can serve the new site, or downscale to free static hosting and stop paying for what you no longer need.",
-  },
-  {
-    q: "I am outside South Africa. Can you build my site?",
-    a: "Yes, by quote. Prices on this page are in rand. Message Emilio and we agree the scope, currency and payment method before any work starts.",
-  },
-  {
-    q: "What is not in the fee?",
-    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, retainers, blogs, link-building, and third-party or API costs.",
-  },
-];
 ---
 
 <BaseLayout

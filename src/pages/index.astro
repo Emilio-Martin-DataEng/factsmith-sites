@@ -2,11 +2,22 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { inProcess, samples, site, tiers, zar } from "../site.config";
+import { faq, inProcess, methodSteps, phoneApp, samples, site, tiers, zar } from "../site.config";
 
+// Four of the common questions, in the order they are asked: cost, enquiries, ownership, domain.
+const homeFaq = [faq[0], faq[3], faq[4], faq[5]];
+
+const homeSteps = [
+  methodSteps[1],
+  {
+    title: "We build, you preview",
+    text: "We build from an agreed sample and you review a private preview. Two focused revision rounds are in the fee.",
+  },
+  methodSteps[7],
+];
 ---
 
-<BaseLayout title={site.name}>
+<BaseLayout title={site.name} faq={homeFaq}>
   <section class="bg-cream-50">
     <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
       <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">Websites for small businesses</p>
@@ -39,11 +50,37 @@ import { inProcess, samples, site, tiers, zar } from "../site.config";
               <p class="font-display text-base font-semibold text-ink-900">{tier.name}</p>
               <p class="mt-1 font-display text-2xl font-semibold text-accent-600">{tier.priceLabel}</p>
               <p class="mt-1 text-sm text-ink-700">{tier.pages}</p>
+              <p class="mt-2 text-xs text-ink-500">{tier.forWho}</p>
             </div>
           ))
         }
       </div>
       <a href="/offer/" class="mt-5 inline-flex text-sm font-semibold text-sea-700 hover:text-accent-600">See what’s included →</a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pt-12 sm:px-6">
+    <div class="grid overflow-hidden rounded-3xl border border-sea-100 shadow-sm md:grid-cols-5">
+      <div class="flex flex-col justify-between gap-8 bg-sea-900 p-6 text-cream-50 sm:p-8 md:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-wide text-sea-200">The short answer</p>
+        <h2 class="font-display text-2xl font-semibold">What does FactSmith Sites do?</h2>
+      </div>
+      <div class="bg-white p-6 sm:p-8 md:col-span-3">
+        <p class="font-display text-lg font-semibold text-ink-900">
+          We build fast, plain websites for small South African businesses, from <span class="whitespace-nowrap">{zar(site.startingPriceZar)}</span>, at a fixed price.
+        </p>
+        <p class="mt-3 text-ink-700">
+          Every site works on a phone, has WhatsApp as the main button, and sits on your own domain with the source files handed
+          over to you. Sharon looks after the South Coast and Emilio looks after everyone else.
+        </p>
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {
+            ["Fixed price", "WhatsApp first", "You own the domain", "Two revision rounds"].map((pill) => (
+              <li class="rounded-full border border-sea-200 px-3 py-1 text-xs font-semibold text-sea-700">{pill}</li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -118,6 +155,67 @@ import { inProcess, samples, site, tiers, zar } from "../site.config";
           );
         })
       }
+    </div>
+  </section>
+
+  <section class="border-y border-sea-100 bg-cream-100">
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+      <div class="grid gap-4 md:grid-cols-2 md:items-end">
+        <div>
+          <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">How it works</p>
+          <h2 class="mt-2 font-display text-2xl font-semibold text-ink-900">From first chat to live site.</h2>
+        </div>
+        <p class="text-ink-700">Three steps, and you pay a fixed price.</p>
+      </div>
+      <ol class="mt-8 grid gap-4 md:grid-cols-3">
+        {
+          homeSteps.map((step, index) => (
+            <li class="rounded-2xl border border-sea-200 bg-white p-5">
+              <p class="text-xs font-semibold uppercase tracking-wide text-accent-600">Step {index + 1}</p>
+              <h3 class="mt-2 font-display text-lg font-semibold text-ink-900">{step.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-700">{step.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <a href="/method/" class="mt-6 inline-flex text-sm font-semibold text-sea-700 hover:text-accent-600">See the full method →</a>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-6">
+    <div class="grid items-center gap-6 rounded-3xl bg-sea-900 p-6 text-cream-50 sm:p-8 md:grid-cols-3">
+      <div class="md:col-span-2">
+        <p class="text-xs font-semibold uppercase tracking-wide text-sea-200">{phoneApp.status}</p>
+        <h2 class="mt-2 font-display text-2xl font-semibold">{phoneApp.name}</h2>
+        <p class="mt-3 text-sea-100">{phoneApp.lede}</p>
+      </div>
+      <div class="md:text-right">
+        <a href="/phone-app/" class="inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-sea-900">See the phone app →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="grid gap-8 md:grid-cols-5">
+      <div class="md:col-span-2 md:sticky md:top-6 md:self-start">
+        <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">Common questions</p>
+        <h2 class="mt-2 font-display text-2xl font-semibold text-ink-900">What people usually ask.</h2>
+        <a href="/offer/" class="mt-4 inline-flex text-sm font-semibold text-sea-700 hover:text-accent-600">All questions and the full offer →</a>
+      </div>
+      <div class="md:col-span-3">
+        {
+          homeFaq.map(({ q, a }, index) => (
+            <details class="group border-t border-sea-100 py-4 last:border-b" open={index === 0}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-display font-semibold text-ink-900 [&::-webkit-details-marker]:hidden">
+                {q}
+                <span aria-hidden="true" class="text-accent-600 group-open:hidden">+</span>
+                <span aria-hidden="true" class="hidden text-accent-600 group-open:inline">-</span>
+              </summary>
+              <p class="mt-2 text-sm leading-relaxed text-ink-700">{a}</p>
+            </details>
+          ))
+        }
+      </div>
     </div>
   </section>
 
