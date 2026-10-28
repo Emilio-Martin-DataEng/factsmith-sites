@@ -106,7 +106,7 @@ export const tiers = [
     app: "Phone app included",
     admin: "Admin dashboard included",
     library: "Every library page that fits",
-    forWho: "Shops, bookings, payments, dashboards and live data",
+    forWho: "WordPress sites, WooCommerce shops, bookings, payments, dashboards and live data",
   },
 ] as const;
 
@@ -155,7 +155,7 @@ export const samples = [
     kind: "Live client, online shop, ZA and export",
     url: "https://mydofishinglures.co.za",
     blurb:
-      "Online shop for hand-made fishing lures. Baitswimmers by weight and rigging, dropper packs, and separate South African and international pricing.",
+      "A WooCommerce shop (WordPress) for hand-made fishing lures. Baitswimmers by weight and rigging, dropper packs, and separate South African and international pricing.",
     hero: "/images/work/mydo/hero.jpg",
     heroAlt: "Mydo silver bullet baitswimmer lure",
     images: [
@@ -404,16 +404,16 @@ export const towns = [
 
 /**
  * The phone app: an installable web app (PWA) on the client's own site at /guide/, no app store.
- * In pilot at Eagle's Roost (2026-10-20). Included from Brochure up; R1 500 one-off on Starter (Emilio, 2026-10-28).
+ * Live at Eagle's Roost (2026-10-20) and Khaya La Manzi (confirmed by Emilio, 2026-10-28). Included from Brochure up; R1 500 one-off on Starter (Emilio, 2026-10-28).
  * Hard rules (Offer Spec): no secrets in the app, no review gating.
  */
 export const phoneApp = {
   name: "Phone app for your visitors",
   lede: "An installable guide on your own website. Visitors scan a QR code or tap a link, add it to their home screen, and it still opens with no signal.",
-  status: "In pilot at Eagle’s Roost",
+  status: "Live at Eagle’s Roost and Khaya La Manzi",
   /** Included from Brochure up; one-off on Starter. Customisation beyond the site's own content is quoted. */
   starterPriceZar: APP_STARTER_PRICE,
-  pricing: `Included on Brochure, Business and Custom. On Starter it is a one-off ${zar(APP_STARTER_PRICE)}. It is in pilot at Eagle’s Roost: you get it as it stands today, and the improvements we make during the pilot at no extra cost. It repackages what is already on your website, so there is nothing to re-write. Customisation beyond that is quoted after a short consult.`,
+  pricing: `Included on Brochure, Business and Custom. On Starter it is a one-off ${zar(APP_STARTER_PRICE)}. It is live at Eagle’s Roost and Khaya La Manzi. It repackages what is already on your website, so there is nothing to re-write. Customisation beyond that is quoted after a short consult.`,
   example: { label: "Eagle’s Roost guest guide", href: "https://eaglesroost.co.za/guide/" },
   image: "/images/work/eagles-roost/feature-guide.webp",
   imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",
@@ -432,7 +432,7 @@ export const phoneApp = {
   ],
   /** Where it fits. The test is relevant content: information people need on their phone, on the spot. */
   fits: [
-    ["Guest houses, lodges and self-catering", "Wi-Fi, check-in, house rules, what to do nearby. The pilot."],
+    ["Guest houses, lodges and self-catering", "Wi-Fi, check-in, house rules, what to do nearby. Live at Eagle’s Roost and Khaya La Manzi."],
     ["Restaurants, venues and events", "Menu, hours, map, how to book, what to expect on the day."],
     ["Tour and activity operators", "Itinerary, what to bring, safety information, meeting point."],
     ["Estates, body corporates and offices", "Rules, contacts, how to report a problem, visitor information."],
@@ -480,7 +480,11 @@ export const faq = [
     a: "Yes, by quote. Prices on this page are in rand. Message Emilio and we agree the scope, currency and payment method before any work starts.",
   },
   {
+    q: "Can you build a WordPress site or an online shop?",
+    a: "Yes. Our standard sites are fast static pages with nothing to log in to. When you want to edit pages yourself or sell online, we build a WordPress site or a WooCommerce shop instead. That is Custom work, quoted after a consult. Mydo Fishing Lures is a live WooCommerce shop with separate South African and international pricing.",
+  },
+  {
     q: "What is not in the fee?",
-    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, retainers, blogs, link-building, and third-party or API costs.",
+    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, logo design or writing from scratch, shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.",
   },
 ];
