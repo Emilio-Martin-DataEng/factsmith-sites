@@ -7,6 +7,8 @@ const BROCHURE_PRICE = 7500;
 const BUSINESS_PRICE = 12500;
 const DEPOSIT = 2000;
 const APP_STARTER_PRICE = 1500;
+/** Admin dashboard: one-off add-on on Starter and Brochure, included on Business and Custom (Emilio, 2026-10-28). */
+const ADMIN_PRICE = 1500;
 /** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
 export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
@@ -54,6 +56,7 @@ export const site = {
   startingPriceZar: STARTER_PRICE,
   brochurePriceZar: BROCHURE_PRICE,
   depositZar: DEPOSIT,
+  adminAddonPriceZar: ADMIN_PRICE,
 } as const;
 
 /**
@@ -68,6 +71,7 @@ export const tiers = [
     priceLabel: `from ${zar(STARTER_PRICE)}`,
     pages: "3 custom pages",
     app: `Phone app ${zar(APP_STARTER_PRICE)} one-off`,
+    admin: `Admin dashboard ${zar(ADMIN_PRICE)} one-off`,
     library: "Template library pages where they fit, for example weather and tides",
     forWho: "A small business that needs a clear, fast site and a WhatsApp button",
   },
@@ -78,6 +82,7 @@ export const tiers = [
     priceLabel: zar(BROCHURE_PRICE),
     pages: "4 to 6 custom pages",
     app: "Phone app included",
+    admin: `Admin dashboard ${zar(ADMIN_PRICE)} one-off`,
     library: "Every library page that fits, including researched ones such as attractions and restaurants",
     forWho: "Guest houses, lodges, tutors, trades and professionals",
   },
@@ -88,6 +93,7 @@ export const tiers = [
     priceLabel: `from ${zar(BUSINESS_PRICE)}`,
     pages: "About 10 custom pages",
     app: "Phone app included",
+    admin: "Admin dashboard included",
     library: "Every library page that fits",
     forWho: "Services by job, areas served, certificates and case studies: larger firms",
   },
@@ -98,6 +104,7 @@ export const tiers = [
     priceLabel: "Quoted",
     pages: "Scoped with you",
     app: "Phone app included",
+    admin: "Admin dashboard included",
     library: "Every library page that fits",
     forWho: "Shops, bookings, payments, dashboards and live data",
   },
@@ -269,8 +276,8 @@ export const standardFeatures = [
     text: "Real questions answered in a FAQ with FAQPage schema, so Google and voice assistants can quote the answer and name you.",
   },
   {
-    title: "Your stats",
-    text: "Google Search Console and Bing set up in your name, Google Analytics, and a private stats page: visitors, top pages, where they came from, and what people search on Google to find you.",
+    title: "Your analytics",
+    text: `Google Search Console and Bing set up in your name, and Google Analytics, so the numbers belong to you. The admin dashboard that shows them in one place is included on Business and an add-on on Starter and Brochure (${zar(ADMIN_PRICE)} one-off).`,
   },
   {
     title: "WhatsApp and tap-to-call",
@@ -323,16 +330,20 @@ export const libraryPages = [
   },
 ] as const;
 
-/** The private admin (stats) page every site gets, as built in /stats. */
+/**
+ * The admin dashboard: one private page per client site. Included on Business and Custom, a one-off add-on on
+ * Starter and Brochure (ADMIN_PRICE). Scope per Emilio, 2026-10-28: site stats, project completion, task
+ * reminders and one page of links. The stats part is built (/stats and the admin hub); the task reminders and the
+ * links page are still to build for clients, see the vault Offer Spec v2.
+ */
 export const adminFeatures = [
   "Sign in with your Google account; nobody else sees it",
-  "Visitors, sessions, page views and average visit length for the last 7, 28 or 90 days",
-  "Sessions per day as a chart",
-  "Top pages: which pages people actually read",
-  "Where visitors came from (source and medium, for example Google search or Facebook)",
-  "Which countries they are in",
+  "Site stats: visitors, sessions, page views and average visit length for the last 7, 28 or 90 days, with sessions per day as a chart",
+  "Top pages, where visitors came from and which countries they are in",
   "Google searches: the words people typed to find you, how often you were shown and clicked, and your average position, from Search Console",
-  "Search Console and Bing set up in your name, so the data is yours if you ever leave us",
+  "Project completion: a checklist of what is done on your site, ticked from automatic checks of the live pages (titles, sitemap, schema and the analytics tag)",
+  "Task reminders: what is still to do on your site, so nothing waits unseen",
+  "One page of links to the tools behind your site: GitHub, Cloudflare, xneelo (domain and hosting), Search Console and Bing, so you do not sign in to each one to find a number",
 ] as const;
 
 export const methodSteps = [
@@ -447,8 +458,12 @@ export const faq = [
     a: `An installable app version of your website content that opens from a QR code and works with no signal. It is included on Brochure, Business and Custom, and a one-off ${zar(APP_STARTER_PRICE)} on Starter. Customisation beyond your own content is quoted.`,
   },
   {
+    q: "What is the admin dashboard?",
+    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the tools behind your site such as GitHub, Cloudflare and xneelo. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} add-on on Starter and Brochure.`,
+  },
+  {
     q: "Will a new website bring me more enquiries?",
-    a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. Your private stats page then shows how many people visit and which Google searches find you.",
+    a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. The admin dashboard, included on Business and an add-on on Starter and Brochure, then shows how many people visit and which Google searches find you.",
   },
   {
     q: "Who owns the website?",

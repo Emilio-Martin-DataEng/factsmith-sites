@@ -11,7 +11,8 @@ FactSmith Sites is a web studio in South Africa (based on the KwaZulu-Natal Sout
 Key facts:
 - Tiers: ${tiers.map((t) => `${t.name} ${t.priceLabel} (${t.pages})`).join("; ")}. Prices are in rand.
 - Deposit: ${zar(site.depositZar)} starts a Starter or Brochure job; the balance is due within 7 days of hand-over.
-- On every tier: mobile-first design from an agreed sample, two focused revision rounds, hand-over of all source files, Google Search Console and Bing set up in your name, Google Analytics and a private stats page, WhatsApp and tap-to-call.
+- On every tier: mobile-first design from an agreed sample, two focused revision rounds, hand-over of all source files, Google Search Console and Bing set up in your name, Google Analytics, WhatsApp and tap-to-call.
+- Admin dashboard (one private page with site stats, project completion, task reminders and links to the tools behind the site): included on Business and Custom, a one-off ${zar(site.adminAddonPriceZar)} add-on on Starter and Brochure.
 - Domain and hosting: you keep your domain, or a new .co.za is registered in your name at actual cost (typically R90 to R150). Keep your hosting if it can serve the site, or move to free static hosting.
 - Page library, free where it fits the business: weather and tides pages (every tier), researched nearby attractions and restaurants pages (Brochure and up). The phone app (installable, works offline, in pilot) is included from the Brochure tier up and a one-off R1 500 on Starter, for any business with relevant content; customisation is quoted.
 - Not in the tier price: a new domain (actual cost), ongoing hosting or renewal bills, more custom pages than the tier allows, photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, retainers, blogs, link-building, and third-party or API costs.
@@ -21,7 +22,7 @@ Key facts:
 ## Pages
 - [Home](${site.url}/): the tiers and how to book a consult
 - [Offer](${site.url}/offer/): the tiers, what is and is not included, common questions
-- [Included](${site.url}/included/): everything that comes with a site, and the admin page
+- [Included](${site.url}/included/): everything that comes with a site, and the admin dashboard
 - [How it is built](${site.url}/technical/): stack, SEO, AEO and GEO actions, process
 - [Phone app](${site.url}/phone-app/): an installable offline phone app on your own site, for any business with useful visitor content
 - [Method](${site.url}/method/): the steps from first message to go-live
