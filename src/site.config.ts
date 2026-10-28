@@ -6,6 +6,7 @@ const STARTER_PRICE = 4000;
 const BROCHURE_PRICE = 7500;
 const BUSINESS_PRICE = 12500;
 const DEPOSIT = 2000;
+const APP_STARTER_PRICE = 1500;
 /** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
 export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
@@ -66,6 +67,7 @@ export const tiers = [
     price: STARTER_PRICE,
     priceLabel: `from ${zar(STARTER_PRICE)}`,
     pages: "3 custom pages",
+    app: `Phone app ${zar(APP_STARTER_PRICE)} one-off`,
     library: "Template library pages where they fit, for example weather and tides",
     forWho: "A small business that needs a clear, fast site and a WhatsApp button",
   },
@@ -75,6 +77,7 @@ export const tiers = [
     price: BROCHURE_PRICE,
     priceLabel: zar(BROCHURE_PRICE),
     pages: "4 to 6 custom pages",
+    app: "Phone app included",
     library: "Every library page that fits, including researched ones such as attractions and restaurants",
     forWho: "Guest houses, lodges, tutors, trades and professionals",
   },
@@ -84,6 +87,7 @@ export const tiers = [
     price: BUSINESS_PRICE,
     priceLabel: `from ${zar(BUSINESS_PRICE)}`,
     pages: "About 10 custom pages",
+    app: "Phone app included",
     library: "Every library page that fits",
     forWho: "Services by job, areas served, certificates and case studies: larger firms",
   },
@@ -93,6 +97,7 @@ export const tiers = [
     price: null,
     priceLabel: "Quoted",
     pages: "Scoped with you",
+    app: "Phone app included",
     library: "Every library page that fits",
     forWho: "Shops, bookings, payments, dashboards and live data",
   },
@@ -291,7 +296,7 @@ export const libraryPages = [
   },
   {
     title: "A guest app that works without signal",
-    kind: "addon" as const,
+    kind: "app" as const,
     text: "A guest guide your visitors add to their home screen: Wi-Fi, check-in times, house rules, weather now, places to eat and one-tap WhatsApp requests. It keeps the last good copy on the phone, so it still opens with no signal.",
     image: "/images/work/eagles-roost/feature-guide.webp",
     imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",
@@ -386,13 +391,16 @@ export const towns = [
 
 /**
  * The phone app: an installable web app (PWA) on the client's own site at /guide/, no app store.
- * In pilot at Eagle's Roost (2026-10-20). Price is not set: "on request" until the pilot is tested.
+ * In pilot at Eagle's Roost (2026-10-20). Included from Brochure up; R1 500 one-off on Starter (Emilio, 2026-10-28).
  * Hard rules (Offer Spec): no secrets in the app, no review gating.
  */
 export const phoneApp = {
   name: "Phone app for your visitors",
   lede: "An installable guide on your own website. Visitors scan a QR code or tap a link, add it to their home screen, and it still opens with no signal.",
-  status: "In pilot at Eagle’s Roost. Price on request.",
+  status: "In pilot at Eagle’s Roost",
+  /** Included from Brochure up; one-off on Starter. Customisation beyond the site's own content is quoted. */
+  starterPriceZar: APP_STARTER_PRICE,
+  pricing: `Included on Brochure, Business and Custom. On Starter it is a one-off ${zar(APP_STARTER_PRICE)}. It repackages what is already on your website, so there is nothing to re-write. Customisation beyond that is quoted after a short consult.`,
   example: { label: "Eagle’s Roost guest guide", href: "https://eaglesroost.co.za/guide/" },
   image: "/images/work/eagles-roost/feature-guide.webp",
   imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",

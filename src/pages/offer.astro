@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { site, tiers, zar } from "../site.config";
+import { phoneApp, site, tiers, zar } from "../site.config";
 
 const everyTier = [
   "Mobile-first custom design from an agreed homepage sample",
@@ -24,7 +24,7 @@ const quoted = [
   "Booking engines, payments, shops, or memberships (the Custom tier)",
   "WordPress or a CMS so a cousin can edit pages",
   "Monthly retainers, blogs, or link-building",
-  "The phone app, an add-on to any tier (price on request, see Phone app)",
+  "Customisation of the phone app beyond your website's own content",
   "Third-party and API costs",
 ];
 
@@ -36,6 +36,10 @@ const faq = [
   {
     q: "What are library pages?",
     a: "Reusable pages we have already built and tested, such as weather and tides, nearby attractions and where to eat. If a page fits your business we add it at no page-building charge. Starter gets the template pages; Brochure and up also get the researched ones.",
+  },
+  {
+    q: "What is the phone app?",
+    a: `An installable app version of your website content that opens from a QR code and works with no signal. It is included on Brochure, Business and Custom, and a one-off ${zar(phoneApp.starterPriceZar)} on Starter. Customisation beyond your own content is quoted.`,
   },
   {
     q: "Will a new website bring me more enquiries?",
@@ -81,6 +85,7 @@ const faq = [
             <p class="mt-2 font-display text-3xl font-semibold text-sea-700">{tier.priceLabel}</p>
             <p class="mt-3 text-sm font-semibold text-ink-900">{tier.pages}</p>
             <p class="mt-2 text-sm text-ink-700">{tier.library}</p>
+            <p class="mt-2 text-sm font-semibold text-sea-800">{tier.app}</p>
             <p class="mt-3 text-sm text-ink-500">{tier.forWho}</p>
           </div>
         ))

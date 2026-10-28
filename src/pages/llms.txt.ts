@@ -13,7 +13,7 @@ Key facts:
 - Deposit: ${zar(site.depositZar)} starts a Starter or Brochure job; the balance is due within 7 days of hand-over.
 - On every tier: mobile-first design from an agreed sample, two focused revision rounds, hand-over of all source files, Google Search Console and Bing set up in your name, Google Analytics and a private stats page, WhatsApp and tap-to-call.
 - Domain and hosting: you keep your domain, or a new .co.za is registered in your name at actual cost (typically R90 to R150). Keep your hosting if it can serve the site, or move to free static hosting.
-- Page library, free where it fits the business: weather and tides pages (every tier), researched nearby attractions and restaurants pages (Brochure and up). The phone app (installable, works offline, in pilot) is a separate add-on for any business with relevant content, price on request.
+- Page library, free where it fits the business: weather and tides pages (every tier), researched nearby attractions and restaurants pages (Brochure and up). The phone app (installable, works offline, in pilot) is included from the Brochure tier up and a one-off R1 500 on Starter, for any business with relevant content; customisation is quoted.
 - Not in the tier price: a new domain (actual cost), ongoing hosting or renewal bills, more custom pages than the tier allows, photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, retainers, blogs, link-building, and third-party or API costs.
 - Book a consult: ${site.bookUrl}
 - Contact: South Coast enquiries WhatsApp +27 72 500 5179 (${site.contactName}); everywhere else WhatsApp +27 82 413 0438 (${site.emilio.name}), ${site.email}
