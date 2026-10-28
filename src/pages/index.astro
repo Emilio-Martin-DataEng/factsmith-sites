@@ -3,12 +3,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import LineIcon from "../components/LineIcon.astro";
-import { faq, inProcess, logoService, methodSteps, phoneApp, samples, site, tiers, zar } from "../site.config";
+import { faq, inProcess, logoService, methodSteps, phoneApp, samples, site, zar } from "../site.config";
 
 // Four of the common questions, in the order they are asked: cost, enquiries, ownership, domain.
 const homeFaq = [faq[0], faq[4], faq[5], faq[6]];
 
-const stepIcons = ["consult", "preview", "live"] as const;
+const startingPoints = [
+  {
+    title: "I need a new website",
+    text: `Starter from ${zar(site.startingPriceZar)}, Brochure ${zar(site.brochurePriceZar)}, bigger sites quoted. Fixed price.`,
+    href: "/offer/",
+  },
+  {
+    title: "My website breaks on a phone",
+    text: "We rebuild it on your own domain at the same fixed prices. Khaya La Manzi was an overhaul.",
+    href: "/work/",
+  },
+  {
+    title: "I need a logo",
+    text: `Quoted for your business, ${zar(logoService.bundleDiscountZar)} off with a website.`,
+    href: "/offer/#logo",
+  },
+];
+
+const stepIcons =["consult", "preview", "live"] as const;
 
 const homeSteps = [
   methodSteps[1],
@@ -45,21 +63,21 @@ const homeSteps = [
       </div>
       <div class="hero-rise rounded-3xl border border-sea-200 bg-white p-5 shadow-sm sm:p-6 lg:col-span-2" style="--d:0.25s">
         <p class="text-xs font-semibold uppercase tracking-wide text-sea-600">Choose your starting point</p>
-        <ul class="mt-4 divide-y divide-sea-100">
+        <ol class="mt-4 divide-y divide-sea-100">
           {
-            tiers.map((tier, i) => (
+            startingPoints.map((point, i) => (
               <li class="hero-rise py-3 first:pt-0 last:pb-0" style={`--d:${0.5 + i * 0.1}s`}>
-                <div class="flex items-baseline justify-between gap-3">
-                  <p class="font-display text-base font-semibold text-ink-900">{tier.name}</p>
-                  <p class="font-display text-lg font-semibold text-accent-600">{tier.priceLabel}</p>
-                </div>
-                <p class="text-sm text-ink-700">{tier.pages}</p>
-                <p class="mt-1 text-xs text-ink-500">{tier.forWho}</p>
+                <a href={point.href} class="group flex gap-3">
+                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-sea-900 text-xs font-semibold text-white">{i + 1}</span>
+                  <span>
+                    <span class="block font-display text-base font-semibold text-ink-900 group-hover:text-accent-600">{point.title} →</span>
+                    <span class="mt-1 block text-sm text-ink-700">{point.text}</span>
+                  </span>
+                </a>
               </li>
             ))
           }
-        </ul>
-        <a href="/offer/" class="mt-4 inline-flex text-sm font-semibold text-sea-700 hover:text-accent-600">See what’s included →</a>
+        </ol>
       </div>
     </div>
   </section>

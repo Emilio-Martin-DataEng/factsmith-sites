@@ -409,7 +409,10 @@ export const towns = [
 export const logoService = {
   name: "Logo and brand identity",
   lede: "A logo made for your business, so your website, WhatsApp profile and printed material look like one business. We did the sunset logo for Khaya La Manzi.",
-  pricing: "Quoted for your business, and cheaper when ordered together with a website.",
+  bundleDiscountZar: 500,
+  get pricing() {
+    return `Quoted for your business, and ${zar(this.bundleDiscountZar)} off when ordered together with a website.`;
+  },
 };
 
 /**
@@ -505,6 +508,6 @@ export const faq = [
   },
   {
     q: "What is not in the fee?",
-    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, writing from scratch, a logo (quoted, cheaper with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.",
+    a: `A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, writing from scratch, a logo (quoted, ${zar(logoService.bundleDiscountZar)} off with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.`,
   },
 ];
