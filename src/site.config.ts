@@ -432,11 +432,11 @@ export const wpCare = {
 
 /**
  * Growth care plan: monthly SEO, AEO and GEO upkeep for static or WordPress sites (Emilio, 2026-10-28). Separate from
- * the WordPress care plan. Price not set yet: quoted per site. No ranking promises.
+ * the WordPress care plan. Price from R950 a month, final amount quoted per site (Emilio, 2026-10-28, after competitor comparison). No ranking promises.
  */
 export const growthCare = {
   name: "Growth care plan",
-  priceLabel: "Quoted per site",
+  priceLabel: "From R950 a month",
   text: "A monthly check that keeps your site findable in Google and in AI assistants. It works on our static sites and on WordPress, and it is separate from the WordPress care plan.",
   monthly: [
     "Search check: your Google Search Console numbers, broken links, titles and sitemap reviewed, with a short fix list that we action",
