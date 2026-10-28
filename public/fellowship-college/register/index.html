@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Fellowship College | Photo and content register</title>
+<style>
+:root{--night:#0b1f38;--blue:#2f6db5;--red:#c8202f;--bg:#f4f6f9;--card:#fff;--ink:#0f172a;--muted:#5b6475;--line:#e2e6ee;--have:#17663b;--font:-apple-system,'Segoe UI',Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);line-height:1.55}
+.wrap{max-width:1000px;margin-inline:auto;padding:0 16px}
+.concept{background:#fff3c4;color:#5a4700;font-size:.82rem;text-align:center;padding:8px 16px}
+.concept a{font-weight:700}
+header{background:var(--night);color:#fff;padding:36px 0}
+h1{margin:0 0 8px;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.1}
+header p{margin:0;color:#b7c6da;max-width:62ch}
+h2{margin:36px 0 6px;font-size:1.5rem}
+.muted{color:var(--muted)}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:14px}
+code{background:#eef3f9;border-radius:5px;padding:1px 6px;font-size:.92em}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));margin-top:14px}
+.steps .box{margin:0}
+.steps b{display:block;color:var(--blue);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.scroll{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th{background:#eef3f9;text-align:left;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;padding:10px 12px;white-space:nowrap}
+td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top}
+td:first-child{font-family:ui-monospace,Consolas,monospace;font-size:.85rem;white-space:nowrap}
+.tag{display:inline-block;border-radius:999px;padding:1px 9px;font-size:.74rem;font-weight:700;white-space:nowrap}
+.tag.have{background:#dcf3e6;color:var(--have)}
+.tag.wait{background:#fff4d6;color:#7a5600}
+.tag.opt{background:#eef0f4;color:var(--muted)}
+.filter{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.filter button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 14px;cursor:pointer}
+.filter button[aria-pressed=true]{background:var(--night);color:#fff;border-color:var(--night)}
+footer{padding:32px 0;color:var(--muted);font-size:.85rem}
+a{color:var(--blue)}
+@media print{.concept,.filter{display:none}header{background:#fff;color:#000;padding:0}header p{color:#333}}
+</style>
+</head>
+<body>
+<div class="concept">Concept by FactSmith Sites. Not the live site. <a href="../">Back to the three layouts</a></div>
+<header><div class="wrap">
+  <h1>Photo and content register</h1>
+  <p>Every photo and every piece of content has a named place on the new site. Name your files after the place, send them in, and we tick them off here.</p>
+</div></header>
+
+<main class="wrap">
+<h2>How to send things</h2>
+<div class="steps">
+  <div class="box"><b>1. Name the file</b>Use <code>place-short-description.jpg</code>: lower case, hyphens, no spaces. Example: <code>classroom-grade-10-maths.jpg</code>. If it fits no place, start it with <code>extra-</code> and tell us what it shows.</div>
+  <div class="box"><b>2. Many photos: Smash</b>Upload them at <a href="https://fromsmash.com/">fromsmash.com</a> (free, works on a phone or computer) and send the transfer to <a href="mailto:emilio@factsmith.co.za">emilio@factsmith.co.za</a>, or paste the link in the WhatsApp group.</div>
+  <div class="box"><b>3. Everything else: email</b>PDFs, forms, lists and short texts go as attachments to <a href="mailto:emilio@factsmith.co.za">emilio@factsmith.co.za</a>. Dates, fees and activities go in the school's Google Sheet (we set it up).</div>
+</div>
+<p class="muted" style="margin-top:14px">Learner photo consent is confirmed. Photos can be camera or phone; send the original, we make the web copies.</p>
+
+<h2>Photos</h2>
+<p class="muted">The place name is the start of the filename.</p>
+<div class="filter" role="group" aria-label="Filter photos">
+  <button type="button" data-f="all" aria-pressed="true">All</button>
+  <button type="button" data-f="wait" aria-pressed="false">Still needed</button>
+  <button type="button" data-f="have" aria-pressed="false">Have something</button>
+</div>
+<div class="scroll"><table id="photos">
+<thead><tr><th>Place</th><th>Page</th><th>What we need</th><th>Status</th></tr></thead>
+<tbody>
+<tr data-s="have"><td>home-hero</td><td>Home</td><td>Wide photo of learners and staff together, landscape, large</td><td><span class="tag have">Have old photo</span></td></tr>
+<tr data-s="have"><td>home-welcome</td><td>Home</td><td>A candid of learners at work</td><td><span class="tag have">Have old photo</span></td></tr>
+<tr data-s="wait"><td>building-front</td><td>Home, Contact</td><td>The school entrance or building from the street</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>classroom-1 to classroom-4</td><td>Home, Admissions</td><td>Learners working through modules, a teacher helping</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>staff-principal</td><td>About</td><td>Principal portrait</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>staff-team</td><td>About</td><td>Staff group photo</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>learners-group-1 to -3</td><td>Learners</td><td>Groups in uniform, different grades</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>activity-sport, activity-outing, activity-project</td><td>Learners</td><td>One photo per activity</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>activity-surf</td><td>Learners, Weather</td><td>The surf crew: action, or a beach group</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="have"><td>event-celebration-1 to -4</td><td>Parents, Learners</td><td>Celebration evening, prize-giving</td><td><span class="tag have">Have 1 of 4</span></td></tr>
+<tr data-s="wait"><td>uniform-front, uniform-sports</td><td>Parents</td><td>Uniform and sports kit, laid out or worn</td><td><span class="tag wait">Needed</span></td></tr>
+<tr data-s="wait"><td>grounds-1, grounds-2</td><td>Home</td><td>Playground, courtyard, wherever learners spend break</td><td><span class="tag wait">Needed</span></td></tr>
+</tbody></table></div>
+
+<h2>Content</h2>
+<p class="muted">Anything not ready shows as "to be confirmed" on the site until it arrives.</p>
+<div class="scroll"><table>
+<thead><tr><th>Item</th><th>Page</th><th>How to send</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>2027 term dates</td><td>Parents, Home</td><td>Google Sheet tab <code>terms</code></td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Exam dates and main events</td><td>Parents, Learners, Home</td><td>Tab <code>exams</code></td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Fees and payment information</td><td>Parents</td><td>Tab <code>fees</code></td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Activities and clubs</td><td>Learners</td><td>Tab <code>activities</code> (days, where, contact)</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Notices from the principal</td><td>Parents</td><td>Tab <code>notices</code> (date, title, text)</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Grades offered, subjects per grade</td><td>Admissions</td><td>Short text by email</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Hatfield online option and portal link</td><td>Admissions, Learners</td><td>Short text and link</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Application and re-application forms</td><td>Admissions, Parents</td><td>PDF by email</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Uniform list, stationery list</td><td>Parents</td><td>PDF by email</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Financial policy, code of conduct, privacy notice</td><td>Parents</td><td>PDF by email</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>School photos portal link</td><td>Parents</td><td>Link</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>History, staff blurbs, testimonials</td><td>About</td><td>Short text by email</td><td><span class="tag opt">Optional</span></td></tr>
+<tr><td>WhatsApp number on the site?</td><td>All pages</td><td>Yes or no, and the number</td><td><span class="tag wait">Needed</span></td></tr>
+<tr><td>Who manages the domain and the Wix account</td><td>Hand-over</td><td>Name and email</td><td><span class="tag wait">Needed</span></td></tr>
+</tbody></table></div>
+</main>
+<footer><div class="wrap">Questions: <a href="mailto:emilio@factsmith.co.za">emilio@factsmith.co.za</a> or the WhatsApp group. Concept by FactSmith Sites.</div></footer>
+<script>
+  document.querySelectorAll(".filter button").forEach(b => b.onclick = () => {
+    document.querySelectorAll(".filter button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    document.querySelectorAll("#photos tbody tr").forEach(r => r.hidden = b.dataset.f !== "all" && r.dataset.s !== b.dataset.f);
+  });
+</script>
+</body>
+</html>
