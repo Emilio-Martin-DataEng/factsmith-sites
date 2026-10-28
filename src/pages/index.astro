@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import LineIcon from "../components/LineIcon.astro";
-import { faq, inProcess, logoService, methodSteps, phoneApp, samples, site, zar } from "../site.config";
+import { faq, inProcess, logoService, methodSteps, phoneApp, samples, site, southCoastOffer, zar } from "../site.config";
 
 // Four of the common questions, in the order they are asked: cost, enquiries, ownership, domain.
 const homeFaq = [faq[0], faq[4], faq[5], faq[6]];
@@ -337,6 +337,7 @@ const homeSteps = [
         <p class="mt-2 text-sm text-ink-700">
           Two revision rounds, deposit up front. Domain at actual cost.
           From {zar(site.startingPriceZar)}, Brochure {zar(site.brochurePriceZar)}, bigger work quoted.
+          <a href="/south-coast/" class="font-semibold text-sea-700 hover:text-accent-600">{southCoastOffer.short}</a>
         </p>
       </div>
       <div>

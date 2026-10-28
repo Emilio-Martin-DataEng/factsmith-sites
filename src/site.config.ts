@@ -491,6 +491,17 @@ export const phoneApp = {
 } as const;
 
 /** Common questions: shown in full on /offer, four of them on the home page. Answers read prices from above. */
+/**
+ * South Coast offer (Emilio, 2026-10-28): 10% off every package for any business based on the KZN South Coast, set up
+ * through Sharon, to encourage investment in and help the South Coast. Covers tiers, add-ons and care plans. List prices
+ * stay on the site; the discount is applied on the quote.
+ */
+export const southCoastOffer = {
+  percent: 10,
+  short: "South Coast business? 10% off every package, set up through Sharon.",
+  text: "We want to encourage investment in the South Coast and help it grow, so any business based on the KZN South Coast gets 10% off every package when the job is set up through Sharon. It covers the website tiers, the add-ons and the care plans, and it is taken off your quote automatically. The prices on this site are list prices.",
+};
+
 export const faq = [
   {
     q: "How much does a website cost?",
@@ -531,5 +542,9 @@ export const faq = [
   {
     q: "What is not in the fee?",
     a: `A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, writing from scratch, a logo (quoted, ${zar(logoService.bundleDiscountZar)} off with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.`,
+  },
+  {
+    q: "Is there a discount for South Coast businesses?",
+    a: southCoastOffer.text,
   },
 ];

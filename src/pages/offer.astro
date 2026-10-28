@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { faq, growthCare, logoService, site, tiers, wpCare, zar } from "../site.config";
+import { faq, growthCare, logoService, site, southCoastOffer, tiers, wpCare, zar } from "../site.config";
 
 const everyTier = [
   "Mobile-first custom design from an agreed homepage sample",
@@ -41,6 +41,9 @@ const quoted = [
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
       Fixed prices in rand. Deposit {zar(site.depositZar)} to start a Starter or Brochure job, balance
       within 7 days of hand-over. Outside South Africa? Ask for a quote.
+    </p>
+    <p class="mt-3 max-w-2xl text-sm font-semibold text-sea-800">
+      {southCoastOffer.short} <a href="/south-coast/" class="underline decoration-sea-300 underline-offset-2">More</a>
     </p>
 
     <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
