@@ -345,7 +345,7 @@ export const adminFeatures = [
   "Project completion: a checklist of what is done on your site, ticked from automatic checks of the live pages (titles, sitemap, schema and the analytics tag)",
   "Task reminders: what is still to do on your site, so nothing waits unseen",
   "One page of links to the accounts in your name, such as Google Analytics, Search Console and your social pages, so you do not hunt for them",
-  "Set up and kept current for you: we give your Google account access to your numbers and keep the reminders and links up to date, so there is nothing for you to edit",
+  "Set up for you: we give your Google account access to your numbers and fill in the reminders and links, so there is nothing for you to edit. On Business and Custom we also keep the reminders and links up to date",
 ] as const;
 
 export const methodSteps = [
@@ -461,7 +461,7 @@ export const faq = [
   },
   {
     q: "What is the admin dashboard?",
-    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the accounts in your name, such as Google Analytics and Search Console. You sign in with Google and only you and we can open it. We set it up and keep the reminders and links current. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} add-on on Starter and Brochure.`,
+    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the accounts in your name, such as Google Analytics and Search Console. You sign in with Google and only you and we can open it. We set it up, and on Business and Custom we keep the reminders and links current. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} set-up add-on on Starter and Brochure.`,
   },
   {
     q: "Will a new website bring me more enquiries?",
