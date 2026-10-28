@@ -106,7 +106,7 @@ export const tiers = [
     app: "Phone app included",
     admin: "Admin dashboard included",
     library: "Every library page that fits",
-    forWho: "WordPress sites, WooCommerce shops, bookings, payments, dashboards and live data",
+    forWho: "WordPress sites, WooCommerce shops, bookings, payments, dashboards and live data. WordPress care plan from R450 a month.",
   },
 ] as const;
 
@@ -413,6 +413,16 @@ export const logoService = {
 };
 
 /**
+ * WordPress care plan: one flat monthly line for PHP hosting, updates and backups on a WordPress or WooCommerce site
+ * (Emilio, 2026-10-28). From-price; the final amount is quoted with the Custom job. Static sites need none of it.
+ */
+export const wpCare = {
+  name: "WordPress care plan",
+  priceLabel: "From R450 a month",
+  text: "WordPress and WooCommerce sites need hosting that runs PHP, regular updates and backups. One flat monthly plan covers all three. Our standard static sites need none of it.",
+};
+
+/**
  * The phone app: an installable web app (PWA) on the client's own site at /guide/, no app store.
  * Live at Eagle's Roost (2026-10-20) and Khaya La Manzi (confirmed by Emilio, 2026-10-28). Included from Brochure up; R1 500 one-off on Starter (Emilio, 2026-10-28).
  * Hard rules (Offer Spec): no secrets in the app, no review gating.
@@ -491,7 +501,7 @@ export const faq = [
   },
   {
     q: "Can you build a WordPress site or an online shop?",
-    a: "Yes. Our standard sites are fast static pages with nothing to log in to. When you want to edit pages yourself or sell online, we build a WordPress site or a WooCommerce shop instead. That is Custom work, quoted after a consult. Mydo Fishing Lures is a live WooCommerce shop with separate South African and international pricing.",
+    a: "Yes. Our standard sites are fast static pages with nothing to log in to. When you want to edit pages yourself or sell online, we build a WordPress site or a WooCommerce shop instead. That is Custom work, quoted after a consult, with a WordPress care plan from R450 a month for hosting, updates and backups. Mydo Fishing Lures is a live WooCommerce shop with separate South African and international pricing.",
   },
   {
     q: "What is not in the fee?",
