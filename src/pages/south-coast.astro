@@ -1,21 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { towns } from "../site.config";
+import { site, towns } from "../site.config";
 ---
 
 <BaseLayout
   title="South Coast"
-  description="FactSmith Sites serves owner-operated businesses on the KZN Hibiscus / Ray Nkonyeni South Coast."
+  description="Local proof: FactSmith Sites work for owner-operated businesses on the KZN Hibiscus Coast. Businesses elsewhere are welcome too."
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <h1 class="font-display text-4xl font-semibold text-ink-900">South Coast</h1>
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      We work with owner-operated businesses on the Hibiscus Coast: lodges, B&Bs, tutors, trades,
-      professionals, where the website is clearly overdue for a rebuild.
+      We build for owner-operated businesses across South Africa. The Hibiscus Coast is home: our first
+      clients are here, and Sharon looks after South Coast enquiries in person. Lodges, B&Bs, tutors,
+      trades and professionals, where the website is clearly overdue for a rebuild.
     </p>
 
-    <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">Towns we mean</h2>
+    <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">Where we know the ground best</h2>
     <ul class="mt-4 flex flex-wrap gap-2">
       {
         towns.map((town) => (
@@ -23,7 +24,7 @@ import { towns } from "../site.config";
         ))
       }
     </ul>
-    <p class="mt-4 text-sm text-ink-500">Not Durban. Not Cape Town.</p>
+    <p class="mt-4 text-sm text-ink-500">Elsewhere in South Africa, or abroad? Message Emilio.</p>
 
     <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">A rebuild is worth it when</h2>
     <ul class="mt-4 max-w-2xl space-y-2 text-ink-700">
@@ -34,7 +35,8 @@ import { towns } from "../site.config";
     </ul>
 
     <div class="mt-10">
-      <WhatsAppButton label="Send us your current site" />
+      <WhatsAppButton label="South Coast: send Sharon your site" />
+      <WhatsAppButton label="Elsewhere: message Emilio" href={site.emilio.whatsappLink} message={site.emilio.whatsappMessage} class="ml-3" />
     </div>
   </section>
 </BaseLayout>

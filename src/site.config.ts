@@ -1,17 +1,13 @@
-// FactSmith Sites, studio brochure. Vault: FactSmith-Sites/01-Client-Brief/Offer Spec.md
+// FactSmith Sites, studio brochure. Vault: FactSmith-Sites/01-Client-Brief/(C) Offer Spec v2 Draft 2026-10-28.md
 
-// Prices and the launch offer are set here, once. Every page, the FAQ, the JSON-LD,
-// the share text and llms.txt read from these, so a change goes out in one release.
-const LAUNCH_PRICE = 4000;
-const STANDARD_PRICE = 7500;
+// Prices are set here, once. Every page, the FAQ, the JSON-LD, the share text and llms.txt read from
+// these, so a change goes out in one release.
+const STARTER_PRICE = 4000;
+const BROCHURE_PRICE = 7500;
+const BUSINESS_PRICE = 12500;
 const DEPOSIT = 2000;
-const LAUNCH_ACTIVE = true;
-const LAUNCH_SLOTS = 5;
-/** The price a visitor pays today. */
-const CURRENT_PRICE = LAUNCH_ACTIVE ? LAUNCH_PRICE : STANDARD_PRICE;
 /** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
 export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-const slotsWord = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][LAUNCH_SLOTS];
 
 export const site = {
   name: "FactSmith Sites",
@@ -19,26 +15,28 @@ export const site = {
   domain: "sites.factsmith.co.za",
   url: "https://sites.factsmith.co.za",
   email: "emilio@factsmith.co.za",
-  /** Sharon Cooper is the published contact for Sites enquiries. */
+  /** Sharon Cooper answers South Coast enquiries; Emilio answers the rest of the country and abroad. */
   contactName: "Sharon Cooper",
   phoneDisplay: "072 500 5179",
   phoneTel: "+27725005179",
   whatsappLink: "https://wa.me/27725005179",
-  whatsappMessage:
-    "Hi Sharon, I saw FactSmith Sites. We need a website rebuild on the South Coast.",
-  description: LAUNCH_ACTIVE
-    ? `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds, ${zar(LAUNCH_PRICE)} for the first ${slotsWord}. Keep your domain if you have one; keep or downscale hosting.`
-    : `Websites for South Coast small businesses whose current site is costing them enquiries. ${zar(STANDARD_PRICE)} brochure rebuilds. Keep your domain if you have one; keep or downscale hosting.`,
+  whatsappMessage: "Hi Sharon, I saw FactSmith Sites. I need a website for my business.",
+  emilio: {
+    name: "Emilio Martin",
+    phoneDisplay: "082 413 0438",
+    phoneTel: "+27824130438",
+    whatsappLink: "https://wa.me/27824130438",
+    whatsappMessage: "Hi Emilio, I saw FactSmith Sites. I need a website for my business.",
+  },
+  description: `Websites for small businesses across South Africa, from ${zar(STARTER_PRICE)}. Fixed prices, WhatsApp as the main button, your domain and source files stay yours. Outside South Africa? Ask for a quote.`,
   /** schema.org priceRange. */
-  priceRange: LAUNCH_ACTIVE ? `R${LAUNCH_PRICE}-R${STANDARD_PRICE}` : `R${STANDARD_PRICE}`,
+  priceRange: `${zar(STARTER_PRICE)}-${zar(BUSINESS_PRICE)}+`,
   /** Alt text for the share image. */
-  ogImageAlt: LAUNCH_ACTIVE
-    ? `FactSmith Sites: website rebuilds, first ${LAUNCH_SLOTS} sites ${zar(LAUNCH_PRICE)}`
-    : `FactSmith Sites: website rebuilds from ${zar(STANDARD_PRICE)}`,
+  ogImageAlt: `FactSmith Sites, websites for small businesses from ${zar(STARTER_PRICE)}`,
   ogImage: "/images/og-card.png",
   /**
    * GitHub Pages has not issued the TLS certificate for this subdomain yet.
-   * While true, og:image / og:url are emitted over http, WhatsApp and Facebook
+   * While true, og:image / og:url are emitted over http: WhatsApp and Facebook
    * refuse to fetch a link-preview card from a host with an invalid cert, so
    * https here means no preview image in a group post at all.
    * Flip to false the moment the certificate lands.
@@ -49,31 +47,53 @@ export const site = {
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
   billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",
-  /** Launch-special price. Reverts to standardPriceZar once the 5 slots are gone. */
-  priceZar: LAUNCH_PRICE,
-  /** Normal published price after the launch five. */
-  standardPriceZar: STANDARD_PRICE,
+  startingPriceZar: STARTER_PRICE,
+  brochurePriceZar: BROCHURE_PRICE,
   depositZar: DEPOSIT,
 } as const;
 
 /**
- * Launch special, the first 5 South Coast sites at R4 000 instead of R7 500.
- * A deposit secures the slot and locks the price.
- * Set active: false once five deposits are in; the pages then fall back to
- * site.standardPriceZar automatically.
+ * The tiers, cheapest first. `price` is the "from" price in rand; Custom is quoted.
+ * Library pages are free where they fit the business (see libraryPages); Starter gets template pages only.
  */
-export const launchOffer = {
-  active: LAUNCH_ACTIVE,
-  slots: LAUNCH_SLOTS,
-  /** The slot count in words, for running text. */
-  slotsWord,
-  headline: `First ${LAUNCH_SLOTS} sites only`,
-  lede: `${zar(LAUNCH_PRICE)} instead of ${zar(STANDARD_PRICE)}.`,
-  detail: `The first ${slotsWord} South Coast rebuilds are ${zar(LAUNCH_PRICE)}, a ${zar(DEPOSIT)} deposit secures your slot and locks the price. After the ${slotsWord}, the published price is ${zar(STANDARD_PRICE)}.`,
-  bonus:
-    "Every site includes Google Search Console + Bing set up in your name, and a private stats page.",
-  turnaround: "Mockups this weekend. Your new site live next week.",
-} as const;
+export const tiers = [
+  {
+    slug: "starter",
+    name: "Starter",
+    price: STARTER_PRICE,
+    priceLabel: `from ${zar(STARTER_PRICE)}`,
+    pages: "3 custom pages",
+    library: "Template library pages where they fit, for example weather and tides",
+    forWho: "A small business that needs a clear, fast site and a WhatsApp button",
+  },
+  {
+    slug: "brochure",
+    name: "Brochure",
+    price: BROCHURE_PRICE,
+    priceLabel: zar(BROCHURE_PRICE),
+    pages: "4 to 6 custom pages",
+    library: "Every library page that fits, including researched ones such as attractions and restaurants",
+    forWho: "Guest houses, lodges, tutors, trades and professionals",
+  },
+  {
+    slug: "business",
+    name: "Business",
+    price: BUSINESS_PRICE,
+    priceLabel: `from ${zar(BUSINESS_PRICE)}`,
+    pages: "About 10 custom pages",
+    library: "Every library page that fits",
+    forWho: "Services by job, areas served, certificates and case studies: larger firms",
+  },
+  {
+    slug: "custom",
+    name: "Custom",
+    price: null,
+    priceLabel: "Quoted",
+    pages: "Scoped with you",
+    library: "Every library page that fits",
+    forWho: "Shops, bookings, payments, dashboards and live data",
+  },
+] as const;
 
 export const nav = [
   { label: "Work", href: "/work/" },
@@ -282,7 +302,7 @@ export const freeAuditPack = {
     "One mobile screenshot of the worst fail",
     "One homepage sample (HTML mock) using their real name/photos where legal",
   ],
-  nextStep: `If they like the sample: ${zar(CURRENT_PRICE)} pack (deposit + domain form).`,
+  nextStep: `If they like the sample: the tier price from ${zar(STARTER_PRICE)} (deposit + domain form).`,
 } as const;
 
 /**
@@ -324,12 +344,14 @@ export const standardFeatures = [
 ] as const;
 
 /**
- * Added where it fits the business (a guest house gets weather and a guest app,
- * a fencing firm does not). Images are snips of the live Eagle's Roost site.
+ * The page library: reusable pages, free where they fit the business (a guest house gets weather,
+ * a fencing firm does not). `kind`: template = Starter and up, researched = Brochure and up,
+ * addon = priced separately. Images are snips of the live Eagle's Roost site.
  */
-export const fitFeatures = [
+export const libraryPages = [
   {
     title: "Weather and tides",
+    kind: "template" as const,
     text: "Hour-by-hour weather for today and tomorrow, a 7-day outlook, wind, swell and sea temperature, Windy wave and storm maps and the latest satellite picture. A tides page shows high and low tide, a 7-day tide curve and the moon, for beach walks, fishing and rock pools.",
     image: "/images/work/eagles-roost/feature-weather.webp",
     imageAlt: "Eagle's Roost weather page on a phone: temperature, wind, sea, water temperature, next tide",
@@ -339,6 +361,7 @@ export const fitFeatures = [
   },
   {
     title: "A guest app that works without signal",
+    kind: "addon" as const,
     text: "A guest guide your visitors add to their home screen: Wi-Fi, check-in times, house rules, weather now, places to eat and one-tap WhatsApp requests. It keeps the last good copy on the phone, so it still opens with no signal.",
     image: "/images/work/eagles-roost/feature-guide.webp",
     imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",
@@ -347,6 +370,7 @@ export const fitFeatures = [
   },
   {
     title: "Nearby attractions, researched",
+    kind: "researched" as const,
     text: "We research what is around you (beaches, walks, the river, family days out, fishing guides) and write a page with real distances from your door, photos and a map, so guests plan their stay on your site.",
     image: "/images/work/eagles-roost/feature-attractions.webp",
     imageAlt: "Eagle's Roost attractions page: guided fishing, the main beach and the whale deck",
@@ -355,6 +379,7 @@ export const fitFeatures = [
   },
   {
     title: "Where to eat, researched",
+    kind: "researched" as const,
     text: "Restaurants and takeaways near you, grouped by area, each with address, phone, website and a map, and a note where you have eaten there yourself.",
     image: "/images/work/eagles-roost/feature-dining.webp",
     imageAlt: "Eagle's Roost restaurants page: cards per restaurant with address, phone and map",
@@ -386,7 +411,7 @@ export const methodSteps = [
   },
   {
     title: "Pack + deposit",
-    text: `Invoice, domain form, content questions, hosting note, and scope. ${zar(DEPOSIT)} starts the job.`,
+    text: `Invoice, domain form, content questions, hosting note, and scope. A ${zar(DEPOSIT)} deposit starts a Starter or Brochure job.`,
   },
   {
     title: "Domain and hosting, your call",
@@ -394,7 +419,7 @@ export const methodSteps = [
   },
   {
     title: "Build from a sample",
-    text: "Mobile-first site. WhatsApp as the main button. Contact form included. Map with a Google Earth fly-to, live weather, SEO, GEO and AEO are built in from the first build, not add-ons.",
+    text: "Mobile-first site. WhatsApp as the main button. Contact form included. Map with a Google Earth fly-to, SEO, GEO and AEO are built in from the first build, not add-ons. Library pages such as weather are added where they fit.",
   },
   {
     title: "Photos: placeholders first, then yours",

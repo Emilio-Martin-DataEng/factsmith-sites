@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import InProcessCard from "../components/InProcessCard.astro";
-import { inProcess, samples, site, launchOffer } from "../site.config";
+import { inProcess, samples, site, zar } from "../site.config";
 ---
 
 <BaseLayout
@@ -81,23 +81,9 @@ import { inProcess, samples, site, launchOffer } from "../site.config";
     <div class="mt-12 rounded-2xl bg-sea-50 p-6 sm:p-8">
       <h2 class="font-display text-xl font-semibold text-ink-900">Want yours on this page?</h2>
       <p class="mt-2 text-ink-700">
-        South Coast brochure rebuilds at R{site.standardPriceZar.toLocaleString("en-ZA")}. Larger
-        sites (like Henton) are quoted separately.
+        Websites from {zar(site.startingPriceZar)}, Brochure at {zar(site.brochurePriceZar)}. Larger
+        sites (like Henton) are a Business or Custom job.
       </p>
-      {
-        launchOffer.active ? (
-          <div class="mt-4 rounded-xl border border-sea-200 bg-white p-4">
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="rounded-full bg-sea-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                {launchOffer.headline}
-              </span>
-              <span class="font-display text-base font-semibold text-sea-900">{launchOffer.lede}</span>
-            </div>
-            <p class="mt-2 text-sm text-ink-700">{launchOffer.detail}</p>
-            <p class="mt-2 text-sm font-semibold text-sea-800">{launchOffer.turnaround}</p>
-          </div>
-        ) : null
-      }
       <div class="mt-5">
         <WhatsAppButton />
       </div>

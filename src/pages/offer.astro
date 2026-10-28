@@ -1,39 +1,39 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { site, launchOffer, zar } from "../site.config";
+import { site, tiers, zar } from "../site.config";
 
-const included = [
-  "4 to 6 page static brochure (Home, About, Services/Rooms, Contact)",
+const everyTier = [
   "Mobile-first custom design from an agreed homepage sample",
   "Two focused revision rounds after the first private preview",
-  "Contact form + WhatsApp as the primary button",
+  "WhatsApp as the primary button, plus a contact form once it is connected and tested",
+  "Map, fly-to, SEO, GEO and AEO built in, see Included",
+  "Google Search Console and Bing set up in your name, Google Analytics, and a private stats page",
   "Hosting setup on the path you choose (keep current or free static)",
   "Email path as agreed (keep yours or free forwarding)",
-  "Map, fly-to, live weather, SEO, GEO and AEO built in, see Included",
-  "Google Search Console + Bing set up in your name, Google Analytics, and a private stats page",
   "Hand-over of all source files",
+  "Library pages where they fit your business, see Included",
 ];
 
-const notIncluded = [
+const quoted = [
   "New domain, only if you need one, at actual registrar cost",
   "Ongoing hosting or domain renewal bills",
-  "Extra top-level pages beyond six, quoted separately",
+  "More custom pages than your tier allows",
   "Photography, logo design, or writing from scratch",
-  "Booking engines, payments, shops, or memberships",
+  "Booking engines, payments, shops, or memberships (the Custom tier)",
   "WordPress or a CMS so a cousin can edit pages",
   "Monthly retainers, blogs, or link-building",
+  "Third-party and API costs",
 ];
 
-// Real questions from Sharon's Round 1 (cost, will it bring enquiries) plus the usual follow-ups.
-// Prices come from site.config so the answers change in the same release as the offer.
-const price = launchOffer.active
-  ? `R${site.priceZar.toLocaleString("en-ZA")} fixed for the first ${launchOffer.slots} South Coast sites, then R${site.standardPriceZar.toLocaleString("en-ZA")}`
-  : `R${site.standardPriceZar.toLocaleString("en-ZA")} fixed`;
 const faq = [
   {
     q: "How much does a website cost?",
-    a: `${price}. A R${site.depositZar.toLocaleString("en-ZA")} deposit starts the job and the balance is due within 7 days of hand-over. A new .co.za domain, if you need one, is at actual cost, typically R90 to R150.`,
+    a: `Starter is from ${zar(tiers[0].price)} (3 custom pages), Brochure is ${zar(tiers[1].price)} (4 to 6 pages), Business is from ${zar(tiers[2].price)} (about 10 pages), and Custom work is quoted. A ${zar(site.depositZar)} deposit starts a Starter or Brochure job and the balance is due within 7 days of hand-over. A new .co.za domain, if you need one, is at actual cost, typically R90 to R150.`,
+  },
+  {
+    q: "What are library pages?",
+    a: "Reusable pages we have already built and tested, such as weather and tides, nearby attractions and where to eat. If a page fits your business we add it at no page-building charge. Starter gets the template pages; Brochure and up also get the researched ones.",
   },
   {
     q: "Will a new website bring me more enquiries?",
@@ -48,68 +48,42 @@ const faq = [
     a: "No. We use the domain you have. Keep your hosting if it can serve the new site, or downscale to free static hosting and stop paying for what you no longer need.",
   },
   {
+    q: "I am outside South Africa. Can you build my site?",
+    a: "Yes, by quote. Prices on this page are in rand. Message Emilio and we agree the scope, currency and payment method before any work starts.",
+  },
+  {
     q: "What is not in the fee?",
-    a: "A new domain at actual cost, ongoing hosting or renewal bills, pages beyond six (quoted separately), photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, and retainers, blogs or link-building.",
+    a: "A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, logo design or writing from scratch, shops, booking engines and payments, a CMS, retainers, blogs, link-building, and third-party or API costs.",
   },
 ];
 ---
 
 <BaseLayout
   title="Offer"
-  description={`South Coast website rebuild, ${launchOffer.active ? `${zar(site.standardPriceZar)}, or ${zar(site.priceZar)} for the first ${launchOffer.slotsWord} sites` : zar(site.standardPriceZar)}. Mockups this weekend, live next week.`}
+  description={`Website tiers from ${zar(site.startingPriceZar)}: Starter, Brochure, Business and Custom. Fixed prices in rand, outside South Africa by quote.`}
   faq={faq}
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-    <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">Published package</p>
-    <h1 class="mt-2 font-display text-4xl font-semibold text-ink-900">South Coast website rebuild</h1>
-    {
-      launchOffer.active ? (
-        <p class="mt-4 flex flex-wrap items-baseline gap-3">
-          <span class="text-2xl font-medium text-ink-500 line-through decoration-2">
-            R{site.standardPriceZar.toLocaleString("en-ZA")}
-          </span>
-          <span class="font-display text-4xl font-semibold text-sea-700">
-            R{site.priceZar.toLocaleString("en-ZA")}
-          </span>
-          <span class="text-sm font-semibold uppercase tracking-wide text-sea-600">
-            first {launchOffer.slots} sites
-          </span>
-        </p>
-      ) : (
-        <p class="mt-4 font-display text-4xl font-semibold text-sea-700">
-          R{site.standardPriceZar.toLocaleString("en-ZA")}
-        </p>
-      )
-    }
-
+    <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">Published tiers</p>
+    <h1 class="mt-2 font-display text-4xl font-semibold text-ink-900">A website for your business</h1>
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      Fixed price for the site. Deposit R{site.depositZar.toLocaleString("en-ZA")} to start,
-      balance within 7 days of hand-over.
+      Fixed prices in rand. Deposit {zar(site.depositZar)} to start a Starter or Brochure job, balance
+      within 7 days of hand-over. Outside South Africa? Ask for a quote.
     </p>
 
-    {
-      launchOffer.active ? (
-        <div class="mt-6 max-w-3xl rounded-2xl border-2 border-sea-600 bg-sea-50 px-5 py-5">
-          <div class="flex flex-wrap items-center gap-3">
-            <span class="rounded-full bg-sea-600 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-              {launchOffer.headline}
-            </span>
-            <span class="font-display text-base font-semibold text-sea-900">{launchOffer.lede}</span>
+    <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {
+        tiers.map((tier) => (
+          <div class="flex flex-col rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
+            <h2 class="font-display text-lg font-semibold text-ink-900">{tier.name}</h2>
+            <p class="mt-2 font-display text-3xl font-semibold text-sea-700">{tier.priceLabel}</p>
+            <p class="mt-3 text-sm font-semibold text-ink-900">{tier.pages}</p>
+            <p class="mt-2 text-sm text-ink-700">{tier.library}</p>
+            <p class="mt-3 text-sm text-ink-500">{tier.forWho}</p>
           </div>
-          <p class="mt-3 text-sm leading-relaxed text-sea-800">{launchOffer.detail}</p>
-          <ul class="mt-3 space-y-1.5 text-sm text-sea-800">
-            <li class="flex gap-2">
-              <span class="text-sea-600" aria-hidden="true">✓</span>
-              <span>{launchOffer.bonus}</span>
-            </li>
-            <li class="flex gap-2">
-              <span class="text-sea-600" aria-hidden="true">✓</span>
-              <span><strong>{launchOffer.turnaround}</strong></span>
-            </li>
-          </ul>
-        </div>
-      ) : null
-    }
+        ))
+      }
+    </div>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2">
       <div class="rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
@@ -131,15 +105,15 @@ const faq = [
 
     <div class="mt-10 grid gap-8 lg:grid-cols-2">
       <div class="rounded-2xl border border-sea-100 bg-white p-6 shadow-sm">
-        <h2 class="font-display text-xl font-semibold text-ink-900">Included</h2>
+        <h2 class="font-display text-xl font-semibold text-ink-900">On every tier</h2>
         <ul class="mt-4 space-y-3 text-sm text-ink-700">
-          {included.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+          {everyTier.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
         </ul>
       </div>
       <div class="rounded-2xl border border-sea-100 bg-cream-100 p-6">
-        <h2 class="font-display text-xl font-semibold text-ink-900">Not in this fee</h2>
+        <h2 class="font-display text-xl font-semibold text-ink-900">Quoted separately</h2>
         <ul class="mt-4 space-y-3 text-sm text-ink-700">
-          {notIncluded.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">-</span><span>{item}</span></li>)}
+          {quoted.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">-</span><span>{item}</span></li>)}
         </ul>
       </div>
     </div>
@@ -166,8 +140,13 @@ const faq = [
         remaining revision round.
       </p>
       <p class="mt-4 text-xs text-sea-300">Invoices from {site.billingEntity}.</p>
-      <div class="mt-6">
-        <WhatsAppButton label="Ask about your site" />
+      <div class="mt-6 flex flex-wrap gap-3">
+        <WhatsAppButton label="South Coast: message Sharon" />
+        <WhatsAppButton
+          label="Elsewhere: message Emilio"
+          href={site.emilio.whatsappLink}
+          message={site.emilio.whatsappMessage}
+        />
       </div>
     </div>
   </section>
