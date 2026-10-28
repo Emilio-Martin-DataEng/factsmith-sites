@@ -344,7 +344,7 @@ export const adminFeatures = [
   "Google searches: the words people typed to find you, how often you were shown and clicked, and your average position, from Search Console",
   "Project completion: a checklist of what is done on your site, ticked from automatic checks of the live pages (titles, sitemap, schema and the analytics tag)",
   "Task reminders: what is still to do on your site, so nothing waits unseen",
-  "One page of links to the tools behind your site: GitHub, Cloudflare, xneelo (domain and hosting), Search Console and Bing, so you do not sign in to each one to find a number",
+  "One page of links to the accounts in your name, such as Google Analytics, Search Console and your social pages, so you do not hunt for them",
   "Set up and kept current for you: we give your Google account access to your numbers and keep the reminders and links up to date, so there is nothing for you to edit",
 ] as const;
 
@@ -367,7 +367,7 @@ export const methodSteps = [
   },
   {
     title: "Build from a sample",
-    text: "Mobile-first site. WhatsApp as the main button. Contact form included. Map with a Google Earth fly-to, SEO, GEO and AEO are built in from the first build, not add-ons. Library pages such as weather are added where they fit.",
+    text: "Mobile-first site. WhatsApp as the main button. A contact form where you want one, once it is connected and tested. Map with a Google Earth fly-to, SEO, GEO and AEO are built in from the first build, not add-ons. Library pages such as weather are added where they fit.",
   },
   {
     title: "Photos: placeholders first, then yours",
@@ -413,7 +413,7 @@ export const phoneApp = {
   status: "In pilot at Eagle’s Roost",
   /** Included from Brochure up; one-off on Starter. Customisation beyond the site's own content is quoted. */
   starterPriceZar: APP_STARTER_PRICE,
-  pricing: `Included on Brochure, Business and Custom. On Starter it is a one-off ${zar(APP_STARTER_PRICE)}. It repackages what is already on your website, so there is nothing to re-write. Customisation beyond that is quoted after a short consult.`,
+  pricing: `Included on Brochure, Business and Custom. On Starter it is a one-off ${zar(APP_STARTER_PRICE)}. It is in pilot at Eagle’s Roost: you get it as it stands today, and the improvements we make during the pilot at no extra cost. It repackages what is already on your website, so there is nothing to re-write. Customisation beyond that is quoted after a short consult.`,
   example: { label: "Eagle’s Roost guest guide", href: "https://eaglesroost.co.za/guide/" },
   image: "/images/work/eagles-roost/feature-guide.webp",
   imageAlt: "Eagle's Roost guest guide app: Wi-Fi, weather now, the house and check-in times",
@@ -461,11 +461,11 @@ export const faq = [
   },
   {
     q: "What is the admin dashboard?",
-    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the tools behind your site such as GitHub, Cloudflare and xneelo. You sign in with Google and only you and we can open it. We set it up and keep the reminders and links current. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} add-on on Starter and Brochure.`,
+    a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the accounts in your name, such as Google Analytics and Search Console. You sign in with Google and only you and we can open it. We set it up and keep the reminders and links current. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} add-on on Starter and Brochure.`,
   },
   {
     q: "Will a new website bring me more enquiries?",
-    a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. The admin dashboard, included on Business and an add-on on Starter and Brochure, then shows how many people visit and which Google searches find you.",
+    a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. The admin dashboard, included on Business and Custom and an add-on on Starter and Brochure, then shows how many people visit and which Google searches find you.",
   },
   {
     q: "Who owns the website?",
