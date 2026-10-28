@@ -280,6 +280,11 @@ export const standardFeatures = [
     text: `Google Search Console and Bing set up in your name, and Google Analytics, so the numbers belong to you. The admin dashboard that shows them in one place is included on Business and Custom, and an add-on on Starter and Brochure (${zar(ADMIN_PRICE)} one-off).`,
   },
   {
+    title: "Facebook or Instagram window",
+    text: "Your latest posts shown live on your own site, so you post once and the website stays fresh. Where you keep an active page, we add the window to the page that suits it.",
+    example: { label: "Eagle’s Roost home page", href: "https://eaglesroost.co.za/" },
+  },
+  {
     title: "WhatsApp and tap-to-call",
     text: "A WhatsApp button and a tap-to-call number on every page, built for the phone first.",
   },
@@ -367,7 +372,7 @@ export const methodSteps = [
   },
   {
     title: "Build from a sample",
-    text: "Mobile-first site. WhatsApp as the main button. A contact form where you want one, once it is connected and tested. Map with a Google Earth fly-to, SEO, GEO and AEO are built in from the first build, not add-ons. Library pages such as weather are added where they fit.",
+    text: "Mobile-first site. WhatsApp as the main button. A contact form where you want one, once it is connected and tested. Map with a Google Earth fly-to, a Facebook or Instagram window, SEO, GEO and AEO are built in from the first build, not add-ons. Library pages such as weather are added where they fit.",
   },
   {
     title: "Photos: placeholders first, then yours",
