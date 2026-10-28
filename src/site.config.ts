@@ -333,8 +333,9 @@ export const libraryPages = [
 /**
  * The admin dashboard: one private page per client site. Included on Business and Custom, a one-off add-on on
  * Starter and Brochure (ADMIN_PRICE). Scope per Emilio, 2026-10-28: site stats, project completion, task
- * reminders and one page of links. The stats part is built (/stats and the admin hub); the task reminders and the
- * links page are still to build for clients, see the vault Offer Spec v2.
+ * reminders and one page of links. All four exist on the owner admin hub (factsmith-website, /admin/sites/<id>/,
+ * Eagle's Roost is the sample). Still to build before selling it: a per-client view with its own Access rule, and
+ * email reminders. See the vault Offer Spec v2, sections 11 and 11a.
  */
 export const adminFeatures = [
   "Sign in with your Google account; nobody else sees it",
