@@ -23,7 +23,7 @@ const quoted = [
   "Photography, or writing from scratch",
   "Online shops, WooCommerce, booking engines, payments or memberships (the Custom tier)",
   "A WordPress site, or a CMS so you can edit pages yourself (the Custom tier, quoted)",
-  "Blogs, link-building, or retainers other than the two care plans",
+  "Blogs beyond the one new page a month in the Lead care tier, link-building, or retainers other than the two care plans",
   "Customisation of the phone app beyond your website's own content",
   "Third-party and API costs",
 ];
@@ -104,10 +104,20 @@ const quoted = [
     <div class="mt-4 rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
       <h2 class="font-display text-base font-semibold text-ink-900">{growthCare.name}: {growthCare.priceLabel}</h2>
       <p class="mt-2 text-sm text-ink-700">{growthCare.text}</p>
-      <p class="mt-3 text-sm font-semibold text-ink-900">Every month</p>
-      <ul class="mt-2 space-y-2 text-sm text-ink-700">
-        {growthCare.monthly.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
-      </ul>
+      <div class="mt-4 grid gap-4 md:grid-cols-3">
+        {
+          growthCare.tiers.map((t) => (
+            <div class="rounded-xl border border-sea-100 bg-cream-50 p-4">
+              <h3 class="font-display text-base font-semibold text-ink-900">{t.name}</h3>
+              <p class="mt-1 font-display text-lg font-semibold text-sea-700">{t.priceLabel}</p>
+              <p class="mt-3 text-sm font-semibold text-ink-900">{t.lead}</p>
+              <ul class="mt-2 space-y-2 text-sm text-ink-700">
+                {(t.items === "monthly" ? growthCare.monthly : t.items).map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
       <p class="mt-3 text-sm font-semibold text-ink-900">Your first 3 months</p>
       <ul class="mt-2 space-y-2 text-sm text-ink-700">
         {growthCare.first90.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}

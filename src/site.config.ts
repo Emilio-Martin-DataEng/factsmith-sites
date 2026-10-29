@@ -432,11 +432,11 @@ export const wpCare = {
 
 /**
  * Growth care plan: monthly SEO, AEO and GEO upkeep for static or WordPress sites (Emilio, 2026-10-28). Separate from
- * the WordPress care plan. Price from R950 a month, final amount quoted per site (Emilio, 2026-10-28, after competitor comparison). No ranking promises.
+ * the WordPress care plan. Price from R1 250 a month (was R950; raised 2026-10-29 with the three tiers), final amount quoted per site. No ranking promises.
  */
 export const growthCare = {
   name: "Growth care plan",
-  priceLabel: "From R950 a month",
+  priceLabel: "From R1 250 a month",
   text: "A monthly check that keeps your site findable in Google and in AI assistants. It works on our static sites and on WordPress, and it is separate from the WordPress care plan.",
   monthly: [
     "Search check: your Google Search Console numbers, broken links, titles and sitemap reviewed, with a short fix list that we action",
@@ -444,13 +444,47 @@ export const growthCare = {
     "AI check: your llms.txt and key facts kept current, and a look at how ChatGPT, Gemini and Perplexity describe you",
     "Short report: a WhatsApp or email summary each month of searches, clicks and what we changed",
   ],
+  /** Three tiers (Emilio, 2026-10-29). Check is the plan above; Grow and Lead add to the tier before. Prices are "from", final amount quoted per site. */
+  tiers: [
+    {
+      name: "Check",
+      priceLabel: "From R1 250 a month",
+      lead: "Every month",
+      items: "monthly",
+    },
+    {
+      name: "Grow",
+      priceLabel: "From R2 500 a month",
+      lead: "Everything in Check, plus",
+      items: [
+        "Up to 6 FAQ answers a month, instead of 3",
+        "10 customer questions tracked in ChatGPT, Gemini and Perplexity, month to month",
+        "Up to 2 Google Business Profile posts a month, where you have a profile",
+        "One page improved each month: titles, headings and internal links",
+        "A report with before and after",
+      ],
+    },
+    {
+      name: "Lead",
+      priceLabel: "From R4 900 a month",
+      lead: "Everything in Grow, plus",
+      items: [
+        "Up to 10 FAQ answers a month",
+        "20 customer questions tracked month to month",
+        "Up to 4 Google Business Profile posts a month, where you have a profile",
+        "Three pages improved each month",
+        "One new answer page or article a month, about 800 words",
+        "A report that adds next priorities",
+      ],
+    },
+  ],
   first90: [
     "Month 1: we record where you stand today (pages indexed, searches, how AI assistants describe you) and fix what is broken",
     "Month 2: we refresh your FAQ and key facts",
     "Month 3: we repeat the checks and show you what changed",
   ],
   terms: "Month to month. Cancel with one month's notice by email. Billed on the 1st of each month, in advance.",
-  limit: "We improve the foundations and report honestly. We cannot promise rankings or a place in an AI answer, and the plan does not include blog writing, link-building or ads.",
+  limit: "We improve the foundations and report honestly. We cannot promise rankings or a place in an AI answer, and the plan does not include link-building or ads. Blog writing is only the one new page a month in Lead.",
 };
 
 /**
@@ -547,7 +581,7 @@ export const faq = [
   },
   {
     q: "What is not in the fee?",
-    a: `A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, writing from scratch, a logo (quoted, ${zar(logoService.bundleDiscountZar)} off with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers, blogs, link-building, and third-party or API costs.`,
+    a: `A new domain at actual cost, ongoing hosting or renewal bills, more custom pages than your tier allows, photography, writing from scratch, a logo (quoted, ${zar(logoService.bundleDiscountZar)} off with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted), retainers other than the two care plans, blogs beyond the one new page a month in the Lead care tier, link-building, and third-party or API costs.`,
   },
   {
     q: "Is there a discount for South Coast businesses?",
