@@ -440,11 +440,17 @@ export const growthCare = {
   text: "A monthly check that keeps your site findable in Google and in AI assistants. It works on our static sites and on WordPress, and it is separate from the WordPress care plan.",
   monthly: [
     "Search check: your Google Search Console numbers, broken links, titles and sitemap reviewed, with a short fix list that we action",
-    "Answer refresh: a few real customer questions added or updated in your FAQ, with FAQ schema, so search and voice assistants can quote you",
+    "Answer refresh: up to 3 real customer questions added or updated in your FAQ, with FAQ schema, so search and voice assistants can quote you",
     "AI check: your llms.txt and key facts kept current, and a look at how ChatGPT, Gemini and Perplexity describe you",
     "Short report: a WhatsApp or email summary each month of searches, clicks and what we changed",
   ],
-  limit: "We improve the foundations and report honestly. We cannot promise rankings or a place in an AI answer.",
+  first90: [
+    "Month 1: we record where you stand today (pages indexed, searches, how AI assistants describe you) and fix what is broken",
+    "Month 2: we refresh your FAQ and key facts",
+    "Month 3: we repeat the checks and show you what changed",
+  ],
+  terms: "Month to month. Cancel with one month's notice by email. Billed on the 1st of each month, in advance.",
+  limit: "We improve the foundations and report honestly. We cannot promise rankings or a place in an AI answer, and the plan does not include blog writing, link-building or ads.",
 };
 
 /**

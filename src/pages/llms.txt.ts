@@ -16,7 +16,7 @@ Key facts:
 - Domain and hosting: you keep your domain, or a new .co.za is registered in your name at actual cost (typically R90 to R150). Keep your hosting if it can serve the site, or move to free static hosting.
 - Page library, free where it fits the business: weather and tides pages (every tier), researched nearby attractions and restaurants pages (Brochure and up). The phone app (installable, works offline, live at two guest houses) is included from the Brochure tier up and a one-off R1 500 on Starter, for any business with relevant content; customisation is quoted.
 - Not in the tier price: a new domain (actual cost), ongoing hosting or renewal bills, more custom pages than the tier allows, photography, writing from scratch, a logo (quoted, ${zar(logoService.bundleDiscountZar)} off with a website), shops, booking engines and payments (WordPress and WooCommerce sites are Custom work, quoted, with a WordPress care plan from R450 a month for hosting, updates and backups), retainers, blogs, link-building, and third-party or API costs.
-- ${growthCare.name} (${growthCare.priceLabel}): ${growthCare.monthly.join("; ")}. ${growthCare.limit}
+- ${growthCare.name} (${growthCare.priceLabel}): ${growthCare.monthly.join("; ")}. First 3 months: ${growthCare.first90.join("; ")}. ${growthCare.terms} ${growthCare.limit}
 - South Coast offer: ${southCoastOffer.text}
 - Book a consult: ${site.bookUrl}
 - Contact: South Coast enquiries WhatsApp +27 72 500 5179 (${site.contactName}); everywhere else WhatsApp +27 82 413 0438 (${site.emilio.name}), ${site.email}
@@ -38,7 +38,7 @@ Key facts:
 - [Khaya La Manzi Guest Lodge, Hibberdene](https://khayalamanzi.co.za)
 - [Mydo Fishing Lures](https://mydofishinglures.co.za)
 
-Prices and offers on this site are the source of truth; last reviewed 28 October 2026.
+Prices and offers on this site are the source of truth; last reviewed 29 October 2026.
 `;
 
 export const GET: APIRoute = () =>
