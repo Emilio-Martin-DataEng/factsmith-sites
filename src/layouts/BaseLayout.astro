@@ -27,7 +27,11 @@ const jsonLd = {
   name: site.name,
   url: site.url,
   email: site.email,
-  telephone: site.phoneTel,
+  telephone: site.emilio.phoneTel,
+  sameAs: [
+    "https://www.linkedin.com/company/factsmith-sites/",
+    "https://www.facebook.com/profile.php?id=61595785618835",
+  ],
   description: site.description,
   areaServed: {
     "@type": "Country",
