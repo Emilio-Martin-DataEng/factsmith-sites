@@ -564,6 +564,14 @@ export const faq = [
     a: "We cannot promise a number. We fix what loses enquiries: a site that breaks on a phone, no WhatsApp button, no clear price. The admin dashboard, included on Business and Custom and an add-on on Starter and Brochure, then shows how many people visit and which Google searches find you.",
   },
   {
+    q: "What is the Growth care plan and what does it cost?",
+    a: `A monthly check that keeps your site findable in Google and in AI assistants. Check is ${growthCare.tiers[0].priceLabel.replace(/^From/, "from")} (search check and fixes, up to 3 FAQ answers, an AI check and a short report). Grow is ${growthCare.tiers[1].priceLabel.replace(/^From/, "from")} and adds more FAQ answers, 10 tracked questions, up to 2 Google Business Profile posts and one page improved a month. Lead is ${growthCare.tiers[2].priceLabel.replace(/^From/, "from")} and adds one new answer page or article a month and three pages improved. We cannot promise rankings or a place in an AI answer.`,
+  },
+  {
+    q: "Can I cancel the Growth care plan?",
+    a: `Yes, there is no long contract. ${growthCare.terms} Your site and domain stay yours either way.`,
+  },
+  {
     q: "Who owns the website?",
     a: "You do. The domain is in your name, and you receive a complete copy of your site files at hand-over. You are not locked in to us: there is no exit fee, and the site is ordinary web code that any developer can take over, so if we were ever unable to carry on, your website would not be stuck.",
   },
