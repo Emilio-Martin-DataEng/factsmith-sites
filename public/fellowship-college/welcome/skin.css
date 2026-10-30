@@ -34,3 +34,10 @@ footer#site-footer{background:var(--blue-dk);color:#c9dbf2}
 #enq input:focus,#enq select:focus,#enq textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
 #enq button{margin-top:20px;border:0;cursor:pointer;font:inherit;font-weight:800}
 .map{width:100%;height:320px;border:0;border-radius:20px;margin-top:16px}
+/* community */
+.contact-card{display:flex;flex-direction:column}
+.ctype{align-self:flex-start;background:var(--sky);color:var(--blue-dk);border-radius:999px;padding:3px 12px;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px}
+.cl{margin:4px 0;word-break:break-word}.cl b{display:inline-block;min-width:5.4em;color:var(--blue-dk)}
+.mapbox{margin-top:14px}.mapbox summary{cursor:pointer;font-weight:800;color:var(--blue-dk)}
+.earth{margin-top:10px;font-weight:800;color:var(--red)}
+.cards{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}

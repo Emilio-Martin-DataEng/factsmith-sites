@@ -7,6 +7,7 @@ const SOURCES = {
   fees: "data/fees.csv",
   activities: "data/activities.csv",
   notices: "data/notices.csv",
+  contacts: "data/contacts.csv",
 };
 
 // RFC 4180 CSV: quoted fields, "" escapes, commas and newlines inside quotes. Returns objects keyed by the header row.
@@ -55,10 +56,31 @@ const RENDER = {
   fees: rows => put("fees", rows.map(r => `<tr><td>${esc(r.item)}${r.notes ? `<br><small class="muted">${esc(r.notes)}</small>` : ""}</td><td>${r.amount ? esc(r.amount) : TBC}</td></tr>`).join("")),
   activities: rows => put("activities", rows.map(r => `<div class="panel"><h3>${esc(r.activity)}</h3><p class="muted" style="margin:0">${[r.when, r.where].filter(Boolean).map(esc).join(", ") || TBC}${r.notes ? "<br>" + esc(r.notes) : ""}</p></div>`).join("")),
   notices: rows => put("notices", rows.sort((a, b) => b.date.localeCompare(a.date)).map(r => `<div class="notice"><time>${day(r.date) ?? "Date TBC"}</time><h3 style="margin:4px 0 6px;font-size:1.1rem">${esc(r.title)}</h3><p class="muted" style="margin:0">${esc(r.body)}</p></div>`).join("")),
+  contacts: rows => {
+    const q = a => encodeURIComponent(a);
+    const line = (label, v) => `<p class="cl"><b>${label}</b> ${v}</p>`;
+    put("contacts", rows.map(r => {
+      const web = r.web ? `<a href="${esc(r.web)}" rel="noopener">${esc(r.web.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</a>` : TBC;
+      const mail = r.email ? `<a href="mailto:${esc(r.email)}">${esc(r.email)}</a>` : TBC;
+      const tel = r.phone ? `<a href="tel:${esc(r.phone.replace(/[^+\d]/g, ""))}">${esc(r.phone)}</a>` : TBC;
+      const adr = r.address ? esc(r.address) : TBC;
+      const map = r.address ? `<details class="mapbox" data-q="${esc(q(r.address))}"><summary>Show map</summary></details>
+        <a class="earth" href="https://earth.google.com/web/search/${q(r.address)}" rel="noopener">Fly there in Google Earth</a>` : "";
+      return `<article class="panel contact-card"><span class="ctype">${esc(r.type)}</span><h3>${esc(r.name)}</h3>
+        ${r.role ? `<p class="muted" style="margin:0 0 10px">${esc(r.role)}</p>` : ""}
+        ${line("Web", web)}${line("Email", mail)}${line("Phone", tel)}${line("Address", adr)}
+        ${r.notes ? `<p class="note">${esc(r.notes)}</p>` : ""}${map}</article>`;
+    }).join(""));
+    // Build each map iframe only when its panel is opened, so the page does not load a dozen maps.
+    document.querySelectorAll("details.mapbox").forEach(d => d.addEventListener("toggle", () => {
+      if (d.open && !d.querySelector("iframe")) d.insertAdjacentHTML("beforeend",
+        `<iframe class="map" loading="lazy" title="Map" src="https://maps.google.com/maps?q=${d.dataset.q}&z=15&output=embed"></iframe>`);
+    }));
+  },
 };
 
 // Only fetch the tables this page shows.
-const NEEDS = { terms: ["terms"], exams: ["exams", "next-up", "countdown"], fees: ["fees"], activities: ["activities"], notices: ["notices"] };
+const NEEDS = { terms: ["terms"], exams: ["exams", "next-up", "countdown"], fees: ["fees"], activities: ["activities"], notices: ["notices"], contacts: ["contacts"] };
 for (const [name, ids] of Object.entries(NEEDS)) {
   if (ids.some(id => document.getElementById(id)))
     load(name).then(RENDER[name]).catch(e => console.error("data.js", name, e));
