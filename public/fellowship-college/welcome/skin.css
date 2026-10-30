@@ -102,3 +102,9 @@ footer#site-footer{background:var(--blue-dk);color:#c9dbf2}
 .streak{stroke-dasharray:26 22;animation:flow var(--d) linear var(--dl) infinite;animation-direction:var(--dir)}
 @keyframes flow{to{stroke-dashoffset:-48}}
 @media (prefers-reduced-motion:reduce){.rays,.drift,.drop,.fog,.flash,.streak{animation:none}.flash{opacity:0}}
+/* cookie notice + privacy page */
+.cookie-bar{position:fixed;left:16px;right:16px;bottom:88px;z-index:40;max-width:720px;margin-inline:auto;background:var(--blue-dk);color:#fff;border-radius:18px;padding:14px 18px;display:flex;gap:14px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.cookie-bar p{margin:0;font-size:.9rem;line-height:1.5}.cookie-bar a{color:#fff;font-weight:800}
+.cookie-bar button{flex:none;border:0;border-radius:999px;padding:10px 20px;background:#fff;color:var(--blue-dk);font:inherit;font-weight:800;cursor:pointer}
+.legal h2{font-size:1.35rem;margin-top:32px}.legal p,.legal li{max-width:75ch}.legal table{margin-top:12px}.legal td:last-child{text-align:left;color:inherit}
+@media(max-width:600px){.cookie-bar{flex-direction:column;align-items:flex-start;bottom:84px}}
