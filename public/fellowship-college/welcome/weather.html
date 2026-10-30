@@ -9,13 +9,14 @@
 <meta name="description" content="Melkbosstrand weather for the school week: what to wear each day, surf before and after school, wind, tides and the 7-day outlook. Concept B by FactSmith Sites.">
 <link rel="stylesheet" href="../hub/hub.css">
 <link rel="stylesheet" href="skin.css">
+<script src="wa.js"></script>
 </head>
 <body>
 <div class="concept">Concept B "Welcome" by FactSmith Sites. Not the live site. <a href="../">See all three</a></div>
 <header><div class="wrap nav">
   <a class="brand" href="index.html"><img src="../images/logo.jpg" alt="Fellowship College logo">Fellowship College</a>
   <nav class="links"><a href="about.html">The school</a><a href="admissions.html">Admissions</a><a href="parents.html">Parents</a><a href="learners.html">Learners</a><a href="weather.html" aria-current="page">Weather &amp; surf</a><a href="community.html">Community</a><a href="contact.html">Contact</a></nav>
-  <a class="pill pill-red" href="contact.html">Book a visit</a>
+  <a class="pill pill-wa" data-wa="Hi, I'd like to book a visit to Fellowship College."><svg class="wai" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1Z"/></svg> Book a visit</a>
 </div></header>
 
 <main>
@@ -147,6 +148,30 @@
       <div class="row">Heading ${compass(bearing)}, a wave every ${r(dur)} s</div>`;
   }
 
+  // Air: a little scene that matches the sky (sun rays turn, clouds drift, rain falls, fog slides, lightning flashes).
+  function airGfx(code) {
+    const kind = wxIcon(code), cloud = (x, y, k, d) => `<g class="drift" style="--dl:${d}s"><path transform="translate(${x} ${y}) scale(${k})" d="${CLOUD}" fill="#dbe6f4" stroke="#9fb3cc" stroke-width="1"/></g>`;
+    const sun = (x, y) => `<g class="rays" style="transform-origin:${x}px ${y}px"><circle cx="${x}" cy="${y}" r="9" fill="#f6b73c"/>` +
+      [0, 45, 90, 135, 180, 225, 270, 315].map(a => `<path d="M${x} ${y - 14}v-5" stroke="#f6b73c" stroke-width="2.5" stroke-linecap="round" transform="rotate(${a} ${x} ${y})"/>`).join("") + `</g>`;
+    const drops = [34, 52, 70, 88, 106].map((x, i) => `<path class="drop" style="--dl:${(i * .27).toFixed(2)}s" d="M${x} 30l-2 6" stroke="#2f6db5" stroke-width="2" stroke-linecap="round"/>`).join("");
+    const body = kind === "sun" ? sun(72, 24)
+      : kind === "partly" ? sun(54, 20) + cloud(62, 14, 1.6, 0)
+      : kind === "cloud" ? cloud(20, 8, 1.7, 0) + cloud(70, 14, 1.4, 1.5)
+      : kind === "fog" ? [12, 22, 32, 42].map((y, i) => `<path class="fog" style="--dl:${i * .8}s" d="M20 ${y}h104" stroke="#aab9cf" stroke-width="3.5" stroke-linecap="round"/>`).join("")
+      : cloud(40, 2, 2.2, 0) + drops + (kind === "storm" ? `<path class="flash" d="M74 22l-8 12h7l-5 11 12-15h-7z" fill="#f6b73c"/>` : "");
+    return `<svg class="gfx" viewBox="0 0 144 48" role="img" aria-label="${WMO[code] ?? "Mixed"} sky">${body}</svg>`;
+  }
+
+  // Wind: streaks flow downwind, faster the stronger it blows; the arrow shows where it is heading.
+  function windGfx(speed, dir) {
+    const dur = Math.max(.7, 55 / Math.max(speed, 5)), right = dir >= 180 && dir < 360, bearing = (dir + 180) % 360; // Melkbos: wind from the west half blows toward the east
+    const line = (y, dl) => `<path class="streak" style="--dl:${dl}s" d="M4 ${y} C 30 ${y - 7}, 50 ${y + 7}, 76 ${y} S 116 ${y - 6}, 128 ${y}" fill="none" stroke="#2f6db5" stroke-width="2.5" stroke-linecap="round"/>`;
+    return `<svg class="gfx" viewBox="0 0 144 48" role="img" aria-label="Wind ${r(speed)} km/h blowing toward ${compass(bearing)}">
+      <g style="--d:${dur.toFixed(2)}s;--dir:${right ? "normal" : "reverse"}">${line(12, 0)}${line(24, .35)}${line(36, .7)}</g>
+      <g transform="translate(130 12) rotate(${bearing})"><circle r="10" fill="#fff" stroke="#c9d6e6"/><path d="M0 -7 L4 5 L0 2 L-4 5Z" fill="#c8202f"/></g></svg>
+    <div class="row">Blowing toward ${compass(bearing)}</div>`;
+  }
+
   // Tube is a gradient from ice blue (far below the annual mean) through neutral to deep red (far above); the pointer shows where the sea is now.
   function seaGfx(t) {
     if (t == null) return "";
@@ -276,8 +301,8 @@
 
       document.getElementById("now-time").textContent = `Latest reading at ${hhmm(cur.time)} local time.`;
       now.innerHTML = `
-        <article class="wx">${ic(wxIcon(cur.weather_code))}<div class="day">Air now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div><div class="row">${WMO[cur.weather_code] ?? "Mixed"}</div><div class="row">Feels like ${r(cur.apparent_temperature)}&deg;</div></article>
-        <article class="wx">${ic("wind")}<div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div><div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row">Gusts ${r(cur.wind_gusts_10m)} km/h</div></article>
+        <article class="wx">${ic(wxIcon(cur.weather_code))}<div class="day">Air now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div><div class="row">${WMO[cur.weather_code] ?? "Mixed"}</div><div class="row">Feels like ${r(cur.apparent_temperature)}&deg;</div>${airGfx(cur.weather_code)}</article>
+        <article class="wx">${ic("wind")}<div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div><div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row">Gusts ${r(cur.wind_gusts_10m)} km/h</div>${windGfx(cur.wind_speed_10m, cur.wind_direction_10m)}</article>
         <article class="wx">${ic("waves")}<div class="day">Waves</div><div class="temp">${n(M.wave_height[ni], v => v.toFixed(1))} <span>m</span></div><div class="row">Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}</div>${waveGfx(M.wave_height[ni], M.swell_wave_period[ni], M.swell_wave_direction[ni])}</article>
         <article class="wx sea">${seaGfx(M.sea_surface_temperature[ni])}<div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div><div class="row">Water temperature</div>${M.sea_surface_temperature[ni] == null ? "" : `<div class="row"><b>${sgn(M.sea_surface_temperature[ni] - SEA_MEAN)}&deg;</b> against the ${SEA_MEAN}&deg; annual average</div>`}</article>
         <article class="wx">${ic(next ? (next.high ? "up" : "down") : "waves")}<div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div><div class="row">${next ? (next.high ? "High tide" : "Low tide") : ""}</div>${tideGfx(M, cur, next)}</article>`;
@@ -311,5 +336,6 @@
     }
   })();
 </script>
+<a class="wa-float" data-wa="Hi, I have a question about Fellowship College." aria-label="Chat with the school on WhatsApp"><svg class="wai" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 2 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.1Z"/></svg></a>
 </body>
 </html>
