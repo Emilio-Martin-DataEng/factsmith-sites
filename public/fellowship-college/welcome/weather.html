@@ -119,6 +119,8 @@
     up: P("M12 19V5M6 11l6-6 6 6M5 21h14"),
     down: P("M12 5v14M6 13l6 6 6-6M5 3h14"),
     shirt: P("M8 3L3 6l2.5 4L8 9v12h8V9l2.5 1L21 6l-5-3a4 4 0 0 1-8 0z"),
+    board: P("M5 19C4 11 12 3 20 4c1 8-7 16-15 15zM8 16L16 8"),
+    sunrise: P("M12 3v4M5 12h2M17 12h2M7.5 7.5l1.4 1.4M16.5 7.5l-1.4 1.4M3 18h18M8 18a4 4 0 0 1 8 0"),
     umbrella: P("M3 12a9 9 0 0 1 18 0zM12 12v6a2 2 0 1 1-4 0"),
   };
   const ic = (name, cls = "ic") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]}</svg>`;
@@ -291,8 +293,8 @@
 
       document.getElementById("surf-days").innerHTML = school.map(({ d }) => {
         const slot = hh => { const k = at(d, hh), [c, t] = surfRating(M.wave_height[k], M.swell_wave_period[k], H.wind_direction_10m[k], H.wind_speed_10m[k]);
-          return `<div class="row"><b>${hh}:00</b> <span class="tag ${c}">${t}</span><br>${n(M.wave_height[k], v => v.toFixed(1))} m @ ${n(M.swell_wave_period[k], r)} s, wind ${r(H.wind_speed_10m[k])} km/h ${compass(H.wind_direction_10m[k])}</div>`; };
-        return `<article class="wx"><div class="day">${dayName(d)} ${d.slice(8)}</div>${slot("07")}${slot("15")}</article>`;
+          return `<div class="row">${ic(hh === "07" ? "sunrise" : "sun", "ri")} <b>${hh}:00</b> <span class="tag ${c}">${t}</span><br>${n(M.wave_height[k], v => v.toFixed(1))} m @ ${n(M.swell_wave_period[k], r)} s, wind ${r(H.wind_speed_10m[k])} km/h ${compass(H.wind_direction_10m[k])}</div>`; };
+        return `<article class="wx">${ic("board")}<div class="day">${dayName(d)} ${d.slice(8)}</div>${slot("07")}${slot("15")}</article>`;
       }).join("") || '<p class="muted">No school days in the forecast window.</p>';
 
       document.getElementById("week").innerHTML = D.time.map((d, i) => { const [c, t] = windTag(D.wind_direction_10m_dominant[i]);
