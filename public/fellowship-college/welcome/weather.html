@@ -23,7 +23,20 @@
   <div class="kicker" style="color:#8fb5e6">Weather &amp; surf</div>
   <h1>Melkbosstrand this week.</h1>
   <p>What to wear for each school day, and whether the surf is worth it before or after school. Updated every hour.</p>
+</div></section>
+
+<section class="section" id="now-sec" style="padding-bottom:0"><div class="wrap">
+  <div class="kicker">Right now</div>
+  <h2>Conditions now in Melkbosstrand</h2>
+  <p class="muted" id="now-time">Live from the forecast model.</p>
   <div class="wx-now" id="now"><p>Loading forecast...</p></div>
+</div></section>
+
+<section class="section" id="outlook" style="padding-bottom:0"><div class="wrap">
+  <div class="kicker">The week ahead</div>
+  <h2>7-day outlook</h2>
+  <div class="scroller" id="week"></div>
+  <p class="caption">Forecast: Open-Meteo (CC BY 4.0).</p>
 </div></section>
 
 <section class="section" id="wear"><div class="wrap">
@@ -67,12 +80,6 @@
     src="https://embed.windy.com/embed.html?type=map&amp;location=coordinates&amp;metricRain=mm&amp;metricTemp=%C2%B0C&amp;metricWind=km/h&amp;zoom=7&amp;overlay=waves&amp;product=ecmwfWaves&amp;level=surface&amp;lat=-33.9&amp;lon=18.1&amp;marker=true&amp;detailLat=-33.726&amp;detailLon=18.44"></iframe>
 </div></section>
 
-<section class="section" style="padding-top:0"><div class="wrap">
-  <div class="kicker">The week ahead</div>
-  <h2>7-day outlook</h2>
-  <div class="scroller" id="week"></div>
-  <p class="caption">Forecast: Open-Meteo (CC BY 4.0).</p>
-</div></section>
 </main>
 
 <footer id="site-footer"><div class="wrap">
@@ -95,6 +102,25 @@
 
   const WMO = {0:"Clear",1:"Mostly clear",2:"Partly cloudy",3:"Overcast",45:"Fog",48:"Fog",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",
     61:"Light rain",63:"Rain",65:"Heavy rain",80:"Showers",81:"Showers",82:"Heavy showers",95:"Thunderstorm",96:"Thunderstorm",99:"Thunderstorm"};
+  // Line icons (24x24, currentColor) for the "now" and 7-day boxes.
+  const P = d => `<path d="${d}"/>`;
+  const CLOUD = "M6.5 18a4.5 4.5 0 0 1-.6-8.96 6 6 0 0 1 11.6 1.46A3.75 3.75 0 0 1 17.5 18z";
+  const ICON = {
+    sun: `<circle cx="12" cy="12" r="4"/>${P("M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4")}`,
+    partly: `<circle cx="8" cy="8" r="2.8"/>${P("M8 2v1.2M2 8h1.2M3.8 3.8l.9.9M12.2 3.8l-.9.9")}${P("M9 20a3.6 3.6 0 0 1-.3-7.2 4.8 4.8 0 0 1 9.2 1.1A3.1 3.1 0 0 1 17.5 20z")}`,
+    cloud: P(CLOUD),
+    rain: `${P(CLOUD)}${P("M8 21l1-2.5M12 21l1-2.5M16 21l1-2.5")}`,
+    storm: `${P(CLOUD)}${P("M12.5 14.5l-2 3h3l-2 3")}`,
+    fog: P("M4 8h16M3 12h18M5 16h14M8 20h8"),
+    wind: P("M3 8h11a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h7"),
+    waves: P("M2 8c2.5-3 5-3 7.5 0s5 3 7.5 0 3-2 5-1M2 14c2.5-3 5-3 7.5 0s5 3 7.5 0 3-2 5-1M2 20c2.5-3 5-3 7.5 0s5 3 7.5 0 3-2 5-1"),
+    thermo: P("M10 14V5a2 2 0 1 1 4 0v9a4 4 0 1 1-4 0z"),
+    drop: P("M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"),
+    up: P("M12 19V5M6 11l6-6 6 6M5 21h14"),
+    down: P("M12 5v14M6 13l6 6 6-6M5 3h14"),
+  };
+  const ic = (name, cls = "ic") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]}</svg>`;
+  const wxIcon = c => c <= 1 ? "sun" : c === 2 ? "partly" : c === 3 ? "cloud" : c === 45 || c === 48 ? "fog" : c >= 95 ? "storm" : (c >= 51 && c <= 67) || (c >= 80 && c <= 82) ? "rain" : "cloud";
   const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
   // Melkbos is a west-facing beach: E/SE is offshore, SW-NW onshore.
@@ -188,12 +214,13 @@
       const [cls, tag] = windTag(cur.wind_direction_10m);
       const next = extrema(M.time, M.sea_level_height_msl).find(e => e.at > cur.time);
 
+      document.getElementById("now-time").textContent = `Latest reading at ${hhmm(cur.time)} local time.`;
       now.innerHTML = `
-        <article class="wx"><div class="day">Now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div><div class="row">${WMO[cur.weather_code] ?? "Mixed"}</div><div class="row">Feels like ${r(cur.apparent_temperature)}&deg;</div></article>
-        <article class="wx"><div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div><div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row">Gusts ${r(cur.wind_gusts_10m)} km/h</div></article>
-        <article class="wx"><div class="day">Waves</div><div class="temp">${n(M.wave_height[ni], v => v.toFixed(1))} <span>m</span></div><div class="row">Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}</div></article>
-        <article class="wx"><div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div><div class="row">Water temperature</div></article>
-        <article class="wx"><div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div><div class="row">${next ? (next.high ? "High tide" : "Low tide") : ""}</div></article>`;
+        <article class="wx">${ic(wxIcon(cur.weather_code))}<div class="day">Air now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div><div class="row">${WMO[cur.weather_code] ?? "Mixed"}</div><div class="row">Feels like ${r(cur.apparent_temperature)}&deg;</div></article>
+        <article class="wx">${ic("wind")}<div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div><div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row">Gusts ${r(cur.wind_gusts_10m)} km/h</div></article>
+        <article class="wx">${ic("waves")}<div class="day">Waves</div><div class="temp">${n(M.wave_height[ni], v => v.toFixed(1))} <span>m</span></div><div class="row">Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}</div></article>
+        <article class="wx">${ic("thermo")}<div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div><div class="row">Water temperature</div></article>
+        <article class="wx">${ic(next ? (next.high ? "up" : "down") : "waves")}<div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div><div class="row">${next ? (next.high ? "High tide" : "Low tide") : ""}</div></article>`;
 
       const school = D.time.map((d, i) => ({ d, i })).filter(x => dow(x.d) >= 1 && dow(x.d) <= 5);
       document.getElementById("wear-days").innerHTML = school.map(({ d, i }) => {
@@ -211,11 +238,11 @@
       }).join("") || '<p class="muted">No school days in the forecast window.</p>';
 
       document.getElementById("week").innerHTML = D.time.map((d, i) => { const [c, t] = windTag(D.wind_direction_10m_dominant[i]);
-        return `<article class="wx"><div class="day">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(d)}</div>
+        return `<article class="wx">${ic(wxIcon(D.weather_code[i]))}<div class="day">${i === 0 ? "Today" : i === 1 ? "Tomorrow" : dayName(d)}</div>
           <div class="temp">${r(D.temperature_2m_max[i])}&deg; <span>/ ${r(D.temperature_2m_min[i])}&deg;</span></div>
-          <div class="row">${WMO[D.weather_code[i]] ?? "Mixed"}</div><div class="row">${D.precipitation_probability_max[i]}% rain</div>
-          <div class="row">${r(D.wind_speed_10m_max[i])} km/h ${compass(D.wind_direction_10m_dominant[i])} <span class="tag ${c}">${t}</span></div>
-          <div class="row">Waves up to ${n(m.daily.wave_height_max[i], v => v.toFixed(1))} m</div></article>`; }).join("");
+          <div class="row">${WMO[D.weather_code[i]] ?? "Mixed"}</div><div class="row">${ic("drop","ri")} ${D.precipitation_probability_max[i]}% rain</div>
+          <div class="row">${ic("wind","ri")} ${r(D.wind_speed_10m_max[i])} km/h ${compass(D.wind_direction_10m_dominant[i])} <span class="tag ${c}">${t}</span></div>
+          <div class="row">${ic("waves","ri")} Waves up to ${n(m.daily.wave_height_max[i], v => v.toFixed(1))} m</div></article>`; }).join("");
 
       drawCharts(w, m);
     } catch (e) {
