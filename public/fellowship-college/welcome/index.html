@@ -74,6 +74,23 @@ header .nav{display:flex;align-items:center;justify-content:space-between;gap:12
 footer#site-footer{background:var(--blue-dk);color:#c9dbf2;font-size:.92rem;margin-top:0}
 footer#site-footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-block:32px}
 footer#site-footer a{text-decoration:none;color:#fff}
+.kb{position:relative;margin-block:20px 56px;border-radius:28px;overflow:hidden;height:clamp(430px,48vw,540px);background:var(--blue-dk);color:#fff}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1s ease;pointer-events:none}
+.slide.on{opacity:1;pointer-events:auto}
+.slide img{width:100%;height:100%;object-fit:cover;transform:scale(1);transition:transform 0s linear 1.1s}
+.slide.on img{transform:scale(1.08);transition:transform 6.5s linear}
+.cap{position:absolute;inset:auto 0 0 0;padding:90px clamp(18px,4vw,44px) 62px;background:linear-gradient(0deg,rgba(18,42,80,.88),rgba(18,42,80,.45) 60%,rgba(18,42,80,0))}
+.cap h1,.cap h2{font-size:clamp(1.8rem,4.6vw,3.1rem);max-width:18ch;margin-bottom:18px;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.cap>*{opacity:0;transform:translateY(14px);transition:opacity .7s ease .35s,transform .7s ease .35s}
+.slide.on .cap>*{opacity:1;transform:none}
+.dots{position:absolute;left:clamp(18px,4vw,44px);bottom:20px;display:flex;gap:4px}
+.dots button{width:30px;height:30px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+.dots button::before{content:"";width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.5);transition:.3s}
+.dots button[aria-current=true]::before{background:#fff;width:30px;border-radius:8px}
+.nt,.nt *{transition:none!important}
+
+.kb .badge{position:absolute;right:16px;top:16px;z-index:2;background:#fff;color:var(--ink);border-radius:16px;padding:10px 14px;box-shadow:0 12px 30px rgba(0,0,0,.2);font-weight:800;font-size:.85rem}.kb .badge span{display:block;font-weight:600;color:var(--muted);font-size:.75rem}
+@media (prefers-reduced-motion:reduce){.slide,.slide img,.cap>*,.dots button::before{transition:none!important}.slide.on img{transform:none}}
 </style>
 <link rel="stylesheet" href="skin.css">
 <script type="application/ld+json">
@@ -95,15 +112,22 @@ footer#site-footer a{text-decoration:none;color:#fff}
 </div></header>
 
 <main>
-<section class="wrap hero">
-  <div>
-    <h1>Room to grow, <em>at their own pace.</em></h1>
-    <p>Fellowship College is a small independent Christian school in Melkbosstrand, where learners master each step before moving on and character comes first.</p>
-    <a class="pill pill-red" href="#visit">Book a visit</a> <a class="pill pill-soft" href="#how">How it works</a>
-  </div>
-  <div class="photo">
-    <img src="../images/tie.jpg" alt="A parent helping a learner with his school tie">
+<section class="wrap">
+  <div class="kb" id="hero" role="group" aria-roledescription="carousel" aria-label="Fellowship College highlights">
+    <div class="slide" role="group" aria-roledescription="slide" aria-label="1 of 3">
+      <img src="../images/tie.jpg" alt="A parent helping a learner with his school tie">
+      <div class="cap"><h1>Room to grow, at their own pace.</h1><a class="pill pill-red" href="#visit">Book a visit</a></div>
+    </div>
+    <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 3">
+      <img src="../images/group.jpg" alt="A group of Fellowship College learners together">
+      <div class="cap"><h2>Character comes first.</h2><a class="pill pill-red" href="#how">How it works</a></div>
+    </div>
+    <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 3">
+      <img src="../images/formal.jpg" alt="Three learners smiling with photo-booth props at a school function">
+      <div class="cap"><h2>Grade 1 to 12, one module at a time.</h2><a class="pill pill-red" href="admissions.html">Admissions</a></div>
+    </div>
     <div class="badge">WCED registered<span>Independent Schools Act</span></div>
+    <div class="dots"><button type="button" aria-label="Show slide 1"></button><button type="button" aria-label="Show slide 2"></button><button type="button" aria-label="Show slide 3"></button></div>
   </div>
 </section>
 
@@ -164,5 +188,24 @@ footer#site-footer a{text-decoration:none;color:#fff}
   <div><a href="tel:+27215530374">021 553 0374</a><br><a href="mailto:principal@thefellowship.co.za">principal@thefellowship.co.za</a></div>
   <div><a href="https://www.facebook.com/FCMelkbos/">Facebook</a><br>Concept by FactSmith Sites</div>
 </div></footer>
+<script>
+const kb = document.getElementById('hero'), slides = [...kb.querySelectorAll('.slide')], dots = [...kb.querySelectorAll('.dots button')];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+let cur = 0, paused = false, seen = true, timer;
+function go(n) {
+  cur = (n + slides.length) % slides.length;
+  slides.forEach((s, k) => { s.classList.toggle('on', k === cur); s.setAttribute('aria-hidden', k !== cur); s.inert = k !== cur; });
+  dots.forEach((d, k) => d.setAttribute('aria-current', k === cur));
+}
+function start() { clearInterval(timer); if (!reduce.matches) timer = setInterval(() => { if (!paused && seen && !document.hidden) go(cur + 1); }, 5000); }
+dots.forEach((d, k) => d.addEventListener('click', () => { go(k); start(); }));
+['mouseenter', 'focusin'].forEach(ev => kb.addEventListener(ev, () => paused = true));
+['mouseleave', 'focusout'].forEach(ev => kb.addEventListener(ev, () => paused = false));
+kb.addEventListener('touchstart', () => paused = true, { passive: true });
+kb.addEventListener('touchend', () => setTimeout(() => paused = false, 6000), { passive: true });
+new IntersectionObserver(es => seen = es[0].isIntersecting).observe(kb);
+go(0); start();
+
+</script>
 </body>
 </html>
