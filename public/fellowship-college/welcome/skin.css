@@ -73,3 +73,9 @@ footer#site-footer{background:var(--blue-dk);color:#c9dbf2}
 .wx{position:relative}
 .wx .ic{position:absolute;right:12px;top:12px;width:30px;height:30px;color:var(--blue)}
 .wx .ri{width:16px;height:16px;vertical-align:-3px;color:var(--blue)}
+.wx ul{list-style:none;padding-left:0}.wx li{margin:5px 0}
+.gfx{display:block;width:100%;height:auto;margin-top:8px}
+.wv{fill:#2f6db5;opacity:.85;animation:wv var(--d) linear infinite;animation-direction:var(--dir)}.wv.back{fill:#9fc3ea;opacity:.7}
+@keyframes wv{to{transform:translateX(-36px)}}
+.wx.sea{padding-right:84px;min-height:170px}.gfx-sea{position:absolute;right:6px;top:34px;width:72px;height:auto}
+@media (prefers-reduced-motion:reduce){.wv{animation:none}}

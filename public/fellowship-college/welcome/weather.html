@@ -118,9 +118,67 @@
     drop: P("M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"),
     up: P("M12 19V5M6 11l6-6 6 6M5 21h14"),
     down: P("M12 5v14M6 13l6 6 6-6M5 3h14"),
+    shirt: P("M8 3L3 6l2.5 4L8 9v12h8V9l2.5 1L21 6l-5-3a4 4 0 0 1-8 0z"),
+    umbrella: P("M3 12a9 9 0 0 1 18 0zM12 12v6a2 2 0 1 1-4 0"),
   };
   const ic = (name, cls = "ic") => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name]}</svg>`;
+  const wearIcon = t => /jersey|uniform/i.test(t) ? "shirt" : /rain/i.test(t) ? "umbrella" : /wind/i.test(t) ? "wind" : "sun";
   const wxIcon = c => c <= 1 ? "sun" : c === 2 ? "partly" : c === 3 ? "cloud" : c === 45 || c === 48 ? "fog" : c >= 95 ? "storm" : (c >= 51 && c <= 67) || (c >= 80 && c <= 82) ? "rain" : "cloud";
+  // ---- "now" box graphics: wave animation, sea thermometer, tide slice ----
+  // ponytail: Melkbos annual mean sea temperature ~15 C (average of published monthly means, approximate). +/-5 C is the full ice-blue to deep-red range.
+  const SEA_MEAN = 15, SEA_SPAN = 5;
+  const mix = (c1, c2, t) => c1.map((v, i) => Math.round(v + (c2[i] - v) * t));
+  const anomColor = a => { const t = Math.max(-1, Math.min(1, a / SEA_SPAN)), mid = [243, 241, 234];
+    return `rgb(${t < 0 ? mix(mid, [159, 216, 245], -t) : mix(mid, [179, 18, 31], t)})`; };
+  const sgn = v => (v >= 0 ? "+" : "") + v.toFixed(1);
+
+  // Height sets the wave size, period sets how long one wave takes to pass, the arrow shows the way the swell is travelling.
+  function waveGfx(h, T, from) {
+    if (h == null) return "";
+    const amp = Math.max(1.5, Math.min(14, h * 6)), lam = 36, W = 144, base = 30, dur = Math.max(2, T ?? 8);
+    const toShore = from == null || (from >= 180 && from < 360); // Melkbos faces west: swell from the west half runs onto the beach
+    const path = ph => { let d = `M0 ${base}`; for (let x = 0; x <= W + lam; x += 3) d += ` L${x} ${(base + amp * Math.sin(x / lam * 2 * Math.PI + ph)).toFixed(1)}`; return d + ` L${W + lam} 48 L0 48Z`; };
+    const bearing = from == null ? 90 : (from + 180) % 360;
+    return `<svg class="gfx" viewBox="0 0 ${W} 48" role="img" aria-label="Animated swell: ${h.toFixed(1)} m high, one wave every ${r(dur)} seconds, travelling toward ${compass(bearing)}">
+      <g style="--d:${dur}s;--dir:${toShore ? "reverse" : "normal"}"><path class="wv back" d="${path(1.6)}"/><path class="wv" d="${path(0)}"/></g>
+      <g transform="translate(126 12) rotate(${bearing})"><circle r="10" fill="#fff" stroke="#c9d6e6"/><path d="M0 -7 L4 5 L0 2 L-4 5Z" fill="#c8202f"/></g></svg>
+      <div class="row">Heading ${compass(bearing)}, a wave every ${r(dur)} s</div>`;
+  }
+
+  // Tube is a gradient from ice blue (far below the annual mean) through neutral to deep red (far above); the pointer shows where the sea is now.
+  function seaGfx(t) {
+    if (t == null) return "";
+    const a = t - SEA_MEAN, y = 36 - Math.max(-1, Math.min(1, a / SEA_SPAN)) * 30;
+    return `<svg class="gfx-sea" viewBox="0 0 48 96" role="img" aria-label="Sea ${r(t)} degrees, ${sgn(a)} against the annual average of ${SEA_MEAN}">
+      <defs><linearGradient id="sea-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b3121f"/><stop offset=".5" stop-color="#f3f1ea"/><stop offset="1" stop-color="#9fd8f5"/></linearGradient></defs>
+      <rect x="18" y="4" width="10" height="64" rx="5" fill="url(#sea-g)" stroke="#9aa6b8" stroke-width="1.2"/>
+      <circle cx="23" cy="77" r="11" fill="${anomColor(a)}" stroke="#9aa6b8" stroke-width="1.2"/>
+      <path d="M13 36h5M28 36h4" stroke="#5b6475" stroke-width="1.5"/>
+      <path d="M30 ${y - 5}L40 ${y}L30 ${y + 5}Z" fill="#0b1f38"/></svg>`;
+  }
+
+  // From the level now, along the curve to the next high or low.
+  function tideGfx(M, cur, next) {
+    if (!next) return "";
+    const ts = M.time.map(x => new Date(x + ":00Z").getTime()), lv = M.sea_level_height_msl;
+    const t0 = new Date(cur.time + ":00Z").getTime(), t1 = new Date(next.at + ":00Z").getTime();
+    const i0 = ts.findIndex(t => t > t0) - 1;
+    if (i0 < 0 || lv[i0] == null || lv[i0 + 1] == null) return "";
+    const l0 = lv[i0] + (lv[i0 + 1] - lv[i0]) * (t0 - ts[i0]) / 3600e3;
+    const pts = [[t0, l0]];
+    for (let i = i0 + 1; i < lv.length && ts[i] < t1; i++) if (lv[i] != null) pts.push([ts[i], lv[i]]);
+    pts.push([t1, next.h]);
+    const vs = pts.map(q => q[1]), lo = Math.min(...vs), span = Math.max(Math.max(...vs) - lo, .05);
+    const X = t => 10 + (t - t0) / (t1 - t0) * 120, Y = v => 34 - (v - lo) / span * 22;
+    const line = pts.map(([t, v], k) => `${k ? "L" : "M"}${X(t).toFixed(1)} ${Y(v).toFixed(1)}`).join("");
+    const mins = Math.round((t1 - t0) / 60e3), end = next.high ? "#c8202f" : "#17663b", yEnd = Y(next.h), yNow = Y(l0);
+    return `<svg class="gfx" viewBox="0 0 144 48" role="img" aria-label="Tide ${next.high ? "rising" : "falling"} from now to ${next.high ? "high" : "low"} tide at ${hhmm(next.at)}">
+      <path d="${line}L${X(t1).toFixed(1)} 40L10 40Z" fill="rgba(47,109,181,.12)"/><path d="${line}" fill="none" stroke="#2f6db5" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="10" cy="${yNow.toFixed(1)}" r="3.5" fill="#2f6db5"/><circle cx="${X(t1).toFixed(1)}" cy="${yEnd.toFixed(1)}" r="3.5" fill="${end}"/>
+      <text x="10" y="46" font-size="8" fill="#5b6475">Now</text><text x="${X(t1).toFixed(1)}" y="46" font-size="8" text-anchor="end" fill="#5b6475">${next.high ? "High" : "Low"} ${hhmm(next.at)}</text></svg>
+      <div class="row">${next.high ? "Rising" : "Falling"} ${Math.abs(next.h - l0).toFixed(2)} m over ${Math.floor(mins / 60)} h ${mins % 60} min</div>`;
+  }
+
   const DAYS = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
   const compass = d => ["N","NE","E","SE","S","SW","W","NW"][Math.round(d / 45) % 8];
   // Melkbos is a west-facing beach: E/SE is offshore, SW-NW onshore.
@@ -218,17 +276,17 @@
       now.innerHTML = `
         <article class="wx">${ic(wxIcon(cur.weather_code))}<div class="day">Air now</div><div class="temp">${r(cur.temperature_2m)}&deg;</div><div class="row">${WMO[cur.weather_code] ?? "Mixed"}</div><div class="row">Feels like ${r(cur.apparent_temperature)}&deg;</div></article>
         <article class="wx">${ic("wind")}<div class="day">Wind</div><div class="temp">${r(cur.wind_speed_10m)} <span>km/h</span></div><div class="row">${compass(cur.wind_direction_10m)} <span class="tag ${cls}">${tag}</span></div><div class="row">Gusts ${r(cur.wind_gusts_10m)} km/h</div></article>
-        <article class="wx">${ic("waves")}<div class="day">Waves</div><div class="temp">${n(M.wave_height[ni], v => v.toFixed(1))} <span>m</span></div><div class="row">Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}</div></article>
-        <article class="wx">${ic("thermo")}<div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div><div class="row">Water temperature</div></article>
-        <article class="wx">${ic(next ? (next.high ? "up" : "down") : "waves")}<div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div><div class="row">${next ? (next.high ? "High tide" : "Low tide") : ""}</div></article>`;
+        <article class="wx">${ic("waves")}<div class="day">Waves</div><div class="temp">${n(M.wave_height[ni], v => v.toFixed(1))} <span>m</span></div><div class="row">Swell ${n(M.swell_wave_period[ni], r)} s from ${n(M.swell_wave_direction[ni], compass)}</div>${waveGfx(M.wave_height[ni], M.swell_wave_period[ni], M.swell_wave_direction[ni])}</article>
+        <article class="wx sea">${seaGfx(M.sea_surface_temperature[ni])}<div class="day">Sea</div><div class="temp">${n(M.sea_surface_temperature[ni], r)}&deg;</div><div class="row">Water temperature</div>${M.sea_surface_temperature[ni] == null ? "" : `<div class="row"><b>${sgn(M.sea_surface_temperature[ni] - SEA_MEAN)}&deg;</b> against the ${SEA_MEAN}&deg; annual average</div>`}</article>
+        <article class="wx">${ic(next ? (next.high ? "up" : "down") : "waves")}<div class="day">Next tide</div><div class="temp">${next ? hhmm(next.at) : "–"}</div><div class="row">${next ? (next.high ? "High tide" : "Low tide") : ""}</div>${tideGfx(M, cur, next)}</article>`;
 
       const school = D.time.map((d, i) => ({ d, i })).filter(x => dow(x.d) >= 1 && dow(x.d) <= 5);
       document.getElementById("wear-days").innerHTML = school.map(({ d, i }) => {
         const k = at(d, "07"), morning = H.temperature_2m[k];
-        return `<article class="wx"><div class="day">${dayName(d)} ${d.slice(8)}</div>
+        return `<article class="wx">${ic(wxIcon(D.weather_code[i]))}<div class="day">${dayName(d)} ${d.slice(8)}</div>
           <div class="temp">${r(morning)}&deg; <span>at 7am, high ${r(D.temperature_2m_max[i])}&deg;</span></div>
           <div class="row">${WMO[D.weather_code[i]] ?? "Mixed"}, ${D.precipitation_probability_max[i]}% rain</div>
-          <ul>${wearList(morning, D.temperature_2m_max[i], D.precipitation_probability_max[i], D.wind_gusts_10m_max[i]).map(x => `<li>${x}</li>`).join("")}</ul></article>`;
+          <ul>${wearList(morning, D.temperature_2m_max[i], D.precipitation_probability_max[i], D.wind_gusts_10m_max[i]).map(x => `<li>${ic(wearIcon(x), "ri")} ${x}</li>`).join("")}</ul></article>`;
       }).join("") || '<p class="muted">No school days in the forecast window.</p>';
 
       document.getElementById("surf-days").innerHTML = school.map(({ d }) => {
