@@ -1,0 +1,24 @@
+/* Concept B "Welcome" skin: shared header + overrides that restyle the hub inner pages (../hub/hub.css) in B's warm palette. */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap');
+:root{--night:#1d4f8c;--blue:#2f6db5;--blue-dk:#1d4f8c;--red:#d63a3a;--bg:#fff9f0;--cream:#fff9f0;--sky:#e8f1fb;--line:#eadfce;--font:'Nunito',-apple-system,'Segoe UI',sans-serif}
+body{background:var(--bg);font-family:var(--font)}
+h1,h2,h3{font-weight:900}
+header{background:var(--cream);color:var(--blue-dk);position:sticky;top:0;z-index:20;box-shadow:0 1px 0 var(--line)}
+header .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:1.15rem;color:var(--blue-dk)}
+.brand img{width:44px;border-radius:10px;background:none;padding:0}
+.links{display:flex;gap:20px;font-size:.95rem;font-weight:800;color:var(--blue-dk)}
+.links a{text-decoration:none;opacity:.8}
+.links a:hover,.links a[aria-current]{opacity:1;color:var(--red)}
+.pill{display:inline-block;white-space:nowrap;padding:11px 20px;border-radius:999px;font-weight:800;text-decoration:none}
+.pill-red{background:var(--red);color:#fff}
+.pill-red:hover{filter:brightness(1.08)}
+@media(max-width:860px){header .nav{flex-wrap:wrap}.links{order:3;width:100%;overflow-x:auto;white-space:nowrap;gap:18px;padding-bottom:4px}}
+.page-head{background:var(--sky);color:var(--blue-dk)}
+.page-head p{color:var(--muted)}
+.kicker{color:var(--red)}
+.panel,.stat,.steps li,.faq details,.dl,.wx,.chart{border-radius:20px}
+.btn,.cta{border-radius:999px}
+.big{color:var(--blue-dk)}
+footer#contact{background:var(--blue-dk);color:#c9dbf2}
+.page-head .kicker{color:var(--red)!important}

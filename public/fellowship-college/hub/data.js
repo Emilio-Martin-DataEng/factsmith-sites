@@ -37,7 +37,8 @@ const day = d => /^\d{4}-\d{2}-\d{2}$/.test(d) ? new Date(d + "T12:00").toLocale
 const span = (a, b) => !day(a) ? TBC : day(b) && b !== a ? `${day(a)} to ${day(b)}` : day(a);
 const today = new Date().toISOString().slice(0, 10);
 const put = (id, html) => { const el = document.getElementById(id); if (el) el.innerHTML = html; };
-const load = name => fetch(SOURCES[name]).then(r => r.ok ? r.text() : Promise.reject(r.status)).then(parseCSV);
+const BASE = document.currentScript.src;
+const load = name => fetch(new URL(SOURCES[name], BASE)).then(r => r.ok ? r.text() : Promise.reject(r.status)).then(parseCSV);
 
 const RENDER = {
   terms: rows => put("terms", rows.map(r => `<tr><td>${esc(r.term)}</td><td>${span(r.start, r.end)}</td></tr>`).join("")),
