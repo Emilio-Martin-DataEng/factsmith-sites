@@ -17,9 +17,9 @@ Two brands live in this repo. Keep them apart, and copy from here instead of red
 
 ## 2. FactSmith Sites (this studio site)
 
-- **Mark:** "FS" tile in sea teal. Files: `public/favicon.svg` and `src/components/BrandMark.astro`.
+- **Mark:** official logo v1 (browser window, wave, spark; navy + magenta). Sources in `brand/sites/` (vault `FactSmith-Sites/07-Brand/logo-v1`); site copy `public/brand/lockup.png`, favicons `public/favicon*.png` and `apple-touch-icon.png`, component `src/components/BrandMark.astro`.
 - **Colour / type:** sea `#1d6a7a`, cream `#f7f5f0`, Outfit / Figtree. Tokens are in `src/styles/global.css`.
-- **OG card:** `public/images/og-card.svg` / `.png`.
+- **OG card:** `public/images/og-card.png`.
 
 ## Rules
 
