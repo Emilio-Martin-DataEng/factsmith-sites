@@ -52,7 +52,6 @@ export const site = {
   ga4: "G-G557XL2BNP",
   productUrl: "https://www.factsmith.co.za",
   threeBirdsUrl: "https://threebirdscentre.co.za",
-  billingEntity: "SELECT STAR DATA ENGINEERS (Pty) Ltd",
   startingPriceZar: STARTER_PRICE,
   brochurePriceZar: BROCHURE_PRICE,
   depositZar: DEPOSIT,

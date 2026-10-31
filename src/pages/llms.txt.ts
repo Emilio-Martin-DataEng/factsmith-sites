@@ -6,7 +6,7 @@ const body = `# ${site.name}
 
 > ${site.description}
 
-FactSmith Sites is a web studio in South Africa (based on the KwaZulu-Natal South Coast) that builds fast, mobile-first, WhatsApp-first websites for small and medium businesses across South Africa. Clients outside South Africa are accepted by quote. Invoices come from ${site.billingEntity}. FactSmith Sites is separate from FactSmith the product (www.factsmith.co.za).
+FactSmith Sites is a web studio in South Africa (based on the KwaZulu-Natal South Coast) that builds fast, mobile-first, WhatsApp-first websites for small and medium businesses across South Africa. Clients outside South Africa are accepted by quote. FactSmith Sites is separate from FactSmith the product (www.factsmith.co.za).
 
 Key facts:
 - Tiers: ${tiers.map((t) => `${t.name} ${t.priceLabel} (${t.pages})`).join("; ")}. Prices are in rand.
