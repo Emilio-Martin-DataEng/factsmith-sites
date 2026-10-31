@@ -542,6 +542,21 @@ export const southCoastOffer = {
   text: "We want to encourage investment in the South Coast and help it grow, so any business based on the KZN South Coast gets 10% off every package when the job is set up through Sharon. It covers the website tiers, the add-ons and the care plans, and it is taken off your quote automatically. The prices on this site are list prices.",
 };
 
+/**
+ * Referral rewards (Emilio, 2026-10-31, from the AI Mode thread): flat cash reward for a warm introduction that closes.
+ * Half when the deposit clears, half within 7 days of the final invoice being paid. 10% on add-ons. Emilio only, no Sharon.
+ */
+export const referral = {
+  rewards: [
+    { tier: "Starter", total: 500 },
+    { tier: "Brochure", total: 1000 },
+    { tier: "Business", total: 1750 },
+  ],
+  addonPercent: 10,
+  payDays: 7,
+  note: "Custom work is quoted, so the reward is agreed with Emilio before the introduction.",
+};
+
 export const faq = [
   {
     q: "How much does a website cost?",
@@ -594,6 +609,10 @@ export const faq = [
   {
     q: "Is there a discount for South Coast businesses?",
     a: southCoastOffer.text,
+  },
+  {
+    q: "Do you pay referral fees for new clients?",
+    a: `Yes. If you make a warm introduction to a business owner who needs a site and the deal closes, we pay a flat reward: ${referral.rewards.map((r) => `${zar(r.total)} for ${r.tier}`).join(", ")}. Half is paid when their deposit clears and half within ${referral.payDays} days of the final invoice being paid. We also pay ${referral.addonPercent}% on any additional services they order. Introduce them in a 3-way WhatsApp group with Emilio, or by email.`,
   },
   {
     q: "What is FactSmith Sites, and is it the same as FactSmith?",
