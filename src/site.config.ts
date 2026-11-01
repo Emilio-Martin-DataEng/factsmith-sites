@@ -12,7 +12,7 @@ const ADMIN_PRICE = 1500;
 /** Library page added to a site someone else built: first page, then each extra page (Emilio, 2026-11-01). */
 const UPGRADE_FIRST_PRICE = 1500;
 const UPGRADE_EXTRA_PRICE = 750;
-/** Paid full audit, credited against any build or upgrade ordered within 30 days (Emilio, 2026-11-01; default, not yet confirmed). */
+/** Full audit on its own. Included at no charge in every website package (Emilio, 2026-11-01). */
 const AUDIT_FULL_PRICE = 1500;
 /** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
 export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -282,6 +282,10 @@ export const standardFeatures = [
   {
     title: "Your analytics",
     text: `Google Search Console and Bing set up in your name, and Google Analytics, so the numbers belong to you. The admin dashboard that shows them in one place is included on Business and Custom, and an add-on on Starter and Brochure (${zar(ADMIN_PRICE)} one-off).`,
+  },
+  {
+    title: "Full website audit",
+    text: `A written SEO, AEO and GEO audit with the fixes in order, done with read-only access to your Search Console, Analytics and site editor or hosting. Included in every package, or ${zar(AUDIT_FULL_PRICE)} on its own.`,
   },
   {
     title: "Facebook or Instagram window",
@@ -623,11 +627,11 @@ export const freeCall = {
     "Keyword research and competitor deep dives",
     "A written report, or any fixing",
   ],
-  fullAuditText: `The full audit is ${zar(AUDIT_FULL_PRICE)}. You give us read-only access to Search Console, Analytics and your site editor or hosting, and get a written report with the fixes in order. The ${zar(AUDIT_FULL_PRICE)} comes off any build or upgrade you order within 30 days.`,
+  fullAuditText: `The full audit is included in every website package. On its own it is ${zar(AUDIT_FULL_PRICE)}. You give us read-only access to Search Console, Analytics and your site editor or hosting, and get a written report with the fixes in order.`,
   limitText: "One free call per business, booked through a warm introduction. Free calls are quick opinions, not reports.",
   faq: {
     q: "What does the free 10-minute call and website check cover?",
-    a: "We look at your site the way a stranger sees it, with no logins: page titles and headings, speed on a phone, how clear your business details are to Google and AI assistants, your contact path and your public Google listing. You get a yes or no on what to do next. It does not cover visitor numbers, searches, your site editor or hosting, which need a login and are part of the paid full audit.",
+    a: `We look at your site the way a stranger sees it, with no logins: page titles and headings, speed on a phone, how clear your business details are to Google and AI assistants, your contact path and your public Google listing. You get a yes or no on what to do next. It does not cover visitor numbers, searches, your site editor or hosting, which need a login and are part of the full audit. The full audit is included in every website package, or ${zar(AUDIT_FULL_PRICE)} on its own.`,
   },
 };
 
