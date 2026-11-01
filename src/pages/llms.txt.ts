@@ -30,7 +30,8 @@ Key facts:
 - [Method](${site.url}/method/): the steps from first message to go-live
 - [Work](${site.url}/work/): live and in-process client sites
 - [South Coast](${site.url}/south-coast/): local work and the towns we know best
-- [Referral](${site.url}/referral/): cash reward for a warm introduction that closes
+- [Add a page to your site](${site.url}/upgrade/): weather and tides or another page added to a website someone else built, handed to your current provider
+- [Referral](${site.url}/referral/): cash reward for a warm introduction that closes, and the free 10-minute call and website check
 - [Contact](${site.url}/contact/)
 
 ## Live client sites

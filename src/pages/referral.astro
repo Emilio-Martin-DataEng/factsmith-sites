@@ -1,14 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { site, referral, zar } from "../site.config";
+import { site, referral, upgrade, freeCall, zar } from "../site.config";
 
 const introMessage = "Hi Emilio, I would like to introduce someone to FactSmith Sites for the referral reward.";
 const groupTemplate = `Hey [Client Name] and Emilio, making a quick intro here!
 
-[Client Name], this is Emilio from FactSmith Sites. He builds fast, clean websites that work properly on phones and bring in real enquiries.
+[Client Name], this is Emilio from FactSmith Sites. He builds fast, clean websites that work properly on phones and bring in real enquiries. He can also add a page, like weather and tides, to the website you already have.
 
-Emilio, [Client Name] runs [Business Name] and is looking to get a proper website set up or rebuilt.
+Emilio, [Client Name] runs [Business Name] and could use some help with their website. I think a free 10-minute call would be a good start.
 
 I'll let you two take it from here.`;
 ---
@@ -16,22 +16,24 @@ I'll let you two take it from here.`;
 <BaseLayout
   title="Earn with a referral"
   image="/images/og-referral.png"
-  imageAlt="Know a business that needs a website? Earn R500 to R1 750 cash for a warm introduction to FactSmith Sites."
-  description={`Earn cash for a warm introduction to a business that needs a website: ${referral.rewards.map((r) => `${zar(r.total)} for ${r.tier}`).join(", ")}, plus ${referral.addonPercent}% on add-ons.`}
+  imageAlt="Everyone knows someone with a website that needs help. Earn R500 to R1 750 cash for a warm introduction to FactSmith Sites."
+  description={`Earn cash for a warm introduction to a business whose website needs help: ${referral.rewards.map((r) => `${zar(r.total)} for ${r.tier}`).join(", ")}, ${referral.upgradePercent}% on a page added to their current site, plus ${referral.addonPercent}% on add-ons. They get a free 10-minute call.`}
 >
   <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
     <p class="text-xs font-semibold uppercase tracking-wide text-accent-600">Introduction rewards</p>
-    <h1 class="mt-1 font-display text-4xl font-semibold text-ink-900">Earn cash for a warm introduction</h1>
+    <h1 class="mt-1 font-display text-4xl font-semibold text-ink-900">Everyone knows someone with a website that needs help</h1>
     <p class="mt-4 max-w-2xl text-lg text-ink-700">
-      Know a business owner whose website is overdue, or who has none? Introduce us. If the deal closes, we share
-      the reward with you, paid across the project.
+      Make one introduction. If the job goes ahead, we share the reward with you, paid in two halves. No selling.
     </p>
+    <ul class="mt-6 max-w-2xl space-y-2 text-ink-700">
+      {referral.cases.map((c) => <li class="flex gap-2"><span class="text-accent-600" aria-hidden="true">&#10003;</span><span>{c}</span></li>)}
+    </ul>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-3">
       {
         referral.rewards.map((r) => (
           <div class="rounded-2xl border border-accent-200 bg-white p-5 shadow-sm">
-            <p class="text-sm font-semibold text-sea-800">{r.tier} referral</p>
+            <p class="text-sm font-semibold text-sea-800">{r.tier} website</p>
             <p class="mt-1 font-display text-3xl font-semibold text-ink-900">{zar(r.total)}</p>
             <p class="mt-2 text-sm text-ink-700">
               {zar(r.total / 2)} when the deposit clears, {zar(r.total / 2)} when the site is complete and the final invoice is paid.
@@ -41,17 +43,34 @@ I'll let you two take it from here.`;
       }
     </div>
     <p class="mt-4 max-w-2xl text-ink-700">
-      Plus {referral.addonPercent}% on any additional services your contact orders, such as a logo or a Growth care
-      plan, paid when that invoice clears. {referral.note}
+      Adding a page, like weather and tides, to a website they already have? You earn {referral.upgradePercent}% of that job
+      (<a href="/upgrade/" class="font-semibold text-accent-600 hover:text-accent-700">see the page upgrade</a>), paid when the
+      invoice clears. Plus {referral.addonPercent}% on any additional services your contact orders, such as a logo or a Growth
+      care plan. {referral.note}
     </p>
 
     <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">How it works</h2>
     <ol class="mt-4 max-w-2xl list-decimal space-y-2 pl-5 text-ink-700">
       <li>Tell your contact about us and check they are happy to be introduced.</li>
-      <li>Introduce them to Emilio in a 3-way WhatsApp group, or by email to {site.email}. This is how we log your referral.</li>
-      <li>They agree a package and pay the deposit. Your first half is paid when it clears.</li>
-      <li>The site goes live and the final invoice is paid. Your second half follows within {referral.payDays} days.</li>
+      <li>Copy the message below, make a WhatsApp group with Emilio and your contact, and paste it. Or email {site.email}. This is how we log your referral.</li>
+      <li>Emilio gives them a free 10-minute call. If they go ahead and pay the deposit, your first half is paid when it clears.</li>
+      <li>The job finishes and the final invoice is paid. Your second half follows within {referral.payDays} days.</li>
     </ol>
+
+    <div id="free-call" class="mt-12 max-w-2xl scroll-mt-24 rounded-2xl border border-sea-200 bg-sea-50 p-6">
+      <h2 class="font-display text-xl font-semibold text-ink-900">{freeCall.name}</h2>
+      <p class="mt-2 text-ink-700">{freeCall.lede}</p>
+      <h3 class="mt-4 text-sm font-semibold text-sea-800">What we look at, with no logins</h3>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-700">
+        {freeCall.covers.map((c) => <li>{c}</li>)}
+      </ul>
+      <h3 class="mt-4 text-sm font-semibold text-sea-800">What needs a login or is paid</h3>
+      <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-ink-700">
+        {freeCall.excludes.map((c) => <li>{c}</li>)}
+      </ul>
+      <p class="mt-4 text-sm text-ink-700">{freeCall.fullAuditText} Your reward on a paid audit is {referral.upgradePercent}%, paid when it clears.</p>
+      <p class="mt-3 text-sm text-ink-500">{freeCall.limitText}</p>
+    </div>
 
     <h2 class="mt-12 font-display text-xl font-semibold text-ink-900">What counts as a warm introduction</h2>
     <ul class="mt-4 max-w-2xl list-disc space-y-2 pl-5 text-ink-700">

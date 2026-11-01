@@ -9,6 +9,11 @@ const DEPOSIT = 2000;
 const APP_STARTER_PRICE = 1500;
 /** Admin dashboard: one-off add-on on Starter and Brochure, included on Business and Custom (Emilio, 2026-10-28). */
 const ADMIN_PRICE = 1500;
+/** Library page added to a site someone else built: first page, then each extra page (Emilio, 2026-11-01). */
+const UPGRADE_FIRST_PRICE = 1500;
+const UPGRADE_EXTRA_PRICE = 750;
+/** Paid full audit, credited against any build or upgrade ordered within 30 days (Emilio, 2026-11-01; default, not yet confirmed). */
+const AUDIT_FULL_PRICE = 1500;
 /** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
 export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
@@ -552,8 +557,78 @@ export const referral = {
     { tier: "Business", total: 1750 },
   ],
   addonPercent: 10,
+  /** Page upgrades and paid audits: 10% of the invoice, paid when it clears (Emilio, 2026-11-01). */
+  upgradePercent: 10,
   payDays: 7,
   note: "Custom work is quoted, so the reward is agreed with Emilio before the introduction.",
+  /** The four kinds of business worth introducing, in plain words (also on the flyer). */
+  cases: [
+    "No website yet",
+    "An old or broken website",
+    "A nice website nobody finds",
+    "A good website that needs a weather and tides page",
+  ],
+};
+
+/**
+ * Upgrade: a library page (weather and tides first) added to a website someone else built.
+ * We build static pages in the site's look and hand the files, with a one-page install note, to their
+ * current provider, who publishes them on the client's own domain. We do not take over hosting or edit their CMS.
+ */
+export const upgrade = {
+  name: "Add a page to your current website",
+  lede: "Happy with your website but missing weather and tides, or another page visitors keep asking for? We build the page and hand it to whoever looks after your site.",
+  firstPrice: UPGRADE_FIRST_PRICE,
+  extraPrice: UPGRADE_EXTRA_PRICE,
+  priceText: `${zar(UPGRADE_FIRST_PRICE)} for the first page, ${zar(UPGRADE_EXTRA_PRICE)} for each extra page. Researched pages such as nearby attractions or where to eat are ${zar(UPGRADE_FIRST_PRICE)} each, quoted if large.`,
+  steps: [
+    "A quick call to agree which page you want and who looks after your website.",
+    "We build the page in the look of your site and send it to your provider with a one-page install note.",
+    "Your provider publishes it on your own domain, for example yourname.co.za/weather/. You keep it.",
+  ],
+  limits: [
+    "Your provider does the publishing. We do not take over your hosting or log in to your site editor.",
+    "We match your site's look as closely as we can. It is a close match, not a copy.",
+    "If your provider cannot or will not publish it, we can host the page on a link your site points to.",
+    "Your provider's own charges, if any, are between you and them.",
+  ],
+  faq: [
+    {
+      q: "Can you add weather and tides to my existing website?",
+      a: `Yes. We build the page and hand it to whoever looks after your site, who publishes it on your own domain. It costs ${zar(UPGRADE_FIRST_PRICE)} for the first page and ${zar(UPGRADE_EXTRA_PRICE)} for each extra page.`,
+    },
+    {
+      q: "Do you work with my current web provider?",
+      a: "Yes. We send them the page files and a one-page install note, and answer their questions. They publish it on your domain. We do not take over your hosting or log in to your site editor. If they cannot publish it, we can host the page on a link your site points to.",
+    },
+  ],
+};
+
+/** The free 10-minute call and the audit behind it (Emilio, 2026-11-01). Public view only, no logins. */
+export const freeCall = {
+  name: "Free 10-minute call with Emilio",
+  lede: "A quick look at your website, how you show up on Google and AI assistants, and a straight yes or no on what to do next.",
+  fullAuditPrice: AUDIT_FULL_PRICE,
+  covers: [
+    "Your page titles, descriptions and headings as a stranger sees them",
+    "Whether the site works on a phone and loads fast",
+    "Whether your business details are clear to Google and AI assistants",
+    "Your WhatsApp, phone and contact path",
+    "Your public Google Business Profile and map listing",
+    "Whether an AI assistant or Google names you when asked",
+  ],
+  excludes: [
+    "Visitor numbers, searches and rankings (needs a login to Google Analytics and Search Console)",
+    "Your site editor, hosting or plugins (needs a login)",
+    "Keyword research and competitor deep dives",
+    "A written report, or any fixing",
+  ],
+  fullAuditText: `The full audit is ${zar(AUDIT_FULL_PRICE)}. You give us read-only access to Search Console, Analytics and your site editor or hosting, and get a written report with the fixes in order. The ${zar(AUDIT_FULL_PRICE)} comes off any build or upgrade you order within 30 days.`,
+  limitText: "One free call per business, booked through a warm introduction. Free calls are quick opinions, not reports.",
+  faq: {
+    q: "What does the free 10-minute call and website check cover?",
+    a: "We look at your site the way a stranger sees it, with no logins: page titles and headings, speed on a phone, how clear your business details are to Google and AI assistants, your contact path and your public Google listing. You get a yes or no on what to do next. It does not cover visitor numbers, searches, your site editor or hosting, which need a login and are part of the paid full audit.",
+  },
 };
 
 export const faq = [
@@ -609,9 +684,11 @@ export const faq = [
     q: "Is there a discount for South Coast businesses?",
     a: southCoastOffer.text,
   },
+  ...upgrade.faq,
+  { q: freeCall.faq.q, a: freeCall.faq.a },
   {
     q: "Do you pay referral fees for new clients?",
-    a: `Yes. If you make a warm introduction to a business owner who needs a site and the deal closes, we pay a flat reward: ${referral.rewards.map((r) => `${zar(r.total)} for ${r.tier}`).join(", ")}. Half is paid when their deposit clears and half within ${referral.payDays} days of the final invoice being paid. We also pay ${referral.addonPercent}% on any additional services they order. Introduce them in a 3-way WhatsApp group with Emilio, or by email.`,
+    a: `Yes. If you make a warm introduction to a business owner who needs a site and the deal closes, we pay a flat reward: ${referral.rewards.map((r) => `${zar(r.total)} for ${r.tier}`).join(", ")}. Half is paid when their deposit clears and half within ${referral.payDays} days of the final invoice being paid. We also pay ${referral.addonPercent}% on any additional services they order, and ${referral.upgradePercent}% on a page added to a website they already have or on a paid audit, paid when that invoice clears. Introduce them in a 3-way WhatsApp group with Emilio, or by email.`,
   },
   {
     q: "What is FactSmith Sites, and is it the same as FactSmith?",
