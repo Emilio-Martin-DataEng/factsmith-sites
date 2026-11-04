@@ -1,0 +1,162 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import BookButton from "../components/BookButton.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { conditions, faq, southCoastOffer } from "../site.config";
+
+// The FAQ on this page is the four Conditions questions from the shared list, so the schema matches the visible text.
+const conditionsFaq = faq.filter((f) => f.q.includes("Conditions"));
+---
+
+<BaseLayout
+  title="Conditions forecast"
+  description={`A five-day ocean forecast on your own website, scored 0 to 100 for fishing, surf, kite or boat launch. An add-on to every package: ${conditions.setupLabel} setup, ${conditions.monthlyInline}.`}
+  faq={conditionsFaq}
+  image="/images/work/conditions/conditions-chart-desktop.jpg"
+  imageAlt={conditions.imageAlt}
+>
+  <section class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="grid items-center gap-10 md:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-sea-600">{conditions.status}</p>
+        <h1 class="mt-2 font-display text-4xl font-semibold text-ink-900">{conditions.name} for your website</h1>
+        <p class="mt-4 max-w-xl text-lg text-ink-700">{conditions.lede}</p>
+        <p class="mt-4 max-w-xl text-ink-700">
+          An add-on to every package: <strong class="whitespace-nowrap">{conditions.setupLabel}</strong> setup, then <strong class="whitespace-nowrap">{conditions.monthlyInline}</strong>.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <BookButton label="Book a consult about the forecast" />
+          <WhatsAppButton variant="outline" />
+        </div>
+        <p class="mt-4 text-sm">
+          <a href={conditions.example.href} target="_blank" rel="noopener noreferrer" class="font-semibold text-accent-600 hover:text-accent-700">
+            See it working: {conditions.example.label} →
+          </a>
+        </p>
+        <p class="mt-2 text-sm">
+          <a href={conditions.example2.href} target="_blank" rel="noopener noreferrer" class="font-semibold text-accent-600 hover:text-accent-700">
+            {conditions.example2.label} →
+          </a>
+        </p>
+      </div>
+      <figure class="flex justify-center">
+        <img src={conditions.phoneImage} alt={conditions.phoneImageAlt} class="w-64 rounded-[2rem] border-8 border-ink-900 shadow-lg" width="780" height="1400" loading="eager" />
+      </figure>
+    </div>
+  </section>
+
+  <section class="border-y border-sea-100 bg-white">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <h2 class="font-display text-3xl font-semibold text-ink-900">What your visitors see</h2>
+      <p class="mt-3 max-w-2xl text-ink-700">
+        The same forecast that runs on our own page, set to your place, your colours and the activities that fit your business.
+      </p>
+      <div class="mt-8 grid items-start gap-8 md:grid-cols-[1.4fr_1fr]">
+        <figure>
+          <img src={conditions.image} alt={conditions.imageAlt} class="w-full rounded-2xl border border-sea-100 shadow-lg" width="1164" height="1400" loading="lazy" />
+        </figure>
+        <figure>
+          <img src={conditions.whyImage} alt={conditions.whyImageAlt} class="w-full rounded-2xl border border-sea-100 shadow-lg" width="880" height="968" loading="lazy" />
+          <figcaption class="mt-2 text-sm text-ink-500">Tap a window to see why it scored as it did.</figcaption>
+        </figure>
+      </div>
+      <div class="mt-10 grid gap-8 md:grid-cols-2">
+        <div class="rounded-2xl border border-sea-100 bg-cream-50 p-6">
+          <h3 class="font-display text-xl font-semibold text-ink-900">For your visitors</h3>
+          <ul class="mt-4 space-y-3 text-sm text-ink-700">
+            {conditions.forVisitors.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-sea-100 bg-cream-50 p-6">
+          <h3 class="font-display text-xl font-semibold text-ink-900">For you</h3>
+          <ul class="mt-4 space-y-3 text-sm text-ink-700">
+            {conditions.forYou.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="price" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-14 sm:px-6">
+    <h2 class="font-display text-3xl font-semibold text-ink-900">What it costs</h2>
+    <p class="mt-3 max-w-2xl text-ink-700">{conditions.pricing} Prices are in rand, and the final amount is quoted for your site.</p>
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      <div class="rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
+        <h3 class="font-display text-lg font-semibold text-ink-900">Setup</h3>
+        <p class="mt-2 font-display text-3xl font-semibold text-sea-700">{conditions.setupLabel}</p>
+        <p class="mt-1 text-sm text-ink-500">First place</p>
+        <ul class="mt-4 space-y-2 text-sm text-ink-700">
+          {conditions.includedSetup.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
+        <h3 class="font-display text-lg font-semibold text-ink-900">Monthly</h3>
+        <p class="mt-2 font-display text-3xl font-semibold text-sea-700">{conditions.monthlyLabel}</p>
+        <p class="mt-1 text-sm text-ink-500">First place, all four activities</p>
+        <ul class="mt-4 space-y-2 text-sm text-ink-700">
+          {conditions.includedMonthly.map((item) => <li class="flex gap-2"><span class="text-sea-600" aria-hidden="true">✓</span><span>{item}</span></li>)}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
+        <h3 class="font-display text-lg font-semibold text-ink-900">More than one place</h3>
+        <p class="mt-2 font-display text-lg font-semibold text-sea-700">{conditions.extraLabel}</p>
+        <p class="mt-3 text-sm text-ink-700">
+          For a business with more than one beach, branch or launch site. Each place has its own location profile.
+        </p>
+      </div>
+    </div>
+    <div class="mt-6 max-w-3xl space-y-3 text-sm text-ink-700">
+      <p><strong>Why a monthly fee?</strong> {conditions.whyMonthly}</p>
+      <p><strong>Terms:</strong> {conditions.terms}</p>
+      <p><strong>South Coast business?</strong> {southCoastOffer.text}</p>
+      <p><strong>Availability:</strong> {conditions.availability}</p>
+    </div>
+  </section>
+
+  <section class="border-y border-sea-100 bg-cream-100">
+    <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <h2 class="font-display text-3xl font-semibold text-ink-900">Where it fits</h2>
+      <p class="mt-3 max-w-2xl text-ink-700">
+        Any business whose visitors check the sea before they come. Choose the activities that matter to you; the rest stay off.
+      </p>
+      <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+        {
+          conditions.fits.map(([title, text]) => (
+            <li class="rounded-2xl border border-sea-100 bg-white p-5 shadow-sm">
+              <h3 class="font-display font-semibold text-ink-900">{title}</h3>
+              <p class="mt-1 text-sm text-ink-700">{text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+    <h2 class="font-display text-2xl font-semibold text-ink-900">What it is and what it is not</h2>
+    <ul class="mt-4 max-w-3xl space-y-3 text-sm text-ink-700">
+      {conditions.rules.map((item) => <li class="flex gap-2"><span class="text-ink-500" aria-hidden="true">-</span><span>{item}</span></li>)}
+    </ul>
+    <p class="mt-4 max-w-3xl text-xs text-ink-500">{conditions.limit}</p>
+  </section>
+
+  <section class="border-t border-sea-100 bg-white">
+    <div class="mx-auto max-w-3xl px-4 py-14 sm:px-6">
+      <h2 class="font-display text-2xl font-semibold text-ink-900">Common questions</h2>
+      <div class="mt-6 space-y-3">
+        {
+          conditionsFaq.map((f) => (
+            <details class="rounded-2xl border border-sea-100 bg-cream-50 p-4">
+              <summary class="cursor-pointer font-display font-semibold text-ink-900">{f.q}</summary>
+              <p class="mt-3 text-sm text-ink-700">{f.a}</p>
+            </details>
+          ))
+        }
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <BookButton label="Book a consult about the forecast" />
+        <WhatsAppButton variant="outline" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -14,6 +14,11 @@ const UPGRADE_FIRST_PRICE = 1500;
 const UPGRADE_EXTRA_PRICE = 750;
 /** Full audit on its own. Included at no charge in every website package (Emilio, 2026-11-01). */
 const AUDIT_FULL_PRICE = 1500;
+/** Conditions forecast add-on, on every tier (Emilio, 2026-11-04). Setup R4 000 first place; monthly covers the customer's own paid forecast data plan (we pay it) plus upkeep and support. Monthly raised from R1 250 to R1 950 on 2026-11-04 when each customer got their own plan. */
+const CONDITIONS_SETUP_PRICE = 4000;
+const CONDITIONS_MONTHLY_PRICE = 1950;
+const CONDITIONS_EXTRA_SETUP_PRICE = 1500;
+const CONDITIONS_EXTRA_MONTHLY_PRICE = 500;
 /** 4000 becomes "R4 000" (plain space, safe in meta tags and text files). */
 export const zar = (n: number) => "R" + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
@@ -120,6 +125,7 @@ export const nav = [
   { label: "Tech", href: "/technical/" },
   { label: "Method", href: "/method/" },
   { label: "Phone app", href: "/phone-app/" },
+  { label: "Conditions", href: "/conditions/" },
   { label: "Offer", href: "/offer/" },
   { label: "South Coast", href: "/south-coast/" },
   { label: "Contact", href: "/contact/" },
@@ -307,7 +313,7 @@ export const libraryPages = [
   {
     title: "Weather and tides",
     kind: "template" as const,
-    text: "Hour-by-hour weather for today and tomorrow, a 7-day outlook, wind, swell and sea temperature, Windy wave and storm maps and the latest satellite picture. A tides page shows high and low tide, a 7-day tide curve and the moon, for beach walks, fishing and rock pools.",
+    text: "Hour-by-hour weather for today and tomorrow, a 7-day outlook, wind, swell and sea temperature, Windy wave and storm maps and the latest satellite picture. A tides page shows high and low tide, a 7-day tide curve and the moon, for beach walks, fishing and rock pools. Want a scored five-day forecast for fishing, surf, kite or boat launch? That is the paid Conditions forecast add-on.",
     image: "/images/work/eagles-roost/feature-weather.webp",
     imageAlt: "Eagle's Roost weather page on a phone: temperature, wind, sea, water temperature, next tide",
     phone: true,
@@ -538,6 +544,78 @@ export const phoneApp = {
   ],
 } as const;
 
+/**
+ * Conditions forecast: the fs-conditions widget (live on www.factsmith.co.za/community/ocean-forecast/) as a paid add-on on every tier.
+ * Each customer has their own paid Open-Meteo plan, managed by us and paid by us, recovered in the monthly fee (the free Open-Meteo
+ * API is non-commercial). Prices set by Emilio 2026-11-04; margin notes live in the vault (Conditions Pricing Baseline), not here.
+ * Status (Emilio, 2026-11-04): first client places open; the page must not claim a client site already runs it.
+ */
+export const conditions = {
+  name: "Conditions forecast",
+  status: "New: first client places open",
+  lede: "A five-day ocean forecast on your own website, scored from 0 to 100 for fishing, surf, kite or boat launch, in your colours. Visitors check it before they book, and every visit lands on your site.",
+  setupLabel: `${zar(CONDITIONS_SETUP_PRICE)} once-off`,
+  monthlyLabel: `From ${zar(CONDITIONS_MONTHLY_PRICE)} a month`,
+  /** Same, for use mid-sentence. */
+  monthlyInline: `from ${zar(CONDITIONS_MONTHLY_PRICE)} a month`,
+  extraLabel: `Each extra place: ${zar(CONDITIONS_EXTRA_SETUP_PRICE)} setup and ${zar(CONDITIONS_EXTRA_MONTHLY_PRICE)} a month`,
+  /** One sentence used on /offer, /conditions, the FAQ and llms.txt. */
+  pricing: `An add-on to every package (Starter, Brochure, Business and Custom) at the same price: ${zar(CONDITIONS_SETUP_PRICE)} setup once-off for your first place, then from ${zar(CONDITIONS_MONTHLY_PRICE)} a month. Each extra place is ${zar(CONDITIONS_EXTRA_SETUP_PRICE)} setup and ${zar(CONDITIONS_EXTRA_MONTHLY_PRICE)} a month.`,
+  whyMonthly: "Your forecast data comes from its own paid commercial plan with the weather service, set up for your site and managed by us, so this is the one add-on with a running cost. The monthly fee pays for that plan, keeps the forecast service running, and covers routine maintenance and support.",
+  availability: "It is live on our own forecast page for Umtentweni and Melkbosstrand. Client places are being set up now, so it is not yet running on a client site. We agree your go-live date when you book.",
+  example: { label: "FactSmith ocean forecast: Umtentweni and Melkbosstrand", href: "https://www.factsmith.co.za/community/ocean-forecast/" },
+  example2: { label: "Salt Cartel conditions page (example)", href: "https://sites.factsmith.co.za/salt-cartel/weather.html" },
+  image: "/images/work/conditions/conditions-chart-desktop.jpg",
+  imageAlt: "The FactSmith ocean forecast for Umtentweni: a five-day chart in four-hour windows with a 0 to 100 fishing score, a strong-gusts warning above it, and lanes for tide, swell, wind, pressure and sea temperature.",
+  phoneImage: "/images/work/conditions/conditions-phone.jpg",
+  phoneImageAlt: "The ocean forecast on a phone: place menu, activity buttons, a strong-gusts warning, the five-day strip and the score chart.",
+  whyImage: "/images/work/conditions/conditions-why-panel.jpg",
+  whyImageAlt: "The why panel for one four-hour window, fishing: a score of 67, Mixed conditions, with bars for tide flow, sea state, wind, gusts, pressure trend, light, rain and spring tide.",
+  forVisitors: [
+    "A five-day forecast in four-hour windows, scored for the activity they pick: fishing, surf, kite or boat launch",
+    "Tide, swell, wind, pressure and sea temperature on one chart, with arrows for direction",
+    "Each day's best window, the moon, springs or neaps, and sunrise and sunset",
+    "A panel that explains why a window scored as it did, and sliders to weigh things their own way",
+    "Safety warnings (a big sea, strong gusts, thunder, an offshore wind for kiters) shown apart from the score",
+    "Works on a phone, and keeps showing the last forecast, with its age, if the signal drops",
+  ],
+  forYou: [
+    "A reason for visitors to open your site again before every trip, next to your rates and contact details",
+    "Guests who can see which day looks better plan around it and book with a day in mind",
+    "Nothing for you to run: no data account, no code, no updates to install",
+    "Your colours and fonts, with a small Conditions by FactSmith credit",
+  ],
+  includedSetup: [
+    "The forecast set up in your brand colours and fonts",
+    "A location profile for your place: which of fishing, surf, kite and boat launch apply, and the direction your beach faces, confirmed with you before go-live",
+    "Embedded on a page of your site and tested on phone and desktop",
+    "The data credit and Conditions by FactSmith credit in place",
+  ],
+  includedMonthly: [
+    "Your own paid forecast data plan with the weather service, managed by us, so your page never depends on a free, non-commercial feed",
+    "The forecast service kept running, with the last good forecast shown if new data is late",
+    "Routine maintenance and widget updates, tested before they reach your site",
+    "Standard support by WhatsApp or email",
+  ],
+  /** Where it fits: any business whose visitors check the sea before they come. */
+  fits: [
+    ["Guest houses and lodges by the sea", "Guests plan the beach, the fishing and the day trips around the forecast."],
+    ["Fishing charters and guides", "Anglers check wind, swell and tide before they book a trip."],
+    ["Surf and kite schools", "Lessons and rentals go where the conditions are good, and clients can see why."],
+    ["Boat launches and slipways", "Launch conditions, with a warning when the sea or gusts are up."],
+    ["Caravan parks and holiday rentals", "A reason for holidaymakers to keep your page open all week."],
+  ],
+  rules: [
+    "The score compares windows for one activity at one place. It is a guide, not a promise of fish or waves, and not a safety rating",
+    "Safety warnings are shown apart from the score and never change it. No warning does not mean it is safe",
+    "The tide is modelled, not read from a tide gauge: good for planning a day, not for navigation",
+    "Weather data is from Open-Meteo (CC BY 4.0). The data credit and the Conditions by FactSmith credit stay on every embed",
+    "We confirm each place's beach direction with you before it goes live, because it decides which winds count as onshore or offshore",
+  ],
+  terms: "Month to month. Cancel with one month's notice by email. Billed on the 1st of each month, in advance.",
+  limit: "We cannot promise bookings or catches. The forecast is a planning aid built on a third-party weather model.",
+};
+
 /** Common questions: shown in full on /offer, four of them on the home page. Answers read prices from above. */
 /**
  * South Coast offer (Emilio, 2026-10-28): 10% off every package for any business based on the KZN South Coast, set up
@@ -651,6 +729,22 @@ export const faq = [
   {
     q: "What is the admin dashboard?",
     a: `One private page for your site: your stats, a checklist of what is done, reminders of what is still to do, and links to the accounts in your name, such as Google Analytics and Search Console. You sign in with Google and only you and we can open it. We set it up, and on Business and Custom we keep the reminders and links current. It is included on Business and Custom, and a one-off ${zar(ADMIN_PRICE)} set-up add-on on Starter and Brochure.`,
+  },
+  {
+    q: "What does the Conditions forecast cost?",
+    a: `${conditions.pricing} ${conditions.whyMonthly} ${conditions.terms} Prices are in rand, and the final amount is quoted for your site.`,
+  },
+  {
+    q: "How is the Conditions forecast different from the free weather and tides page?",
+    a: "The weather and tides page is a free library page: hour-by-hour weather, wind, swell, a tide curve and maps. The Conditions forecast scores five days in four-hour windows from 0 to 100 for fishing, surf, kite or boat launch, explains each score, and shows safety warnings apart from the score. It is a paid add-on because each site has its own paid weather data plan.",
+  },
+  {
+    q: "Can I rely on the Conditions score for safety?",
+    a: "No. The score is a guide for comparing forecast windows, not a promise of fish or waves and not a safety rating. Warnings are shown separately and never change the score, and no warning does not mean it is safe. The tide is modelled, not from a tide gauge, so it is not for navigation. Always check conditions on the day.",
+  },
+  {
+    q: "Is the Conditions forecast running on a client site yet?",
+    a: conditions.availability,
   },
   {
     q: "Will a new website bring me more enquiries?",

@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BookButton from "../components/BookButton.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
-import { faq, growthCare, logoService, site, southCoastOffer, tiers, wpCare, zar } from "../site.config";
+import { conditions, faq, growthCare, logoService, site, southCoastOffer, tiers, wpCare, zar } from "../site.config";
 
 const everyTier = [
   "Mobile-first custom design from an agreed homepage sample",
@@ -94,6 +94,11 @@ const quoted = [
     <div id="logo" class="mt-8 scroll-mt-24 rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
       <h2 class="font-display text-base font-semibold text-ink-900">{logoService.name}</h2>
       <p class="mt-2 text-sm text-ink-700">{logoService.lede} <strong>{logoService.pricing}</strong></p>
+    </div>
+
+    <div id="conditions" class="mt-4 scroll-mt-24 rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
+      <h2 class="font-display text-base font-semibold text-ink-900">{conditions.name}, add-on for every package: {conditions.setupLabel} setup, {conditions.monthlyInline}</h2>
+      <p class="mt-2 text-sm text-ink-700">{conditions.lede} {conditions.extraLabel}. {conditions.terms} <a href="/conditions/" class="font-semibold text-accent-600 hover:text-accent-700">See the Conditions forecast →</a></p>
     </div>
 
     <div class="mt-4 rounded-2xl border border-sea-200 bg-white p-5 shadow-sm">
